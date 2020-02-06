@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+<link rel="stylesheet" href="css.css">
+<script src="jquery.3.4.1.js"></script>
+<script>
+jQuery(document).ready(function(){
+       $("#course_info_showname").click(function(){
+			if($("#course_info_showname").prop("checked")){
+				$('p.coursetitle').show();
+			}
+			else{
+				$('p.coursetitle').hide();
+			}
+	   });
+       $("#course_info_showlocation").click(function(){
+			if($("#course_info_showlocation").prop("checked")){
+				$('p.courselocation').show();
+			}
+			else{
+				$('p.courselocation').hide();
+			}
+	   });
+       $("#course_info_showteacher").click(function(){
+			if($("#course_info_showteacher").prop("checked")){
+				$('p.courseteacher').show();
+			}
+			else{
+				$('p.courseteacher').hide();
+			}
+	   });
+       $("#course_info_showhomework").click(function(){
+			if($("#course_info_showhomework").prop("checked")){
+				$('p.coursehomework').show();
+			}
+			else{
+				$('p.coursehomework').hide();
+			}
+	   });	   
+	   
+	   $("#module_homework_tracker").click(function(){
+			if($("#module_homework_tracker").prop("checked")){
+				$('td.notread').css({"background-color": "red"});
+				$('td.read').css({"background-color": "green"});
+			}
+			else{
+				$('td.notread').css({"background-color": "white"});
+				$('td.read').css({"background-color": "white"});
+			}
+	   });	
+	   
+	   
+	   
+       $("#menu_settings").click(function(event){
+			$('#headersubmenu_protokol').hide();
+			if($("#headersubmenu_settings").is(':visible')){
+				$('#headersubmenu_settings').hide();
+			}
+			else{
+				$('#headersubmenu_settings').show();
+			}
+			return false;
+	   });
+
+       $("#menu_protokol").click(function(event){
+			$('#headersubmenu_settings').hide();
+			if($("#headersubmenu_protokol").is(':visible')){
+				$('#headersubmenu_protokol').hide();
+			}
+			else{
+				$('#headersubmenu_protokol').show();
+			}
+			return false;
+	   });
+
+		$("a").click(function(){
+			if(!(event.target.id == "menu_settings" || event.target.id == "menu_protokol")){
+				alert("Dette link er ikke aktivt id = '" + event.target.id + "'");
+			}
+			
+			return false;}
+			);
+});  
+
+</script>
+</head>
+<body>
+<div class="keatop">
+	<span class="logo">Københavns Erhvervsakademi</span>
+	<span style="float: right">
+		<a href="">For studerende</a>
+		<a href="">For ansatte</a>
+		<a href="">Bibliotek</a>
+		<a href="">Job</a>
+		<a href="">Kontakt</a>
+	</span>
+</div>
+<div class="headermenu">
+	<a href="" class="kea_orange"><img src="logo-main-black-single.png" class="kea_orange"></a>
+	<a href="Indstillinger" id="menu_settings">Settings</a>
+	<a href="Indstillinger">Homework</a>
+	<a href="Indstillinger">Surveys</a>
+	<a href="Indstillinger">Notes</a>	
+	<a href="" id="menu_protokol">Protokol</a>	
+	<div class="headermenu_right">
+		<a href=""><img src="dk.png" style="width: 20px; margin: 0px; padding: 0px;">Dansk</a>
+
+
+		<!--
+		<a href="" class="headermenu_language">DK</a>
+		<span class="headermenu_user">Login</span>
+		<span class="headermenu_usersettings">
+			Hi Martin, <br/>
+			Showing <select><option>semester 1 (1990.x.x - 1990.y.y.)</option><option>2</option><option>3</option><option>4</option></select>
+		</span>
+		-->
+	</div>
+</div>
+<div class="headersubmenu" style="font-weight: bold">
+<span style="color: red">Brugeren er ikke logget ind</span>For at få vist dit specifikke skema, skal du logge ind. <a href="https://www.wayf.dk/">Tryk her for at logge ind.</a>
+</div>
+<div class="headersubmenu" style="font-weight: bold">
+<span style="color: red">Brugeren er logget ind</span>Vis semester 1 (zzzz - yyyy) for Martin Kjeldgaard Nikolajsen
+</div>
+
+
+<div class="headersubmenu" id="headersubmenu_protokol" style="display: none">
+	Der findes 3 bruger typer til protokol.<br/>
+	Admin = Kan skjule elever for alle og give elever fravær<br/>
+	Lærer = Kan "skjule" elever for sig selv og give elever fravær i de timer man er tilknyttet.<br/>
+	Studerende = Kan se deres fravær.<br/><br/>
+	
+	<div style="border: 1px solid red">
+		<span style="color: red">Admin skjul elev</span><br/>
+		Retning: <select><option>Datamatiker</option></select><br/>
+		Periode: <select><option>Periode 29/8 2019 - 1/1 2020</option></select><br/>
+		Fag: <select><option>Design 18A</option></select><br/>
+		Elev: <select><option>Martin xxx</option></select><br/>
+		<input type="submit" value="Skjul">
+	</div>
+
+	<div style="border: 1px solid red">
+		<span style="color: red">Lærer</span><br/>
+		Retning: <select><option>Datamatiker</option></select><br/>
+		Periode: <select><option>Periode 29/8 2019 - 1/1 2020</option></select><br/>
+		Fag: <select><option>Design 18A</option></select><br/>
+		Dato: <select><option>22/11 2019</option></select>
+		<table>
+			<tr>
+				<th></th>
+				<th></th>
+				<th>10:15 - 11:30</th>
+				<th>12:30 - 14:00</th>
+				<th>14:15 - 16:00</th>
+			</tr>
+			<tr>
+				<td>X</td>
+				<td><a href="">Andreas</a></td>
+				<td style=""></td>
+				<td style=""></td>
+				<td style=""></td>
+			</tr>			
+			<tr>
+				<td>X</td>
+				<td><a href="">Rasmus</a></td>
+				<td style="" onclick=""></td>
+				<td style=""></td>
+				<td style=""></td>
+			</tr>
+			<tr>
+				<td>X</td>
+				<td>Martin</td>
+				<td style="background: yellow; color: black">wifi</td>
+				<td style="background: yellow; color: black">wifi</td>
+				<td style="background: yellow; color: black">wifi</td>
+			</tr>
+			<tr>
+				<td>X</td>
+				<td>Oliver</td>
+				<td style="background: yellow; color: black">wifi</td>
+				<td style="background: yellow; color: black">wifi</td>
+				<td style="background: yellow; color: black">wifi</td>
+			</tr>			
+		</table>
+		<script>
+		$('td').click(function() {
+			if($(this).css('backgroundColor') == 'rgb(0, 128, 0)'){
+			$(this).css('backgroundColor', 'red');
+			}
+			else{
+			$(this).css('backgroundColor', 'green');
+			}
+		});
+		</script>
+		<a href="">Marker alle uvalgte som ikke tilstede</a> / <a href="">Marker alle valgte som tilstede</a><br/><br/>
+		Total i klassen X.
+		<br/>
+		<br/>
+		</hr>
+		Skjulte elever
+		<table style="color: gray">
+			<tr>
+				<th></th>
+				<th></th>
+				<th>10:15 - 11:30</th>
+				<th>12:30 - 14:00</th>
+				<th>14:15 - 16:00</th>
+			</tr>
+			<tr>
+				<td>X</td>
+				<td>Polina</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		</table>
+	</div>	
+	
+	<div style="border: 1px solid red">
+		<span style="color: red">Elev</span><br/>
+		Dit fravær i perioden Periode 29/8 2019 - 1/1 2020 er på 10%. Du kan se dit fravær mere specifikt ved at slå protokol plugginet til under settings og se i skemaet.
+	</div>	
+</div>
+
+<div class="headersubmenu" id="headersubmenu_settings" style="display: none">
+	<h1>Settings</h1>
+	<h2>General settings</h2>
+	<input type="checkbox"> Use infinit scrollbar til at vise uge planer <span style="color: red"><-- Ikke implementeret i prototype</span>
+	<h2>Course info</h2>
+	<input type="checkbox" id="course_info_showname" checked>Show course name (Bold)<br/>
+	<input type="checkbox" id="course_info_showlocation" checked>Show course location (Italic)<br/>
+	<input type="checkbox" id="course_info_showteacher" checked>Show course teacher name (Underline)<br/>
+	<input type="checkbox" id="course_info_showhomework" checked>Show course homework (Link if source is available)<br/>
+	<h2>Modules</h2>
+	<input type="checkbox" id="module_homework_tracker" checked>
+	<div class="module">
+	<h3><a href="" class="module">Homework tracker</a></h3><br/>
+	Items that are read, are shown as <span style="background: green; height: 20px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.<br/>
+	Items that are not read, and where the data of the course is past is shown as <span style="background: red; height: 20px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.<br/>
+	To mark a lection as read, click on <img class="check" src="check.png">.<br/> To unmark click on <img class="check" src="minus.png">
+	</div><br/>
+	<input type="checkbox">
+	<div class="module">
+	<h3><a href="" class="module">Class surveys</a></h3><br/>
+	<input type="checkbox" checked> Display survey, if available for lection.<br/>
+	<input type="checkbox"> Display option to create surveys to lection.
+	</div>
+	<br/>
+	<input type="checkbox">
+	<div class="module">
+	<h3><a href="" class="module">Course notes</a></h3><br/>
+	Add notes to each lection / course.
+	</div>
+	<br/>
+	<input type="checkbox">
+	<div class="module">
+	<h3><a href="" class="module">Course protocol</a></h3><br/>
+	See if you where present at the lecture.
+	</div>	
+</div>
+<div class="pageoptions">
+	<a href=""><img src="download.png"></a>
+	<a href=""><img src="print.png"></a>
+</div>
+<div class="content">
+<!--Active-->
+
+	<table class="weekly">
+		<tr>
+			<th colspan="2" class="weeknumberactive">Uge 47</th>
+			<th class="past">Mandag</th>
+			<th class="past">Tirsdag</th>
+			<th class="past">Onsdag</th>
+			<th class="past">Torsdag</th>
+			<th class="present">Fredag</th>
+		</tr>
+		<tr>
+			<td>8:30</td>
+			<td>10:00</td>
+			<td class="notread" rowspan="2">
+				<p class="coursetitle">Design 18A</p>
+				<p class="courselocation">L37.A141</p>
+				<p class="courseteacher">Hardy Alva</p>
+				<p class="coursehomework">
+					<a href=""><img class="check" src="check.png"></a>Pressman ch. 10
+				</p>
+				</td>
+			<td rowspan="2" class="notread">
+				<p class="coursetitle">Design 18A</p>
+				<p class="coursehomework">
+					<a href=""><img class="check" src="check.png"></a>Pressman ch. 11
+				</p>
+			</td>
+			<td rowspan="2" class="read"><p class="coursetitle">Teknik 18A</p><p class="coursehomework"><a href=""><img class="check" src="minus.png"></a>Netværkslaget s100-115</p></td>
+			<td rowspan="2" class="notread"><p class="coursetitle">Konstruktion 18A</p><p class="coursehomework"><a href=""><img class="check" src="check.png"></a>Java Threads s10-80</p></td>
+			<td></td>			
+		</tr>
+		<tr>
+			<td>10:15</td>
+			<td>11:30</td>
+			<td>
+				<p class="coursetitle">Teknik 18A</p> <p class="coursehomework"><a href=""><img class="check" src="check.png"></a><a href="https://www.youtube.com/watch?v=kAty4mKczEg" target="_blank">Transportlaget</a><br/><a href=""><img class="check" src="check.png"></a><a href="https://www.youtube.com/watch?v=kAty4mKczEg" target="_blank">Transportlaget 2</a></p>
+			</td>		
+		</tr>
+		<tr>
+			<td>11:30</td>
+			<td>12:30</td>
+			<td>frokost pause</td><td>frokost pause</td><td>frokost pause</td><td>frokost pause</td><td>frokost pause</td>
+		</tr>
+		<tr>
+			<td>12:30</td>
+			<td>14:00</td>
+			<td rowspan="2" class="notread"><p class="coursetitle">Design 18A (fortsat)</p></td>
+			<td></td><td></td>
+			<td rowspan="2" class="read"><p class="coursetitle">Teknik 18A</p><p class="coursehomework"><a href=""><img class="check" src="minus.png"></a>Netværkslaget s100-115</p></td>
+			<td rowspan="2"><p class="coursetitle">Teknik 18A (fortsat)</p></td>
+		</tr>
+		<tr>
+			<td>14:15</td>
+			<td>16:00</td>
+			<td></td>
+			<td></td>
+		</tr>		
+	</table>
+<!--Future-->	
+	<table class="weekly">
+		<tr>
+			<th colspan="2" class="weeknumber">Uge 48</th>
+			<th class="past">Mandag</th>
+			<th class="past">Tirsdag</th>
+			<th class="past">Onsdag</th>
+			<th class="past">Torsdag</th>
+			<th class="past">Fredag</th>
+		</tr>
+		<tr>
+			<td>8:30</td>
+			<td>10:00</td>
+			<td rowspan="2">
+				<p class="coursetitle">Design 18A</p>
+				<p class="courselocation">L37.A141</p>
+				<p class="courseteacher">Hardy Alva</p>
+				<p class="coursehomework">
+					<a href=""><img class="check" src="check.png"></a>Pressman ch. 10
+				</p>
+				</td>
+			<td rowspan="2">
+				<p class="coursetitle">Design 18A</p>
+				<p class="coursehomework">
+					<a href=""><img class="check" src="check.png"></a>Pressman ch. 11
+				</p>
+			</td>
+			<td rowspan="2"><p class="coursetitle">Teknik 18A</p><p class="coursehomework"><a href=""><img class="check" src="minus.png"></a>Netværkslaget s100-115</p></td>
+			<td rowspan="2"><p class="coursetitle">Konstruktion 18A</p><p class="coursehomework"><a href=""><img class="check" src="check.png"></a>Java Threads s10-80</p></td>
+			<td></td>			
+		</tr>
+		<tr>
+			<td>10:15</td>
+			<td>11:30</td>
+			<td>
+				<p class="coursetitle">Teknik 18A</p> <p class="coursehomework"><a href=""><img class="check" src="check.png"></a><a href="https://www.youtube.com/watch?v=kAty4mKczEg" target="_blank">Transportlaget</a><br/><a href=""><img class="check" src="check.png"></a><a href="https://www.youtube.com/watch?v=kAty4mKczEg" target="_blank">Transportlaget 2</a></p>
+			</td>		
+		</tr>
+		<tr>
+			<td>11:30</td>
+			<td>12:30</td>
+			<td>frokost pause</td><td>frokost pause</td><td>frokost pause</td><td>frokost pause</td><td>frokost pause</td>
+		</tr>
+		<tr>
+			<td>12:30</td>
+			<td>14:00</td>
+			<td rowspan="2"><p class="coursetitle">Design 18A (fortsat)</p></td>
+			<td></td><td></td>
+			<td rowspan="2"><p class="coursetitle">Teknik 18A</p><p class="coursehomework"><a href=""><img class="check" src="minus.png"></a>Netværkslaget s100-115</p></td>
+			<td rowspan="2"><p class="coursetitle">Teknik 18A (fortsat)</p></td>
+		</tr>
+		<tr>
+			<td>14:15</td>
+			<td>16:00</td>
+			<td></td>
+			<td></td>
+		</tr>		
+	</table>
+
+	<table class="weekly">
+		<tr>
+			<th colspan="2" class="weeknumber">Uge 49</th>
+			<th class="past">Mandag</th>
+			<th class="past">Tirsdag</th>
+			<th class="past">Onsdag</th>
+			<th class="past">Torsdag</th>
+			<th class="past">Fredag</th>
+		</tr>
+		<tr>
+			<td>8:30</td>
+			<td>10:00</td>
+			<td rowspan="2">
+				<p class="coursetitle">Design 18A</p>
+				<p class="courselocation">L37.A141</p>
+				<p class="courseteacher">Hardy Alva</p>
+				<p class="coursehomework">
+					<a href=""><img class="check" src="check.png"></a>Pressman ch. 10
+				</p>
+				</td>
+			<td rowspan="2">
+				<p class="coursetitle">Design 18A</p>
+				<p class="coursehomework">
+					<a href=""><img class="check" src="check.png"></a>Pressman ch. 11
+				</p>
+			</td>
+			<td rowspan="2"><p class="coursetitle">Teknik 18A</p><p class="coursehomework"><a href=""><img class="check" src="minus.png"></a>Netværkslaget s100-115</p></td>
+			<td rowspan="2"><p class="coursetitle">Konstruktion 18A</p><p class="coursehomework"><a href=""><img class="check" src="check.png"></a>Java Threads s10-80</p></td>
+			<td></td>			
+		</tr>
+		<tr>
+			<td>10:15</td>
+			<td>11:30</td>
+			<td>
+				<p class="coursetitle">Teknik 18A</p> <p class="coursehomework"><a href=""><img class="check" src="check.png"></a><a href="https://www.youtube.com/watch?v=kAty4mKczEg" target="_blank">Transportlaget</a><br/><a href=""><img class="check" src="check.png"></a><a href="https://www.youtube.com/watch?v=kAty4mKczEg" target="_blank">Transportlaget 2</a></p>
+			</td>		
+		</tr>
+		<tr>
+			<td>11:30</td>
+			<td>12:30</td>
+			<td>frokost pause</td><td>frokost pause</td><td>frokost pause</td><td>frokost pause</td><td>frokost pause</td>
+		</tr>
+		<tr>
+			<td>12:30</td>
+			<td>14:00</td>
+			<td rowspan="2"><p class="coursetitle">Design 18A (fortsat)</p></td>
+			<td></td><td></td>
+			<td rowspan="2"><p class="coursetitle">Teknik 18A</p><p class="coursehomework"><a href=""><img class="check" src="minus.png"></a>Netværkslaget s100-115</p></td>
+			<td rowspan="2"><p class="coursetitle">Teknik 18A (fortsat)</p></td>
+		</tr>
+		<tr>
+			<td>14:15</td>
+			<td>16:00</td>
+			<td></td>
+			<td></td>
+		</tr>		
+	</table>	
+
+</div>
+</body>
+</html>

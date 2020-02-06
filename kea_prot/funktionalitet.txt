@@ -1,0 +1,16 @@
+Muligt at oprette grupper, som kan indeholder grupper eller personer. - En gruppe kan ligge i en specifik kategori
+Muligt at oprette gruppe kategorier (Enhed, Linje, klasse, hold etc.) - Når en gruppe kategori oprettes, vælges der hvilke
+gruppe kategorier en gruppe her i kan indeholde.
+- Muligt at tilføje en enhed (her er der tænkt som KEA, DTU, Københavns Universitet)
+- Linje: f.eks. Datamatiker
+
+Muligt at oprette skema (som kan ligges på hver enkelt gruppe kategori enhed, linje, klasse, hold)
+
+Muligt at oprette hold og tildele lærer (ned på enkelte timer) ud fra CSV fil og eller interface.
+evt. bruge wayf til at logge ind...
+Modul baseret arkitektur (måske noget i den her dur: https://spring.io/guides/gs/multi-module/).
+Man kan se skemaet per uge og frem i tiden.
+Forskellige sprog - et hold oprettes med et specifikt sprog.
+upload af filer
+link af filer til timer
+- forskellige kategorier til upload på et hold (f.eks. præsentation, litteratur, links, ekstra etc.)
