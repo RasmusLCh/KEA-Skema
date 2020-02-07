@@ -81,6 +81,17 @@ jQuery(document).ready(function(){
 			
 			return false;}
 			);
+			
+		$("#schemastyle").change(function() {
+			if($("#schemastyle").val() == "day"){
+				$("#daily").show();
+				$("#weekly").hide();
+			}
+			else{
+				$("#daily").hide();
+				$("#weekly").show();
+			}
+		});	
 });  
 
 </script>
@@ -259,13 +270,108 @@ jQuery(document).ready(function(){
 	See if you where present at the lecture.
 	</div>	
 </div>
+
 <div class="pageoptions">
+	<select id="schemastyle" style="margin-top: 10px; padding: 5px;">
+		<option value="week">Uge skema</option>
+		<option value="day">Dag skema</option>
+		<option value="month">Måneds skema</option>
+	</select>
 	<a href=""><img src="download.png"></a>
 	<a href=""><img src="print.png"></a>
 </div>
 <div class="content">
-<!--Active-->
+<div id="daily" style="display: none">
+	<table style="width: 100%;">
+		<tr>
+			<th colspan="2" class="weeknumberactive">Uge 47</th>
+			<th class="present">Fredag</th>
+		</tr>
+		<tr>
+			<td>8:30</td>
+			<td>10:00</td>		
+		</tr>
+		<tr>
+			<td>10:15</td>
+			<td>11:30</td>
+			<td style="width: 100%">
+				<p class="coursetitle">Teknik 18A</p> 
+				<p class="courselocation">L37.A141</p>
+				<h3>Introduction to Python</h3>
+				<b>Learning objectives</b><br/>
+After today's lectures you will have an understanding of how this semester's teachings and learning process are going to be, and of how the exam will proceed. <br/><br/>
 
+You will be able to use a terminal to control your computer.<br/><br/>
+
+You will have a basic understanding of a python development environment will look like and how to use it (interpreter and editor).<br/><br/>
+
+You will be able to use and talk about strings, conditions, basics about functions. Run a python program from the command line and use the python interpreter. <br/><br/>
+<b>Daily lecture</b><br/>
+The first hour of the lecture, we will go over exercises from last week. Then followed by talking about the command prompt, and around the last hour of the lecture, we will do class assignments.<br/><br/>
+<b>Literature & materials</b><br/>
+<a href="">Introduction slides (all the formal stuff)</a><br/>
+<a href="">Installations</a><br/>
+<a href="">Unix commands and file system</a><br/>
+<a href="">Is Python interpreted or compiled? Yes.</a><br/>
+<a href="">Strings and Character Data in Python</a><br/>
+<a href="">if Statements</a><br/>
+<a href="">Code examples from today</a><br/><br/>
+<b>Exercises</b><br/>
+<a href="">This weeks Exercises</a><br/>
+<a href="">Python Strings and Character Data Quiz</a><br/>
+<a href="">Splitting, Concatenating, and Joining Strings in Python Quiz</a><br/>
+<a href="">Command line Crash Course</a><br/>
+<a href="">Unix commands</a><br/>
+			</td>
+		</tr>
+	</table>
+	<br/><br/>
+	<table style="width: 100%;">
+		<tr>
+			<th colspan="2" class="weeknumber">Uge 48</th>
+			<th>Mandag</th>
+		</tr>
+		<tr>
+			<td>8:30</td>
+			<td>10:00</td>		
+		</tr>
+		<tr>
+			<td>10:15</td>
+			<td>11:30</td>
+			<td style="width: 100%">
+				<p class="coursetitle">Teknik 18A</p> 
+				<p class="courselocation">L37.A141</p>
+				<h3>Introduction to Python</h3>
+				<b>Learning objectives</b><br/>
+After today's lectures you will have an understanding of how this semester's teachings and learning process are going to be, and of how the exam will proceed. <br/><br/>
+
+You will be able to use a terminal to control your computer.<br/><br/>
+
+You will have a basic understanding of a python development environment will look like and how to use it (interpreter and editor).<br/><br/>
+
+You will be able to use and talk about strings, conditions, basics about functions. Run a python program from the command line and use the python interpreter. <br/><br/>
+<b>Daily lecture</b><br/>
+The first hour of the lecture, we will go over exercises from last week. Then followed by talking about the command prompt, and around the last hour of the lecture, we will do class assignments.<br/><br/>
+<b>Literature & materials</b><br/>
+<a href="">Introduction slides (all the formal stuff)</a><br/>
+<a href="">Installations</a><br/>
+<a href="">Unix commands and file system</a><br/>
+<a href="">Is Python interpreted or compiled? Yes.</a><br/>
+<a href="">Strings and Character Data in Python</a><br/>
+<a href="">if Statements</a><br/>
+<a href="">Code examples from today</a><br/><br/>
+<b>Exercises</b><br/>
+<a href="">This weeks Exercises</a><br/>
+<a href="">Python Strings and Character Data Quiz</a><br/>
+<a href="">Splitting, Concatenating, and Joining Strings in Python Quiz</a><br/>
+<a href="">Command line Crash Course</a><br/>
+<a href="">Unix commands</a><br/>
+			</td>
+		</tr>
+	</table>	
+</div>
+<div id="weekly">
+<!--Active-->
 	<table class="weekly">
 		<tr>
 			<th colspan="2" class="weeknumberactive">Uge 47</th>
@@ -283,24 +389,148 @@ jQuery(document).ready(function(){
 				<p class="courselocation">L37.A141</p>
 				<p class="courseteacher">Hardy Alva</p>
 				<p class="coursehomework">
-					<a href=""><img class="check" src="check.png"></a>Pressman ch. 10
+					<a href=""><img class="check" src="minus.png"></a>
+					<a href="">Introduction slides (all the formal stuff)</a><br/>
+					<a href=""><img class="check" src="minus.png"></a>
+					<a href="">Installations</a><br/>
+					<a href=""><img class="check" src="minus.png"></a>
+					<a href="">Unix commands and file system</a><br/>
+					<a href=""><img class="check" src="minus.png"></a>
+					<a href="">Is Python interpreted or compiled? Yes.</a><br/>
+					<a href=""><img class="check" src="minus.png"></a>
+					<a href="">Strings and Character Data in Python</a><br/>
+					<a href=""><img class="check" src="minus.png"></a>
+					<a href="">if Statements</a><br/>
+					<a href=""><img class="check" src="minus.png"></a>
+					<a href="">Code examples from today</a><br/><br/>
+					<b>Exercises</b><br/>
+					<a href=""><img class="check" src="check.png"></a>					
+					<a href="">This weeks Exercises</a><br/>
+					<a href=""><img class="check" src="check.png"></a>					
+					<a href="">Python Strings and Character Data Quiz</a><br/>
+					<a href=""><img class="check" src="minus.png"></a>					
+					<a href="">Splitting, Concatenating, and Joining Strings in Python Quiz</a><br/>
+					<a href=""><img class="check" src="minus.png"></a>					
+					<a href="">Command line Crash Course</a><br/>
+					<a href=""><img class="check" src="check.png"></a>					
+					<a href="">Unix commands</a><br/>	
 				</p>
 				</td>
 			<td rowspan="2" class="notread">
 				<p class="coursetitle">Design 18A</p>
 				<p class="coursehomework">
-					<a href=""><img class="check" src="check.png"></a>Pressman ch. 11
+					<a href=""><img class="check" src="minus.png"></a>
+					<a href="">Introduction slides (all the formal stuff)</a><br/>
+					<a href=""><img class="check" src="check.png"></a>
+					<a href="">Installations</a><br/>
+					<a href=""><img class="check" src="check.png"></a>
+					<a href="">if Statements</a><br/>
+					<a href=""><img class="check" src="minus.png"></a>
+					<a href="">Code examples from today</a><br/><br/>
+					<b>Exercises</b><br/>
+					<a href=""><img class="check" src="check.png"></a>					
+					<a href="">Splitting, Concatenating, and Joining Strings in Python Quiz</a><br/>
+					<a href=""><img class="check" src="minus.png"></a>					
+					<a href="">Command line Crash Course</a><br/>
+					<a href=""><img class="check" src="check.png"></a>					
+					<a href="">Unix commands</a><br/>	
 				</p>
 			</td>
-			<td rowspan="2" class="read"><p class="coursetitle">Teknik 18A</p><p class="coursehomework"><a href=""><img class="check" src="minus.png"></a>Netværkslaget s100-115</p></td>
-			<td rowspan="2" class="notread"><p class="coursetitle">Konstruktion 18A</p><p class="coursehomework"><a href=""><img class="check" src="check.png"></a>Java Threads s10-80</p></td>
+			<td rowspan="2" class="read">
+				<p class="coursetitle">Teknik 18A</p>
+				<p class="courselocation">L37.A141</p>
+				<p class="coursehomework">
+					<a href=""><img class="check" src="check.png"></a>
+					<a href="">Introduction slides (all the formal stuff)</a><br/>
+					<a href=""><img class="check" src="minus.png"></a>
+					<a href="">Installations</a><br/>
+					<a href=""><img class="check" src="check.png"></a>
+					<a href="">Unix commands and file system</a><br/>
+					<a href=""><img class="check" src="check.png"></a>
+					<a href="">Is Python interpreted or compiled? Yes.</a><br/>
+					<a href=""><img class="check" src="check.png"></a>
+					<a href="">Strings and Character Data in Python</a><br/>
+					<a href=""><img class="check" src="minus.png"></a>
+					<a href="">if Statements</a><br/>
+					<a href=""><img class="check" src="minus.png"></a>
+					<a href="">Code examples from today</a><br/><br/>
+					<b>Exercises</b><br/>
+					<a href=""><img class="check" src="minus.png"></a>					
+					<a href="">This weeks Exercises</a><br/>
+					<a href=""><img class="check" src="check.png"></a>					
+					<a href="">Python Strings and Character Data Quiz</a><br/>
+					<a href=""><img class="check" src="check.png"></a>					
+					<a href="">Splitting, Concatenating, and Joining Strings in Python Quiz</a><br/>
+					<a href=""><img class="check" src="check.png"></a>					
+					<a href="">Command line Crash Course</a><br/>
+					<a href=""><img class="check" src="check.png"></a>					
+					<a href="">Unix commands</a><br/>	
+				</p>
+			</td>
+			<td rowspan="2" class="notread">
+				<p class="coursetitle">Konstruktion 18A</p>
+				<p class="coursehomework">
+					<a href=""><img class="check" src="check.png"></a>
+					<a href="">Introduction slides (all the formal stuff)</a><br/>
+					<a href=""><img class="check" src="minus.png"></a>
+					<a href="">Installations</a><br/>
+					<a href=""><img class="check" src="check.png"></a>
+					<a href="">Unix commands and file system</a><br/>
+					<a href=""><img class="check" src="check.png"></a>
+					<a href="">Is Python interpreted or compiled? Yes.</a><br/>
+					<a href=""><img class="check" src="minus.png"></a>
+					<a href="">Strings and Character Data in Python</a><br/>
+					<a href=""><img class="check" src="minus.png"></a>
+					<a href="">if Statements</a><br/>
+					<a href=""><img class="check" src="check.png"></a>
+					<a href="">Code examples from today</a><br/><br/>
+					<b>Exercises</b><br/>
+					<a href=""><img class="check" src="check.png"></a>					
+					<a href="">This weeks Exercises</a><br/>
+					<a href=""><img class="check" src="check.png"></a>					
+					<a href="">Python Strings and Character Data Quiz</a><br/>
+					<a href=""><img class="check" src="check.png"></a>					
+					<a href="">Splitting, Concatenating, and Joining Strings in Python Quiz</a><br/>
+					<a href=""><img class="check" src="check.png"></a>					
+					<a href="">Command line Crash Course</a><br/>
+					<a href=""><img class="check" src="check.png"></a>					
+					<a href="">Unix commands</a><br/>	
+				</p>
+			</td>
 			<td></td>			
 		</tr>
 		<tr>
 			<td>10:15</td>
 			<td>11:30</td>
 			<td>
-				<p class="coursetitle">Teknik 18A</p> <p class="coursehomework"><a href=""><img class="check" src="check.png"></a><a href="https://www.youtube.com/watch?v=kAty4mKczEg" target="_blank">Transportlaget</a><br/><a href=""><img class="check" src="check.png"></a><a href="https://www.youtube.com/watch?v=kAty4mKczEg" target="_blank">Transportlaget 2</a></p>
+				<p class="coursetitle">Teknik 18A</p><p class="courselocation">L37.A141</p>
+				<p class="coursehomework">
+					<a href=""><img class="check" src="check.png"></a>
+					<a href="">Introduction slides (all the formal stuff)</a><br/>
+					<a href=""><img class="check" src="check.png"></a>
+					<a href="">Installations</a><br/>
+					<a href=""><img class="check" src="check.png"></a>
+					<a href="">Unix commands and file system</a><br/>
+					<a href=""><img class="check" src="check.png"></a>
+					<a href="">Is Python interpreted or compiled? Yes.</a><br/>
+					<a href=""><img class="check" src="check.png"></a>
+					<a href="">Strings and Character Data in Python</a><br/>
+					<a href=""><img class="check" src="check.png"></a>
+					<a href="">if Statements</a><br/>
+					<a href=""><img class="check" src="check.png"></a>
+					<a href="">Code examples from today</a><br/><br/>
+					<b>Exercises</b><br/>
+					<a href=""><img class="check" src="check.png"></a>					
+					<a href="">This weeks Exercises</a><br/>
+					<a href=""><img class="check" src="check.png"></a>					
+					<a href="">Python Strings and Character Data Quiz</a><br/>
+					<a href=""><img class="check" src="check.png"></a>					
+					<a href="">Splitting, Concatenating, and Joining Strings in Python Quiz</a><br/>
+					<a href=""><img class="check" src="check.png"></a>					
+					<a href="">Command line Crash Course</a><br/>
+					<a href=""><img class="check" src="check.png"></a>					
+					<a href="">Unix commands</a><br/>					
+				</p>
 			</td>		
 		</tr>
 		<tr>
@@ -439,7 +669,7 @@ jQuery(document).ready(function(){
 			<td></td>
 		</tr>		
 	</table>	
-
+</div>
 </div>
 </body>
 </html>
