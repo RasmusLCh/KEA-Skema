@@ -6,4 +6,5 @@ import proof.concept.modules.modules.MicroService;
 
 @Repository
 public interface MSSetupRepo extends JpaRepository<MicroService, Integer> {
+    public MicroService findByName(String name);
 }

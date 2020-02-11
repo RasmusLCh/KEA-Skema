@@ -1,12 +1,46 @@
 package proof.concept.modules.controllers;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.web.bind.annotation.*;
+import proof.concept.modules.modules.MicroService;
+import proof.concept.modules.services.MSService;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 @RestController
 @RequestMapping("/servicerest/")
 public class MSRestController {
+    private MSService mss;
+    private ResourceLoader rl;
 
+    @Autowired
+    public MSRestController(MSService mss, ResourceLoader rl){
+        this.mss = mss;
+        this.rl = rl;
+    }
+
+    @GetMapping("{servicename}/{restpage}")
+    @ResponseBody
+    public String get_servicename_restpage(@PathVariable String servicename, @PathVariable String restpage) throws IOException {
+        MicroService ms = mss.findMSByName(servicename);
+        if(ms != null){
+            System.out.println("Getting: " + "http://localhost:"+ms.getPort()+"/pages/"+restpage);
+            Resource resource = rl.getResource("http://localhost:"+ms.getPort()+"/pages/"+restpage);
+            BufferedReader br = new BufferedReader(new InputStreamReader(resource.getInputStream(), "UTF-8"));
+            String s= "";
+            while(br.ready()){
+                //System.out.println(br.readLine());
+                s+=br.readLine();
+            }
+            return s;
+        }
+        System.out.println("Service: " + servicename);
+        return "Unknown service";
+    }
     /*
     https://stackoverflow.com/questions/14726082/spring-mvc-rest-service-redirect-forward-proxy
  @RequestMapping("/**")

@@ -13,9 +13,7 @@ public class MicroService {
     @Column(name="port", unique = true)
     private int port;
 
-    public MicroService(){
-        this(null, -1);
-    }
+    public MicroService(){ }
 
     public MicroService(String name, int port){
         this(-1, name, port);

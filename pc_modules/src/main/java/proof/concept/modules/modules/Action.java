@@ -1,12 +1,10 @@
 package proof.concept.modules.modules;
 
-import org.springframework.stereotype.Controller;
-
 import javax.persistence.*;
 
 @Entity(name= "MicroServiceAction")
 @Table(name= "microserviceactions")
-public class MicroServiceAction {
+public class Action {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -19,15 +17,15 @@ public class MicroServiceAction {
     @Column(name = "priority")
     private int priority;
 
-    public MicroServiceAction(){
-        this(null, null, null, -1);
+    public Action(){
+
     }
 
-    public MicroServiceAction(String servicename, String actionname, String rest, int priority){
+    public Action(String servicename, String actionname, String rest, int priority){
         this(-1, servicename, actionname, rest, priority);
     }
 
-    public MicroServiceAction(int id, String servicename, String actionname, String rest, int priority){
+    public Action(int id, String servicename, String actionname, String rest, int priority){
         this.id = id;
         this.servicename = servicename;
         this.actionname = actionname;

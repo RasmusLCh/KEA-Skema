@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Setup MS1</title>
+</head>
+<body>
+<h2>Your about to setup MS1</h2>
+<form action="http://localhost:10000/serviceregistration" method="post">
+    <input type="hidden" name="port" value="10001">
+    <input type="hidden" name="name" value="MS1">
+    <input type="submit" value="manual Install">
+</form>
+<form action="http://localhost:10000/serviceremoval" method="post">
+    <input type="hidden" name="name" value="MS1">
+    <input type="submit" value="Uninstall">
+</form>
+<form action="" method="post">
+    <input type="submit" value="Remove all data">
+</form>
+</body>
+</html>
