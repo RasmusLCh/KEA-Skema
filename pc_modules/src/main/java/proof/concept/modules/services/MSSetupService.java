@@ -5,9 +5,11 @@ import org.springframework.stereotype.Service;
 import proof.concept.modules.modules.MicroService;
 import proof.concept.modules.modules.Action;
 import proof.concept.modules.modules.PageInjection;
+import proof.concept.modules.modules.TopMenuLink;
 import proof.concept.modules.repositories.ActionRepo;
 import proof.concept.modules.repositories.PageInjectionRepo;
 import proof.concept.modules.repositories.MSSetupRepo;
+import proof.concept.modules.repositories.TopMenuLinkRepo;
 
 import java.util.List;
 
@@ -17,12 +19,14 @@ public class MSSetupService {
     MSSetupRepo msrepo;
     ActionRepo actionrepo;
     PageInjectionRepo pageinjectionrepo;
+    TopMenuLinkRepo topmenulinkrepo;
 
     @Autowired
-    public MSSetupService(MSSetupRepo msrepo, ActionRepo actionrepo, PageInjectionRepo pageinjectionrepo){
+    public MSSetupService(MSSetupRepo msrepo, ActionRepo actionrepo, PageInjectionRepo pageinjectionrepo, TopMenuLinkRepo topmenulinkrepo){
         this.msrepo = msrepo;
         this.actionrepo = actionrepo;
         this.pageinjectionrepo = pageinjectionrepo;
+        this.topmenulinkrepo = topmenulinkrepo;
     }
 
     public MicroService serviceregistration(MicroService service){
@@ -47,7 +51,16 @@ public class MSSetupService {
         actionrepo.save(msa);
     }
 
+    public List<TopMenuLink> serviceaddtopmenulink(TopMenuLink link){
+        topmenulinkrepo.save(link);
+        return topmenulinkrepo.findAll();
+    }
+
     public List<MicroService> getAllMS(){
         return msrepo.findAll();
+    }
+
+    public MicroService findByName(String servicename){
+        return msrepo.findByName(servicename);
     }
 }

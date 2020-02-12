@@ -4,32 +4,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import proof.concept.modules.modules.MicroService;
+import proof.concept.modules.modules.TopMenuLink;
 import proof.concept.modules.services.MSService;
+import proof.concept.modules.services.TopMenuLinkService;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 
 @Controller
 @RequestMapping("/service/")
 public class MSController {
     private MSService mss;
+    private TopMenuLinkService menuservice;
     private ResourceLoader rl;
 
     @Autowired
-    public MSController(MSService mss, ResourceLoader rl){
+    public MSController(MSService mss, TopMenuLinkService menuservice, ResourceLoader rl){
         this.mss = mss;
+        this.menuservice = menuservice;
         this.rl = rl;
     }
 
     @GetMapping("{servicename}/{page}")
-    @ResponseBody
-    public String get_servicename_page(@PathVariable String servicename, @PathVariable String page) throws IOException {
+    public String get_servicename_page(@PathVariable String servicename, @PathVariable String page, Model model) throws IOException {
         MicroService ms = mss.findMSByName(servicename);
         if(ms != null){
             System.out.println("Getting: " + "http://localhost:"+ms.getPort()+"/pages/"+page);
@@ -40,9 +42,16 @@ public class MSController {
                 //System.out.println(br.readLine());
                 s+=br.readLine();
             }
-            return s;
+            model.addAttribute("data", s);
         }
-        System.out.println("Service: " + servicename);
-        return "Unknown service";
+        else{
+            model.addAttribute("data", "Unknown error");
+        }
+        return "servicedata";
+    }
+
+    @ModelAttribute("topmenu")
+    public List<TopMenuLink> modelattribute_topmenu(){
+        return menuservice.findAll();
     }
 }

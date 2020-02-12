@@ -9,14 +9,16 @@ public class MicroService {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @Column(name="name", columnDefinition="VARCHAR(50)", unique = true)
-    private String name;
+    private String name = null;
     @Column(name="port", unique = true)
     private int port;
+    @Column(name="enabled")
+    private boolean enabled;
 
     public MicroService(){ }
 
     public MicroService(String name, int port){
-        this(-1, name, port);
+        this(0, name, port);
     }
 
     public MicroService(int id, String name, int port){
@@ -48,4 +50,8 @@ public class MicroService {
     public void setPort(int port) {
         this.port = port;
     }
+
+    public boolean isEnabled(){ return this.enabled; }
+
+    public void setEnabled(boolean enabled){ this.enabled = enabled; }
 }

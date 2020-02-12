@@ -28,8 +28,8 @@ public class MSRestController {
     public String get_servicename_restpage(@PathVariable String servicename, @PathVariable String restpage) throws IOException {
         MicroService ms = mss.findMSByName(servicename);
         if(ms != null){
-            System.out.println("Getting: " + "http://localhost:"+ms.getPort()+"/pages/"+restpage);
-            Resource resource = rl.getResource("http://localhost:"+ms.getPort()+"/pages/"+restpage);
+            System.out.println("Getting: " + "http://localhost:"+ms.getPort()+"/rest/"+restpage);
+            Resource resource = rl.getResource("http://localhost:"+ms.getPort()+"/rest/"+restpage);
             BufferedReader br = new BufferedReader(new InputStreamReader(resource.getInputStream(), "UTF-8"));
             String s= "";
             while(br.ready()){

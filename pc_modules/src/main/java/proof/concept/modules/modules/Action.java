@@ -2,35 +2,39 @@ package proof.concept.modules.modules;
 
 import javax.persistence.*;
 
-@Entity(name= "MicroServiceAction")
-@Table(name= "microserviceactions")
+@Entity(name= "Action")
+@Table(name= "actions")
 public class Action {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @Column(name = "servicename")
-    private String servicename;
     @Column(name = "actionname")
-    private String actionname;
-    @Column(name = "rest")
-    private String rest;
+    private String actionname = null;
+    @Column(name = "callbackurl")
+    private String callbackurl = null;
     @Column(name = "priority")
-    private int priority;
+    private int priority = 50;
+    @Column
+    private int microservice_id;
 
     public Action(){
 
     }
 
-    public Action(String servicename, String actionname, String rest, int priority){
-        this(-1, servicename, actionname, rest, priority);
+    public Action(String actionname, String callbackurl){
+
     }
 
-    public Action(int id, String servicename, String actionname, String rest, int priority){
+    public Action(String actionname, String callbackurl, int priority){
+        this(0, actionname, callbackurl, priority, 0);
+    }
+
+    public Action(int id, String actionname, String callbackurl, int priority, int microservice_id){
         this.id = id;
-        this.servicename = servicename;
         this.actionname = actionname;
-        this.rest = rest;
+        this.callbackurl = callbackurl;
         this.priority = priority;
+        this.microservice_id = microservice_id;
     }
 
     public int getId() {
@@ -41,12 +45,12 @@ public class Action {
         this.id = id;
     }
 
-    public String getServicename() {
-        return servicename;
+    public int getMicroservice_id() {
+        return microservice_id;
     }
 
-    public void setServicename(String servicename) {
-        this.servicename = servicename;
+    public void setMicroservice_id(int microservice_id) {
+        this.microservice_id = microservice_id;
     }
 
     public String getActionname() {
@@ -57,12 +61,12 @@ public class Action {
         this.actionname = actionname;
     }
 
-    public String getRest() {
-        return rest;
+    public String getCallbackurl() {
+        return callbackurl;
     }
 
-    public void setRest(String rest) {
-        this.rest = rest;
+    public void setCallbackurl(String rest) {
+        this.callbackurl = rest;
     }
 
     public int getPriority() {
