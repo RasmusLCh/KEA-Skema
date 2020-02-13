@@ -94,4 +94,9 @@ public class MSSetupController {
         }
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
+//Not tested
+    @GetMapping("serviceexists/{servicename}")
+    public ResponseEntity<MicroService> get_serviceexists(@PathVariable(name = "servicename") String servicename){
+        return new ResponseEntity<>(msss.findByName(servicename), HttpStatus.OK);
+    }
 }

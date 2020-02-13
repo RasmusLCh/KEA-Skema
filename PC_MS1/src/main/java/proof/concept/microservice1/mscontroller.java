@@ -51,7 +51,7 @@ public class mscontroller {
         //Add pageinjection CSS
         json = new JSONObject();
         json.appendField("type", "CSS");
-        json.appendField("page", "/index.html");
+        json.appendField("page", "/index");
         json.appendField("data", "h1 { color: green; }");
         json.appendField("priority", 5);
         entity = new HttpEntity<JSONObject>(json,headers);
@@ -59,7 +59,7 @@ public class mscontroller {
         //Add page injection JS
         json = new JSONObject();
         json.appendField("type", "JS");
-        json.appendField("page", "/index.html");
+        json.appendField("page", "/index");
         json.appendField("data", "$( document ).ready(function() { " +
                 " $( '#item' ).prepend('Hello there, what are you?') ; " +
                 "});");
@@ -69,7 +69,7 @@ public class mscontroller {
         //Add page injection JS - Lets go funky - Not in manueal!!
         json = new JSONObject();
         json.appendField("type", "JS");
-        json.appendField("page", "/index.html");
+        json.appendField("page", "/index");
         json.appendField("data", "setInterval(function(){ " +
                 " $.ajax({" +
                     " method: 'GET', " +

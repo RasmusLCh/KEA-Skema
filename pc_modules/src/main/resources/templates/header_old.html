@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        html { visibility:hidden; }
+    </style>
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            document.getElementsByTagName("html")[0].style.visibility = "visible";
+        });
+    </script>
+    <style th:inline="text" th:each="pageinjection_css: ${pageinjections_css}" th:if="pageinjection_css.data != null">
+        [[${pageinjection_css.data}]]
+    </style>
+</head>
+<body>
+<div>
+    <h3>This is the header!</h3>
+    <div th:each="link: ${topmenu}">
+        <a th:href="'http://'+ ${link.path}" th:text="${link.text}" th:alt="${link.description}"></a>
+    </div>
+</div>

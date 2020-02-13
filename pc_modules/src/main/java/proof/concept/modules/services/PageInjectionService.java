@@ -17,10 +17,16 @@ public class PageInjectionService {
     }
 
     public List<PageInjection> getCSSPageInjection(String page){
+        if(page.equals("/")){
+            page = "/index";
+        }
         return pageinectionrepo.findByPageAndType(page, "CSS");
     }
 
     public List<PageInjection> getJSPageInjection(String page){
+        if(page.equals("/")){
+            page = "/index";
+        }
         return pageinectionrepo.findByPageAndType(page, "JS");
     }
 }

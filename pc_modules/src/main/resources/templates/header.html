@@ -1,28 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
         html { visibility:hidden; }
     </style>
-    <script
-            src="https://code.jquery.com/jquery-3.4.1.min.js"
-            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-            crossorigin="anonymous"></script>
+    <script th:src="@{/js/jquery_3_4_1.js}"></script>
+    <script th:src="@{/js/default.js}"></script>
     <script>
         $(document).ready(function() {
             document.getElementsByTagName("html")[0].style.visibility = "visible";
         });
     </script>
+    <link rel="stylesheet" th:href="@{/css/css.css}" type="text/css">
     <style th:inline="text" th:each="pageinjection_css: ${pageinjections_css}" th:if="pageinjection_css.data != null">
         [[${pageinjection_css.data}]]
     </style>
 </head>
 <body>
-<div>
-    <h3>This is the header!</h3>
+<div class="keatop">
+    <span class="logo">Københavns Erhvervsakademi</span>
+    <span style="float: right">
+		<a href="">For studerende</a>
+		<a href="">For ansatte</a>
+		<a href="">Bibliotek</a>
+		<a href="">Job</a>
+		<a href="">Kontakt</a>
+	</span>
+</div>
+<div class="headermenu">
+    <a href="/" class="kea_orange"><img th:src="@{/images/logo-main-black-single.png}" class="kea_orange"></a>
+
     <div th:each="link: ${topmenu}">
         <a th:href="'http://'+ ${link.path}" th:text="${link.text}" th:alt="${link.description}"></a>
     </div>
+    <div class="headermenu_right">
+        <a href="settngs" id="menu_settings">Settings</a>
+        <a href=""><img th:src="@{/images/dk.png}" style="width: 20px; margin: 0px; padding: 0px;">Dansk</a>
+    </div>
 </div>
+<div class="headersubmenu" id="headersubmenu_settings" style="display: none">
+    <h1>Settings</h1>
+    <h2>General settings</h2>
+    <input type="checkbox"> Use infinit scrollbar til at vise uge planer <span style="color: red"><-- Ikke implementeret i prototype</span>
+    <h2>Course info</h2>
+    <input type="checkbox" id="course_info_showname" checked>Show course name (Bold)<br/>
+    <input type="checkbox" id="course_info_showlocation" checked>Show course location (Italic)<br/>
+    <input type="checkbox" id="course_info_showteacher" checked>Show course teacher name (Underline)<br/>
+    <input type="checkbox" id="course_info_showhomework" checked>Show course homework (Link if source is available)<br/>
+    <h2>Modules</h2>
+    <input type="checkbox" id="module_homework_tracker" checked>
+    <div class="module">
+        <h3><a href="" class="module">Homework tracker</a></h3><br/>
+        Items that are read, are shown as <span style="background: green; height: 20px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.<br/>
+        Items that are not read, and where the data of the course is past is shown as <span style="background: red; height: 20px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.<br/>
+        To mark a lection as read, click on <img class="check" th:src="@{/images/check.png}">.<br/> To unmark click on <img class="check" th:src="@{/images/minus.png}">
+    </div><br/>
+    <input type="checkbox">
+    <div class="module">
+        <h3><a href="" class="module">Class surveys</a></h3><br/>
+        <input type="checkbox" checked> Display survey, if available for lection.<br/>
+        <input type="checkbox"> Display option to create surveys to lection.
+    </div>
+    <br/>
+    <input type="checkbox">
+    <div class="module">
+        <h3><a href="" class="module">Course notes</a></h3><br/>
+        Add notes to each lection / course.
+    </div>
+    <br/>
+    <input type="checkbox">
+    <div class="module">
+        <h3><a href="" class="module">Course protocol</a></h3><br/>
+        See if you where present at the lecture.
+    </div>
+</div>
+<div class="content">

@@ -2,8 +2,8 @@ package proof.concept.modules.modules;
 
 import javax.persistence.*;
 
-@Entity(name= "topmenulink")
-@Table(name= "TopMenuLink")
+@Entity(name= "TopMenuLink")
+@Table(name= "topmenulinks")
 public class TopMenuLink {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
