@@ -1,2 +1,9 @@
 <h2>MS1</h2>
 <p>This is the MS1 test page!</p>
+
+<p>This is called through the MSServicePagesController in the microservice.</p>
+
+<h3>Resource test</h3>
+<p>Test of resource handling, Here the picture to the right should be added to the spring project (through upload) - the left is a direct access and wont work</p>
+<img th:src="@{/smiley.jpg}">
+<img th:src="@{/serviceresource/MS1/smiley.jpg}">

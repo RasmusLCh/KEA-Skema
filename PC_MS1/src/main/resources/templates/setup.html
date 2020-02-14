@@ -11,7 +11,7 @@
         function serviceregistration(){
             alert("Start");
             $.ajax({
-                url: 'http://localhost:10000/serviceregistration',
+                url: 'http://localhost:7500/serviceregistration',
                 type: 'post',
                 contentType: 'application/json',
                 data: JSON.stringify({
@@ -28,7 +28,7 @@
         function serviceremoval(){
             alert("Start");
             $.ajax({
-                url: 'http://localhost:10000/serviceremoval',
+                url: 'http://localhost:7500/serviceremoval',
                 type: 'post',
                 contentType: 'application/json',
                 data: JSON.stringify({
@@ -43,11 +43,11 @@
         function serviceaddtopmenulink(){
             alert("Start");
             $.ajax({
-                url: 'http://localhost:10000/serviceaddtopmenulink/MS1',
+                url: 'http://localhost:7500/serviceaddtopmenulink/MS1',
                 type: 'post',
                 contentType: 'application/json',
                 data: JSON.stringify({
-                    path: "localhost:10000/service/MS1/test",
+                    path: "localhost:7500/servicepages/MS1/test",
                     text: "MS1",
                     description: "This is my description"
                 }),
@@ -60,11 +60,11 @@
         function serviceaddaction(){
             alert("Start");
             $.ajax({
-                url: 'http://localhost:10000/serviceaddaction/MS1',
+                url: 'http://localhost:7500/serviceaddaction/MS1',
                 type: 'post',
                 contentType: 'application/json',
                 data: JSON.stringify({
-                    callbackurl: "http://localhost:10001/pages/action",
+                    callbackurl: "http://localhost:10001/servicepages/MS1/action",
                     actionname: "cron"
                 }),
                 success: function() {
@@ -76,12 +76,12 @@
         function serviceaddpageinjectionCSS(){
             alert("Start");
             $.ajax({
-                url: 'http://localhost:10000/serviceaddpageinjection/MS1',
+                url: 'http://localhost:7500/serviceaddpageinjection/MS1',
                 type: 'post',
                 contentType: 'application/json',
                 data: JSON.stringify({
                     type: "CSS",
-                    page: "/index.html",
+                    page: "/index",
                     data: "h1 { color: green; }",
                     priority: 5
                 }),
@@ -94,12 +94,12 @@
         function serviceaddpageinjectionJS(){
             alert("Start");
             $.ajax({
-                url: 'http://localhost:10000/serviceaddpageinjection/MS1',
+                url: 'http://localhost:7500/serviceaddpageinjection/MS1',
                 type: 'post',
                 contentType: 'application/json',
                 data: JSON.stringify({
                     type: "JS",
-                    page: "/index.html",
+                    page: "/index",
                     data: "$( document ).ready(function() { " +
                         " $( '#item' ).prepend('Hello there, what are you?') ; " +
                         "});",
@@ -107,6 +107,18 @@
                 }),
                 success: function() {
                     alert("serviceaddpageinjection JS done!");
+                }
+            });
+        }
+
+        function serviceexists(){
+            alert("Start");
+            $.ajax({
+                url: 'http://localhost:7500/serviceexists/MS1',
+                type: 'get',
+                dataType: 'JSON',
+                success: function(data) {
+                    alert("id: " + data.id + ", name: " + data.name + ", port: " + data.port + " - If id is 0, then the service doesnt exists!");
                 }
             });
         }
@@ -127,48 +139,25 @@
 <body>
 <h2>Your about to setup MS1</h2>
 <h3>Manual</h3>
-<p>Each button click, calls the appropriate page on the main service - with default test data. - This is done with ajax calls.</p>
+<p>Each button click, calls the appropriate page on the main service - with default test data. - This is done with ajax calls in javascript.</p>
 <button onclick="javascript: serviceregistration()">serviceregistration</button>
 <button onclick="javascript: serviceremoval()">serviceremoval</button>
 <button onclick="javascript: serviceaddtopmenulink()">serviceaddtopmenulink</button>
 <button onclick="javascript: serviceaddaction()">serviceaddaction</button>
 <button onclick="javascript: serviceaddpageinjectionCSS()">serviceaddpageinjection CSS</button>
 <button onclick="javascript: serviceaddpageinjectionJS()">serviceaddpageinjection JS</button>
+<button onclick="javascript: serviceexists()">Check if MS1 microservice is already installed</button>
+<form enctype="multipart/form-data" method="post" action="http://localhost:7500/serviceaddfileresource/MS1">
+    <input type="file" name="multipartfile">
+    <input type="submit" value="Upload">
+</form>
+
+<p>Note: After uploading a file, visit localhost:7500/serviceresource/MS1/{filename} so if you upload 1.png visit localhost:7500/serviceresource/MS1/1.png</p>
+
 <hr/>
 <h3>Automatic</h3>
-<p>All the default test data settings are send to the main service. This is done with a server side call.</p>
+<p>All the default test data settings are send to the main service. This is done with a server side call. Beside the above, this also adds a some JS that uses the microservice restcontroller, to change the color of p's on the /index page.</p>
 
 <button onclick="javascript: setupall()" style="padding: 30px; font-size: 50px">Setup MS1 (all settings)</button>
-<!--
-<br/>
-<br/>
-<hr/>
-
-<form action="http://localhost:10000/serviceregistration" method="post">
-    <input type="hidden" name="port" value="10001">
-    <input type="hidden" name="name" value="MS1">
-    <input type="submit" value="manual Install">
-</form>
-<form action="http://localhost:10000/serviceremoval" method="post">
-    <input type="hidden" name="name" value="MS1">
-    <input type="submit" value="Uninstall">
-</form>
-<form action="http://localhost:10000/serviceaddtopmenulink" method="post">
-    <input type="hidden" name="path" value="localhost:10000/service/MS1/test">
-    <input type="hidden" name="text" value="MS1">
-    <input type="hidden" name="description" value="MS1">
-    <input type="submit" value="Add link">
-</form>
-<form action="http://localhost:10000/serviceaddaction" method="post">
-    <input type="hidden" name="callbackurl" value="http://localhost:10001/pages/action">
-    <input type="hidden" name="priority" value="10">
-    <input type="hidden" name="actionname" value="cron">
-    <input type="hidden" name="servicename" value="MS1">
-    <input type="submit" value="Add action">
-</form>
-<form action="" method="post">
-    <input type="submit" value="Remove all data">
-</form>
--->
 </body>
 </html>
