@@ -12,19 +12,26 @@ import java.util.List;
 @Service
 public class MSSetupService {
 
-    MSSetupRepo msrepo;
-    ActionRepo actionrepo;
-    PageInjectionRepo pageinjectionrepo;
-    TopMenuLinkRepo topmenulinkrepo;
-    FileResourceRepo fileresourcerepo;
+    private MicroServiceRepo msrepo;
+    private ActionRepo actionrepo;
+    private PageInjectionRepo pageinjectionrepo;
+    private TopMenuLinkRepo topmenulinkrepo;
+    private FileResourceRepo fileresourcerepo;
+    private MicroServiceOptionRepo microserviceoptionrepo;
 
     @Autowired
-    public MSSetupService(MSSetupRepo msrepo, ActionRepo actionrepo, PageInjectionRepo pageinjectionrepo, TopMenuLinkRepo topmenulinkrepo, FileResourceRepo fileresourcerepo){
+    public MSSetupService(MicroServiceRepo msrepo,
+                          ActionRepo actionrepo,
+                          PageInjectionRepo pageinjectionrepo,
+                          TopMenuLinkRepo topmenulinkrepo,
+                          FileResourceRepo fileresourcerepo,
+                          MicroServiceOptionRepo microserviceoptionrepo){
         this.msrepo = msrepo;
         this.actionrepo = actionrepo;
         this.pageinjectionrepo = pageinjectionrepo;
         this.topmenulinkrepo = topmenulinkrepo;
         this.fileresourcerepo = fileresourcerepo;
+        this.microserviceoptionrepo = microserviceoptionrepo;
     }
 
     public MicroService serviceregistration(MicroService service){
@@ -49,9 +56,12 @@ public class MSSetupService {
         actionrepo.save(msa);
     }
 
-    public List<TopMenuLink> serviceaddtopmenulink(TopMenuLink link){
+    public void serviceaddtopmenulink(TopMenuLink link){
         topmenulinkrepo.save(link);
-        return topmenulinkrepo.findAll();
+    }
+
+    public void serviceaddmicroserviceoption(MicroServiceOption microserviceoption){
+        microserviceoptionrepo.save(microserviceoption);
     }
 
     public List<MicroService> getAllMS(){
@@ -71,8 +81,8 @@ public class MSSetupService {
             fileresource.setType(splitter[0]);
             fileresource.setExtension(splitter[1]);
             fileresource.setData(bytes);
-            fileresource.setMicroservice_id(ms.getId());
-            System.out.println(fileresource.getFilename() + " " + fileresource.getType() + " " + fileresource.getExtension() + " " + fileresource.getMicroservice_id());
+            fileresource.setMicroserviceId(ms.getId());
+            System.out.println(fileresource.getFilename() + " " + fileresource.getType() + " " + fileresource.getExtension() + " " + fileresource.getMicroserviceId());
             fileresourcerepo.save(fileresource);
         } catch (IOException e) {
             e.printStackTrace();

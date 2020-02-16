@@ -17,8 +17,8 @@ public class TopMenuLinkService {
         this.repo = repo;
     }
 
-    public List<TopMenuLink> findAll(){
-        List<TopMenuLink> links = repo.findAll();
+    public List<TopMenuLink> findAll(String language){
+        List<TopMenuLink> links = repo.findAllByLanguageOrderByPriority(language);
         if(links == null){
             links = new ArrayList<>();
         }

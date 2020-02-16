@@ -1,10 +1,17 @@
+/* General CSS: Start */
 body{
 	margin: 0px;
 	padding: 0px;
-	font-family: "Helvetica Neue Condensed",sans-serif;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-size: 16px;
+	line-height: 1.6;
+	color: #233249;
+	text-rendering: optimizeLegibility;
+	box-sizing: border-box;
 }
+
 table, th, td {
-  border: 1px solid black;
+	border: 1px solid black;
 }
 table{
 	border-collapse: collapse;
@@ -19,40 +26,71 @@ td.noborder{
 hr{
 	border: 1px dotted black;
 }
-table.weekly{
-	width: 1000px;
-	margin-bottom: 30px;
+
+img{
+	vertical-align: middle;
 }
 
-img.check{
-	height: 12px;
-	padding-right: 3px;
+.kea_orange{
+	background-color: #ea5045;
 }
-p.coursetitle{
+
+.nomargin
+{
+	margin: 0px;
+}
+
+.nopadding{
+	padding: 0px;
+}
+/* General CSS: End */
+
+/* Header CSS: Start */
+div.header{
+	display: block;
+	margin: 0px;
+	padding: 0px;
+}
+
+/*+++ Header Navigation bar: Start */
+div.header_nav{
+	color: #234165;
+	background-color: #c8d0d8;
+	line-height: 1.6;
 	font-weight: bold;
-	margin: 0px;
-	padding: 0px;
+	text-decoration: none;
+	font-family: "Helvetica Neue Condensed",sans-serif;
+	font-weight: bold;
+	font-size: 16px;
+	letter-spacing: 0.5px;
 }
 
-p.courselocation{
-	font-weight: none;
-	font-style: italic;
-	margin: 0px;
-	padding: 0px;
+div.header_nav-lg{
+	padding-left: 30px;
+	padding-right: 15px;
 }
 
-p.courseteacher{
-	font-weight: none;
-	text-decoration: underline;
-	margin: 0px;
-	padding: 0px;
+div.header_nav-admin{
+	background-color: #ea5045;
+	padding: 10px;
 }
 
-p.coursehomework{
-	font-weight: none;
-	margin: 0px;
-	padding: 0px;
+div.header_nav a,div.header_nav a:visited,div.header_nav a:link{
+	color: #234165;
+	text-decoration: none;
+    padding-left: 15px;
 }
+
+div.header_nav a:hover{
+	color: #ea5045;
+	text-decoration: none;
+}
+
+
+
+/*+++ Header Navigation bar: Start */
+
+/*+++ Header menu bar: Start */
 
 div.headermenu{
 	border-bottom: 1px solid silver;
@@ -61,74 +99,91 @@ div.headermenu{
 	margin: 0px;
 	display: flex;
 	flex-direction: row;
+	align-items: stretch;
+	justify-content: center;
+	border: 0px;
+}
+
+div.headermenu_nav{
+	display: flex;
 	align-items: center;
+	border: 0px;
+	margin: 0px;
+	padding: 0px;
 }
 
-div.headermenu a{
-	padding: 20px;
+
+img.headermenu_logo-lg{
+	height: 45px;
+	padding: 0px;
+	margin: 0px;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
-div.headermenu_right{
- 	height: 100%;
+div.headermenu a,
+div.headermenu a:visited,
+div.headermenu a:link{
+	color: white;
+	vertical-align: center;
+	font-weight: bold;
+	text-decoration: none;
+	font-family: "Helvetica Neue Condensed",sans-serif;
+	font-weight: bold;
+	font-size: 20px;
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+div.headermenu a:hover{
+	color: #ea5045
+}
+#menu_language_wrapper{
+	background-color: white;
+	display: flex;
+	align-items: center;
+	border: 0px;
+	margin: 0px;
 	margin-left: auto;
+	padding: 0px;
 }
 
-a.headermenu_language{
-	height: 100%; 
-	background-color: white; 
-	color: orange !important;
-	padding: 0px;
-	margin: 0px;
+#menu_language{
+	background-color: white;
+	color: #ea5045; !important;
+	margin-left: auto;
+	text-transform: uppercase;
 }
-span.headermenu_user{
-	height: 100%; 
-	background-color: orange; 
+
+#menu_settings_wrapper{
+	background-color: #ea5045;
+	display: flex;
+	align-items: center;
+	border: 0px;
+	margin: 0px;
+	padding: 0px;
+}
+
+#menu_settings{
+	background-color: #ea5045;
 	color: black;
-	padding: 0px;
-	margin: 0px;
 }
+/*+++ Header menu bar: End */
+/* Header CSS: End */
 
-span.headermenu_usersettings{
-	display: none;
-}
-
+/* Header Submenu CSS: Start */
 div.headersubmenu{
 	margin: 0px auto;
 	width: 1000px;
 	border-left: 1px solid silver;
 	border-right: 1px solid silver;
 	border-bottom: 1px solid silver;
-	background: #233249;
 	padding: 5px;
 	color: white;
-}
-div.content{
-	margin: 0px auto;
-	width: 1000px;
-	margin-top: 15px;
-	padding: 0px;
-}
-th.weeknumberactive{
-	background: lightgray;
-}
-
-th.weeknumber{
-}
-
-
-th.past{
-}
-
-th.present{
-	background: lightgray;
-}
-
-td.notread{
-	background: red;
-}
-
-td.read{
-	background: green;
+	border-left: 1px solid #233249;
+	border-right: 1px solid #233249;
+	border-bottom: 1px solid #233249;
+	color: black;
 }
 
 div.headersubmenu h2{
@@ -154,88 +209,26 @@ div.headersubmenu input[type=checkbox]{
 	margin-top: 5px;
 }
 
-div.keatop{
-	 background-color: #c8d0d8;
-	 padding: 10px;
- }
-
-div.keatop-admin{
-	background-color: #ea5045;
-	padding: 10px;
-}
-
-div.keatop a,div.keatop a:visited,div.keatop a:link{
-	color: #234165;
-	font-weight: bold;
-	text-decoration: none;
-	font-family: "Helvetica Neue Condensed",sans-serif;
-	font-weight: bold;
-	font-size: 16px;
-	margin-right: 10px;
-	margin-left: 10px;
-}
-
-div.keatop a:hover{
-	color: #ea5045
-}
-
-div.keatop span.logo{
-	color: #234165;
-	font-weight: bold;
-	font-size: 16px;
-	font-family: "Helvetica Neue Condensed",sans-serif;
-	text-transform: uppercase;
-	font-weight: bold;
-}
-
-div.headermenu a,div.headermenu a:visited,div.headermenu a:link{
-	color: white;
-	vertical-align: center;
-	font-weight: bold;
-	text-decoration: none;
-	font-family: "Helvetica Neue Condensed",sans-serif;
-	font-weight: bold;
-	font-size: 20px;
-
-}
-
-div.headermenu a:hover{
-	color: #ea5045
-}
-
-
 a.module,a.module:visited,a.module:link{
 	margin: 0px;
 	padding: 0px;
+	color: black;
+	text-decoration: none;
 }
+/* Header Submenu CSS: End */
 
-.kea_orange{
-	background-color: #ea5045;
-}
 
-.nomargin
-{
-	margin: 0px;
-}
-
-.nopadding{
+/* Content CSS: Start*/
+div.content{
+	margin: 0px auto;
+	width: 1000px;
+	margin-top: 15px;
 	padding: 0px;
 }
 
-div.headermenu img{
-padding-left: 10px; padding-right: 10px;
-}
-
-a, a:visited, a:link{
-	color: white;
-	text-decoration: underline;
-}
-
-a:hover{
-	color: #ea5045
-}
-
-div.content a, div.content a:visited, div.content a:link{
+div.content a,
+div.content a:visited,
+div.content a:link{
 	color: black;
 	text-decoration: underline;
 }
@@ -244,14 +237,72 @@ div.content a:hover{
 	color: #ea5045
 }
 
-div.pageoptions{
-	margin: 0px auto;
+/* Content CSS: End */
+
+
+
+table.weekly{
 	width: 1000px;
-	padding-bottom: 70px;
+	margin-bottom: 30px;
 }
 
-div.pageoptions img{
-	height: 30px;
-	float: right;
-	padding: 10px;
+img.check{
+	height: 12px;
+	padding-right: 3px;
 }
+p.coursetitle{
+	font-weight: bold;
+	margin: 0px;
+	padding: 0px;
+}
+
+p.courselocation{
+	font-weight: normal;
+	font-style: italic;
+	margin: 0px;
+	padding: 0px;
+}
+
+p.courseteacher{
+	font-weight: normal;
+	text-decoration: underline;
+	margin: 0px;
+	padding: 0px;
+}
+
+p.coursehomework{
+	font-weight: normal;
+	margin: 0px;
+	padding: 0px;
+}
+
+
+
+th.weeknumberactive{
+	background: lightgray;
+}
+
+th.weeknumber{
+}
+
+
+th.past{
+}
+
+th.present{
+	background: lightgray;
+}
+
+td.notread{
+	background: red;
+}
+
+td.read{
+	background: green;
+}
+
+
+
+
+
+

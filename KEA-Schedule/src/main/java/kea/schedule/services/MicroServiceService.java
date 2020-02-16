@@ -4,20 +4,22 @@ import kea.schedule.modules.FileResource;
 import kea.schedule.modules.MicroService;
 import kea.schedule.repositories.ActionRepo;
 import kea.schedule.repositories.FileResourceRepo;
-import kea.schedule.repositories.MSSetupRepo;
+import kea.schedule.repositories.MicroServiceRepo;
 import kea.schedule.repositories.PageInjectionRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class MSService {
-    MSSetupRepo msrepo;
+public class MicroServiceService {
+    MicroServiceRepo msrepo;
     ActionRepo actionrepo;
     PageInjectionRepo pageinjectionrepo;
     FileResourceRepo fileresourcerepo;
 
     @Autowired
-    public MSService(MSSetupRepo msrepo, ActionRepo actionrepo, PageInjectionRepo pageinjectionrepo, FileResourceRepo fileresourcerepo){
+    public MicroServiceService(MicroServiceRepo msrepo, ActionRepo actionrepo, PageInjectionRepo pageinjectionrepo, FileResourceRepo fileresourcerepo){
         this.msrepo = msrepo;
         this.actionrepo = actionrepo;
         this.pageinjectionrepo = pageinjectionrepo;
@@ -33,8 +35,12 @@ public class MSService {
         System.out.println("1 " + filename);
         if(ms != null){
             System.out.println("2 " + ms.getId());
-            return fileresourcerepo.findByFilenameAndMicroserviceid(filename, ms.getId());
+            return fileresourcerepo.findByFilenameAndMicroserviceId(filename, ms.getId());
         }
         return null;
+    }
+
+    public List<MicroService> findAll(){
+        return msrepo.findAll();
     }
 }

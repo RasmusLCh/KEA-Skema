@@ -1,42 +1,77 @@
 package kea.schedule.controllers;
 
+import kea.schedule.modules.MicroService;
 import kea.schedule.modules.PageInjection;
 import kea.schedule.modules.TopMenuLink;
+import kea.schedule.services.LangService;
+import kea.schedule.services.MicroServiceService;
 import kea.schedule.services.PageInjectionService;
 import kea.schedule.services.TopMenuLinkService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.util.List;
 
 @Controller
 @RequestMapping("/")
 public class RootController {
-    @Autowired
-    private ResourceLoader resourceLoader;
-
-    @Autowired
     private PageInjectionService pageinjectionservice;
-    @Autowired
     private TopMenuLinkService topmenuservice;
+    private LangService langservice;
+    private MicroServiceService msservice;
 
-
+    @Autowired
+    public RootController(PageInjectionService pageinjectionservice, TopMenuLinkService topmenuservice, LangService langservice, MicroServiceService msservice){
+        this.pageinjectionservice = pageinjectionservice;
+        this.topmenuservice = topmenuservice;
+        this.langservice = langservice;
+        this.msservice = msservice;
+    }
 
     @GetMapping({"index", ""})
+    public String get_root(Model model, HttpServletRequest hsr){
+        if(getLanguage(hsr).equalsIgnoreCase("dk")){
+            return "redirect:/index.dk";
+        }
+        return "redirect:/index.eng";
+    }
+
+
+
+    @GetMapping({"index.eng", "index.dk"})
     public String get_index(Model model) throws IOException {
         return "index";
     }
 
+    @GetMapping("settings.eng")
+    public String get_sessing_eng(Model model){
+        model.addAttribute("microservices", msservice.findAll());
+        System.out.println("Services = " + msservice.findAll().size());
+
+        return "settings_eng";
+    }
+
+    @GetMapping("settings.dk")
+    public String get_sessing_dk(Model model){
+        return "settings_dk";
+    }
+
+    @PostMapping("setLanguage")
+    public String post_setLanguage(@RequestParam("page") String page, @RequestParam("language") String language, HttpSession session){
+        System.out.println("Lang " + language);
+        langservice.setLanguage(language, session);
+        page = langservice.switchPageLanguage(page, language);
+        return "redirect:"+page;
+    }
+
     @ModelAttribute("topmenu")
-    private List<TopMenuLink> getTopMenuLink(){
-        return topmenuservice.findAll();
+    private List<TopMenuLink> getTopMenuLink(HttpServletRequest hsr){
+        return topmenuservice.findAll(getLanguage(hsr));
     }
 
     @ModelAttribute("pageinjections_js")
@@ -60,4 +95,20 @@ public class RootController {
         }
         return pi;
     }
+
+    @ModelAttribute("language")
+    public String getLanguage(HttpServletRequest hsr){
+        return langservice.getUserLanguage(hsr.getSession());
+    }
+
+    @ModelAttribute("alternativelanguage")
+    public String getAlternativeLanguage(HttpServletRequest hsr) {
+        return langservice.getUserAlternativeLanguage(hsr.getSession());
+    }
+
+    @ModelAttribute("page")
+    private String setPage(HttpServletRequest hsr){
+        return hsr.getRequestURI();
+    }
+
 }

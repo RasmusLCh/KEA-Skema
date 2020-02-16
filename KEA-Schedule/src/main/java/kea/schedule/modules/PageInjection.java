@@ -17,7 +17,7 @@ public class PageInjection {
     @Column
     private int priority = 50;
     @Column
-    private int microserviceid;
+    private int microserviceId;
 
     public PageInjection(){
 
@@ -31,13 +31,13 @@ public class PageInjection {
         this(0, type, page, data, priority, 0);
     }
 
-    public PageInjection(int id, String type, String page, String data, int priority, int microservice_id){
+    public PageInjection(int id, String type, String page, String data, int priority, int microserviceId){
         this.id = id;
         this.type = type;
         this.page = page;
         this.data = data;
         this.priority = priority;
-        this.microserviceid = microservice_id;
+        this.microserviceId = microserviceId;
     }
 
     public int getId() {
@@ -84,11 +84,11 @@ public class PageInjection {
         this.priority = priority;
     }
 
-    public int getMicroserviceid() {
-        return microserviceid;
+    public int getMicroserviceId() {
+        return microserviceId;
     }
 
     public void setMicroserviceid(int microserviceid) {
-        this.microserviceid = microserviceid;
+        this.microserviceId = microserviceId;
     }
 }

@@ -14,16 +14,30 @@ import java.util.Enumeration;
 @Controller
 @RequestMapping("/servicepages/MS1/")
 public class MSServicePagesController {
-    @GetMapping("test")
+    @GetMapping({"test"})
     public String get_test(){
-        return "test";
+        return "test_eng";
+    }
+
+    @GetMapping("test.dk")
+    public String get_action_dk(){
+        System.out.println("dk");
+        return "test_dk";
+    }
+
+    @GetMapping("test.eng")
+    public String get_action_eng(){
+        System.out.println("uh");
+        return "test_eng";
     }
 
     @GetMapping("action")
     public String get_action(){
         System.out.println("action");
-        return "test";
+        return "test_eng";
     }
+
+
 
     @PostMapping("action")
     public ResponseEntity post_action(@RequestBody JSONObject json, HttpServletRequest hsr){

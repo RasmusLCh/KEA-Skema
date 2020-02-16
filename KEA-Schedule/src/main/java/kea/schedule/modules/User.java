@@ -10,4 +10,6 @@ public class User {
     private int id;
     @Column
     private String identifier; //This is a unique user identifier
+    @Column
+    private String language; //Default language for user
 }

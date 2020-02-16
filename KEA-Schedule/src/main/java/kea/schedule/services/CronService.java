@@ -15,7 +15,7 @@ public class CronService {
     }
 
 
-    @Scheduled(fixedDelay = 2000)
+    @Scheduled(fixedDelay = 30000)
     public void fixedDelayTask() {
         System.out.println("Lets do an action!");
         actionservice.doAction("cron", null);

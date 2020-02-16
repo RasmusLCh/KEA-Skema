@@ -53,16 +53,27 @@ public class MSSetupController {
         HttpEntity<?> entity;
         JSONObject json;
         //Setup the service
+        System.out.println("Add the service");
         json = new JSONObject();
         json.appendField("name", "MS1");
         json.appendField("port", 10001);
         json.appendField("enabled", false);
+        json.appendField("description", "this is a description of the MS1 service...");
         entity = new HttpEntity<JSONObject>(json,headers);
         restTemplate.exchange("http://localhost:7500/serviceregistration", HttpMethod.POST, entity, String.class);
         //Add topmenulink
         json = new JSONObject();
-        json.appendField("path", "localhost:7500/servicepages/MS1/test");
-        json.appendField("text", "MS1");
+        json.appendField("path", "https://localhost/servicepages/MS1/test.eng");
+        json.appendField("text", "MS1_ENG");
+        json.appendField("language", "eng");
+        json.appendField("description", "This is my description");
+        entity = new HttpEntity<JSONObject>(json,headers);
+        restTemplate.exchange("http://localhost:7500/serviceaddtopmenulink/MS1", HttpMethod.POST, entity, String.class);
+        //Add topmenulink
+        json = new JSONObject();
+        json.appendField("path", "https://localhost/servicepages/MS1/test.dk");
+        json.appendField("text", "MS1_DK");
+        json.appendField("language", "dk");
         json.appendField("description", "This is my description");
         entity = new HttpEntity<JSONObject>(json,headers);
         restTemplate.exchange("http://localhost:7500/serviceaddtopmenulink/MS1", HttpMethod.POST, entity, String.class);
@@ -107,10 +118,17 @@ public class MSSetupController {
         json.appendField("priority", 5);
         entity = new HttpEntity<JSONObject>(json,headers);
         restTemplate.exchange("http://localhost:7500/serviceaddpageinjection/MS1", HttpMethod.POST, entity, String.class);
+
+
+        //Add microserviceoption
+
+        json = new JSONObject();
+        json.appendField("variableName", "ms1_test");
+        json.appendField("description", "This is the description");
+        entity = new HttpEntity<JSONObject>(json,headers);
+        restTemplate.exchange("http://localhost:7500/serviceaddmicroserviceoption/MS1", HttpMethod.POST, entity, String.class);
+
         //Lets upload our smiley file
-
-
-
         File file = null;
         try {
             Resource res = rl.getResource("classpath:static/smiley.jpg");

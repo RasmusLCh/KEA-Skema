@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    /*
     $("#menu_settings").click(function(event){
         if($("#headersubmenu_settings").is(':visible')){
             $('#headersubmenu_settings').hide();
@@ -12,7 +13,7 @@ $(document).ready(function() {
     $("#menu_settings").click(function(){
         return false;
     });
-
+*/
     $("#course_info_showname").click(function(){
         if($("#course_info_showname").prop("checked")){
             $('p.coursetitle').show();

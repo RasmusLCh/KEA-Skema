@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MSSetupRepo extends JpaRepository<MicroService, Integer> {
+public interface MicroServiceRepo extends JpaRepository<MicroService, Integer> {
     public MicroService findByName(String name);
 }

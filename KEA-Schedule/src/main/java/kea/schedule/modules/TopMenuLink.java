@@ -14,27 +14,30 @@ public class TopMenuLink {
     private String text = null;
     @Column
     private String description = null;
+    @Column(name = "language")
+    private String language = "eng";
     @Column
     private int priority = 50;
     @Column
-    private int microserviceid;
+    private int microserviceId;
     public TopMenuLink(){}
 
     public TopMenuLink(String path, String text, String description, int priority){
         this(path, text, description, priority,0);
     }
 
-    public TopMenuLink(String path, String text, String description, int priority, int microserviceid){
-        this(0, path, text, description, priority, microserviceid);
+    public TopMenuLink(String path, String text, String description, int priority, int microserviceId){
+        this(0, path, text, description, "eng", priority, microserviceId);
     }
 
-    public TopMenuLink(int id, String path, String text, String description, int priority, int microserviceid){
+    public TopMenuLink(int id, String path, String text, String description, String language, int priority, int microserviceId){
         this.id = id;
         this.path = path;
         this.text = text;
         this.description = description;
+        this.language = language;
         this.priority = priority;
-        this.microserviceid = microserviceid;
+        this.microserviceId = microserviceId;
     }
 
     public int getId() {
@@ -77,11 +80,19 @@ public class TopMenuLink {
         this.priority = priority;
     }
 
-    public int getMicroserviceid() {
-        return microserviceid;
+    public int getMicroserviceId() {
+        return microserviceId;
     }
 
-    public void setMicroserviceid(int microserviceid) {
-        this.microserviceid = microserviceid;
+    public void setMicroserviceId(int microserviceId) {
+        this.microserviceId = microserviceId;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 }

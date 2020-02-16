@@ -1,6 +1,8 @@
 package kea.schedule.modules;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name= "MicroService")
 @Table(name= "microservices")
@@ -12,8 +14,18 @@ public class MicroService {
     private String name = null;
     @Column(name="port", unique = true)
     private int port;
+    @Column
+    private float version = 0f;
+    @Column
+    private String description = null;
+    @Column
+    //This refered to if the service should be required for users or not
+    private boolean userRequired;
     @Column(name="enabled")
-    private boolean enabled;
+    private boolean enabled = false;
+    //If the microservice requires another microservice, an id for the microservice should be specified.
+    @Column
+    private int dependencyMicroserviceId;
 
     public MicroService(){ }
 
@@ -54,4 +66,36 @@ public class MicroService {
     public boolean isEnabled(){ return this.enabled; }
 
     public void setEnabled(boolean enabled){ this.enabled = enabled; }
+
+    public float getVersion() {
+        return version;
+    }
+
+    public void setVersion(float version) {
+        this.version = version;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public boolean isUserRequired() {
+        return userRequired;
+    }
+
+    public void setUserRequired(boolean userRequired) {
+        this.userRequired = userRequired;
+    }
+
+    public int getDependencyMicroserviceId() {
+        return dependencyMicroserviceId;
+    }
+
+    public void setDependencyMicroserviceId(int dependencyMicroserviceId) {
+        this.dependencyMicroserviceId = dependencyMicroserviceId;
+    }
 }

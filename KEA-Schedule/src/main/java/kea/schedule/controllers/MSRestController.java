@@ -1,12 +1,15 @@
 package kea.schedule.controllers;
 
 import kea.schedule.modules.MicroService;
-import kea.schedule.services.MSService;
+import kea.schedule.services.LangService;
+import kea.schedule.services.MicroServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -14,13 +17,15 @@ import java.io.InputStreamReader;
 @RestController
 @RequestMapping("/servicerest/")
 public class MSRestController {
-    private MSService mss;
+    private MicroServiceService mss;
     private ResourceLoader rl;
+    private LangService langservice;
 
     @Autowired
-    public MSRestController(MSService mss, ResourceLoader rl){
+    public MSRestController(MicroServiceService mss, ResourceLoader rl, LangService langservice){
         this.mss = mss;
         this.rl = rl;
+        this.langservice = langservice;
     }
 
     @GetMapping("{servicename}/{restpage}")
@@ -73,4 +78,19 @@ public ResponseEntity mirrorRest(@RequestBody(required = false) String body,
     }
 }
     * */
+
+    @ModelAttribute("language")
+    public String getLanguage(HttpSession session){
+        return langservice.getUserLanguage(session);
+    }
+
+    @ModelAttribute("alternativelanguage")
+    public String getAlternativeLanguage(HttpSession session) {
+        return langservice.getUserAlternativeLanguage(session);
+    }
+
+    @ModelAttribute("page")
+    private String setPage(HttpServletRequest hsr){
+        return hsr.getRequestURI();
+    }
 }

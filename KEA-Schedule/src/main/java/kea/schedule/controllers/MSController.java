@@ -2,7 +2,8 @@ package kea.schedule.controllers;
 
 import kea.schedule.modules.MicroService;
 import kea.schedule.modules.TopMenuLink;
-import kea.schedule.services.MSService;
+import kea.schedule.services.LangService;
+import kea.schedule.services.MicroServiceService;
 import kea.schedule.services.TopMenuLinkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,19 +21,23 @@ import java.util.List;
 @Controller
 @RequestMapping("/servicepages/")
 public class MSController {
-    private MSService mss;
-    private TopMenuLinkService menuservice;
+    private MicroServiceService mss;
+    private TopMenuLinkService topmenuservice;
     private ResourceLoader rl;
+    private LangService langservice;
+
 
     @Autowired
-    public MSController(MSService mss, TopMenuLinkService menuservice, ResourceLoader rl){
+    public MSController(MicroServiceService mss, TopMenuLinkService topmenuservice, ResourceLoader rl, LangService langservice){
         this.mss = mss;
-        this.menuservice = menuservice;
+        this.topmenuservice = topmenuservice;
         this.rl = rl;
+        this.langservice = langservice;
     }
 
     @GetMapping("{servicename}/{page}")
     public String get_servicename_page(@PathVariable String servicename, @PathVariable String page, Model model) throws IOException {
+        System.out.println("MSController");
         MicroService ms = mss.findMSByName(servicename);
         if(ms != null){
             System.out.println("Getting: " + "http://localhost:"+ms.getPort()+"/servicepages/"+servicename+"/"+page);
@@ -51,7 +57,22 @@ public class MSController {
     }
 
     @ModelAttribute("topmenu")
-    public List<TopMenuLink> modelattribute_topmenu(){
-        return menuservice.findAll();
+    private List<TopMenuLink> getTopMenuLink(HttpServletRequest hsr){
+        return topmenuservice.findAll(getLanguage(hsr));
+    }
+
+    @ModelAttribute("language")
+    public String getLanguage(HttpServletRequest hsr){
+        return langservice.getUserLanguage(hsr.getSession());
+    }
+
+    @ModelAttribute("alternativelanguage")
+    public String getAlternativeLanguage(HttpServletRequest hsr) {
+        return langservice.getUserAlternativeLanguage(hsr.getSession());
+    }
+
+    @ModelAttribute("page")
+    private String setPage(HttpServletRequest hsr){
+        return hsr.getRequestURI();
     }
 }

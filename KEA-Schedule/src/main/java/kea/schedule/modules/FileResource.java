@@ -20,7 +20,7 @@ public class FileResource {
     @Column(name="data", columnDefinition="BLOB")
     private byte[] data = null;
     @Column(name = "microserviceid")
-    private int microserviceid;
+    private int microserviceId;
 
     public FileResource(){
 
@@ -58,12 +58,12 @@ public class FileResource {
         this.data = data;
     }
 
-    public int getMicroservice_id() {
-        return microserviceid;
+    public int getMicroserviceId() {
+        return microserviceId;
     }
 
-    public void setMicroservice_id(int microservice_id) {
-        this.microserviceid = microservice_id;
+    public void setMicroserviceId(int microserviceId) {
+        this.microserviceId = microserviceId;
     }
 
     public String getFilename() {

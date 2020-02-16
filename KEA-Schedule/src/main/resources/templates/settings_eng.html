@@ -1,0 +1,10 @@
+<th:block th:include="'header_'+${language}+'.html'" th:tag="remove"></th:block>
+<h2>Settings</h2>
+<div th:each="service: ${microservices}">
+    <h3 th:text="${service.name}"></h3>
+    <p th:utext="${service.description}"></p>
+
+    write out options....
+
+</div>
+<th:block th:include="footer.html" th:tag="remove"></th:block>

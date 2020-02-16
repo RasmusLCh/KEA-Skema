@@ -1,9 +1,6 @@
 package kea.schedule.controllers;
 
-import kea.schedule.modules.Action;
-import kea.schedule.modules.MicroService;
-import kea.schedule.modules.PageInjection;
-import kea.schedule.modules.TopMenuLink;
+import kea.schedule.modules.*;
 import kea.schedule.services.MSSetupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -72,7 +69,7 @@ public class MSSetupController {
         if(hsr.getLocalPort() == serviceport){
             MicroService ms = msss.findByName(servicename);
             if(ms != null && action.getCallbackurl() != null && action.getActionname() != null){
-                action.setMicroserviceid(ms.getId());
+                action.setMicroserviceId(ms.getId());
                 msss.serviceaddaction(action);
                 return new ResponseEntity<>(HttpStatus.OK);
             }
@@ -86,7 +83,7 @@ public class MSSetupController {
         if(hsr.getLocalPort() == serviceport){
             MicroService ms = msss.findByName(servicename);
             if(ms != null && tml.getPath() != null && tml.getText() != null){
-                tml.setMicroserviceid(ms.getId());
+                tml.setMicroserviceId(ms.getId());
                 msss.serviceaddtopmenulink(tml);
                 System.out.println("Menu link added!");
                 return new ResponseEntity<>(HttpStatus.OK);
@@ -98,7 +95,24 @@ public class MSSetupController {
         }
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
-//Not tested
+
+
+    @PostMapping("serviceaddmicroserviceoption/{servicename}")
+    public ResponseEntity post_serviceaddmicroserviceoption(@PathVariable(name = "servicename") String servicename, @RequestBody MicroServiceOption microserviceoption, HttpServletRequest hsr){
+        System.out.println("serviceaddmicroserviceoption");
+        if(hsr.getLocalPort() == serviceport){
+            MicroService ms = msss.findByName(servicename);
+            if(ms != null && microserviceoption.getVariableName() != null && !microserviceoption.getVariableName().equals("")){
+                microserviceoption.setMicroserviceId(ms.getId());
+                msss.serviceaddmicroserviceoption(microserviceoption);
+                System.out.println("Menu link added!");
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    }
+
     @GetMapping("serviceexists/{servicename}")
     public ResponseEntity<MicroService> get_serviceexists(@PathVariable(name = "servicename") String servicename){
         System.out.println("serviceexists");
@@ -110,7 +124,7 @@ public class MSSetupController {
     }
 
     @PostMapping("serviceaddfileresource/{servicename}")
-    public ResponseEntity post_create(@PathVariable(name = "servicename") String servicename, @RequestParam("multipartfile") MultipartFile multipartfile, HttpServletRequest hsr){
+    public ResponseEntity post_addfileresource(@PathVariable(name = "servicename") String servicename, @RequestParam("multipartfile") MultipartFile multipartfile, HttpServletRequest hsr){
         if(hsr.getLocalPort() == serviceport){
             MicroService ms = msss.findByName(servicename);
             if(ms != null && multipartfile != null && !multipartfile.isEmpty() && multipartfile.getOriginalFilename() != null && multipartfile.getOriginalFilename() != ""){

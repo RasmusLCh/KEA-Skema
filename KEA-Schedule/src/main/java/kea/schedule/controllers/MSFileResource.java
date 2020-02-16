@@ -1,7 +1,7 @@
 package kea.schedule.controllers;
 
 import kea.schedule.modules.FileResource;
-import kea.schedule.services.MSService;
+import kea.schedule.services.MicroServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/serviceresource/")
 public class MSFileResource {
 
-    public MSService msservice;
+    public MicroServiceService msservice;
 
     @Autowired
-    public MSFileResource(MSService msservice){
+    public MSFileResource(MicroServiceService msservice){
         this.msservice = msservice;
     }
     /*
