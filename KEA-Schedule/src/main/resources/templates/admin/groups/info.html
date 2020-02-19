@@ -1,0 +1,10 @@
+<th:block th:include="morcms/header.html"></th:block>
+
+<h1 class="block">User info</h1>
+<a href="/users/" class="btn btn-primary right">Back</a>
+<br/>
+<label>Id:</label><p th:text="${user.getId()}"></p>
+<label>Username: </label><p th:text="${user.getName()}"></p>
+<label>Brugertype: </label><p th:text="${user.getUserType().getName()}"></p>
+
+<th:block th:include="morcms/footer.html"></th:block>

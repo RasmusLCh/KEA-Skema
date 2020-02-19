@@ -1,6 +1,6 @@
 package kea.schedule.services;
 
-import kea.schedule.modules.Action;
+import kea.schedule.moduls.Action;
 import kea.schedule.repositories.ActionRepo;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;

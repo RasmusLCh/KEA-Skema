@@ -1,6 +1,6 @@
 package kea.schedule.repositories;
 
-import kea.schedule.modules.MicroService;
+import kea.schedule.moduls.MicroService;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

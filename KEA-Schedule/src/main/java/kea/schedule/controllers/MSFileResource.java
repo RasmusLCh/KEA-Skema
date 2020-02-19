@@ -1,6 +1,6 @@
 package kea.schedule.controllers;
 
-import kea.schedule.modules.FileResource;
+import kea.schedule.moduls.FileResource;
 import kea.schedule.services.MicroServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;

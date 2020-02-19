@@ -1,0 +1,16 @@
+<th:block th:include="morcms/header.html"></th:block>
+
+<h1>Delete User</h1>
+<a href="/users/" class="btn btn-primary right">Back</a>
+<br/>
+<p>You are about to delete the user</p><p class="bold" th:text="${user.getName()}"></p>
+<p>Please confirm.</p>
+<div class="form-group">
+    <form method="post" action="/users/delete">
+        <input type="hidden" name="id" th:value="${user.getId()}">
+        <input type="submit" value="Delete" class="btn-primary form-control">
+    </form>
+</div>
+
+
+<th:block th:include="morcms/footer.html"></th:block>

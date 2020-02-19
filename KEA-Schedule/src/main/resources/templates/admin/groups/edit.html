@@ -1,0 +1,31 @@
+<th:block th:include="morcms/header.html"></th:block>
+
+<h1>Edit User</h1>
+<a href="/users/" class="btn btn-primary right">Back</a>
+<br/>
+<p>To make any changes, please provide the old password</p>
+<div class="form-group">
+    <form method="post" action="/users/edit" class="fw500" th:object="${user}">
+        <input type="hidden" th:field="*{id}">
+        <div class="block">
+            <label>Username:</label>
+            <input type="text" th:field="*{name}" class="form-control">
+            <p class="errortext" th:if="${#fields.hasErrors('name')}">The name must be between 2 and 50 characters long.</p>
+        </div>
+        <div class="block">
+            <label>Password:</label>
+            <input type="password" th:field="*{password}" class="form-control">
+            <p class="errortext" th:if="${#fields.hasErrors('password')}">The password must be between 8 and 250 characters long. A new password must be created, if you save a user account.</p>
+        </div>
+        <div class="block">
+            <label>Bruger type:</label>
+            <select size="1" name="userTypeid" path="setUserTypeId" class="form-control">
+                        <option value="1">ADMINISTRATOR</option>
+            </select>
+        </div>
+        <br/>
+        <input type="submit" value="Edit" class="btn-primary form-control">
+    </form>
+</div>
+
+<th:block th:include="morcms/footer.html"></th:block>

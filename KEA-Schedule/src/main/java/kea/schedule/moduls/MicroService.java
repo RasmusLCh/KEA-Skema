@@ -1,8 +1,6 @@
-package kea.schedule.modules;
+package kea.schedule.moduls;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity(name= "MicroService")
 @Table(name= "microservices")

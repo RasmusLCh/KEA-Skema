@@ -1,8 +1,7 @@
 package kea.schedule.controllers;
 
-import kea.schedule.modules.MicroService;
-import kea.schedule.modules.PageInjection;
-import kea.schedule.modules.TopMenuLink;
+import kea.schedule.moduls.PageInjection;
+import kea.schedule.moduls.TopMenuLink;
 import kea.schedule.services.LangService;
 import kea.schedule.services.MicroServiceService;
 import kea.schedule.services.PageInjectionService;

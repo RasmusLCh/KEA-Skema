@@ -1,7 +1,8 @@
 package kea.schedule.controllers;
 
-import kea.schedule.modules.MicroService;
-import kea.schedule.modules.TopMenuLink;
+import kea.schedule.moduls.MicroService;
+import kea.schedule.moduls.TopMenuLink;
+import kea.schedule.moduls.User;
 import kea.schedule.services.LangService;
 import kea.schedule.services.MicroServiceService;
 import kea.schedule.services.TopMenuLinkService;
@@ -13,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -36,12 +38,21 @@ public class MSController {
     }
 
     @GetMapping("{servicename}/{page}")
-    public String get_servicename_page(@PathVariable String servicename, @PathVariable String page, Model model) throws IOException {
+    public String get_servicename_page(@PathVariable String servicename, @PathVariable String page, Model model, HttpSession session) throws IOException {
         System.out.println("MSController");
         MicroService ms = mss.findMSByName(servicename);
         if(ms != null){
-            System.out.println("Getting: " + "http://localhost:"+ms.getPort()+"/servicepages/"+servicename+"/"+page);
-            Resource resource = rl.getResource("http://localhost:"+ms.getPort()+"/servicepages/"+servicename+"/"+page);
+            Resource resource;
+            if(session != null && session.getAttribute("user") != null){
+                User user = (User)session.getAttribute("user");
+                System.out.println("Getting: " + "http://localhost:"+ms.getPort()+"/servicepages/"+servicename+"/"+page+"?user_id="+user.getId());
+                resource = rl.getResource("http://localhost:"+ms.getPort()+"/servicepages/"+servicename+"/"+page+"?user_id="+user.getId());
+            }
+            else{
+                System.out.println("Getting: " + "http://localhost:"+ms.getPort()+"/servicepages/"+servicename+"/"+page);
+                resource = rl.getResource("http://localhost:"+ms.getPort()+"/servicepages/"+servicename+"/"+page);
+            }
+
             BufferedReader br = new BufferedReader(new InputStreamReader(resource.getInputStream(), "UTF-8"));
             String s= "";
             while(br.ready()){

@@ -1,6 +1,6 @@
 package kea.schedule.controllers;
 
-import kea.schedule.modules.*;
+import kea.schedule.moduls.*;
 import kea.schedule.services.MSSetupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,10 +13,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Only requests made on the service port are valid to the controller
+ * */
 @Controller
 @CrossOrigin(origins = "*") // A better solution would be to be more narrow in who can access..
 @RequestMapping("/")
-public class MSSetupController {
+public class InternalController {
     private ResourceLoader resourceLoader;
     private MSSetupService msss;
 
@@ -25,7 +28,7 @@ public class MSSetupController {
     int serviceport;
 
     @Autowired
-    public MSSetupController(MSSetupService msss){
+    public InternalController(MSSetupService msss){
         this.msss = msss;
     }
 

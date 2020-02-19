@@ -1,6 +1,6 @@
 package kea.schedule.services;
 
-import kea.schedule.modules.PageInjection;
+import kea.schedule.moduls.PageInjection;
 import kea.schedule.repositories.PageInjectionRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

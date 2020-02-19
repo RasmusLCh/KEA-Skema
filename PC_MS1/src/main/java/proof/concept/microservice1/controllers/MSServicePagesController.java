@@ -20,14 +20,14 @@ public class MSServicePagesController {
     }
 
     @GetMapping("test.dk")
-    public String get_action_dk(){
-        System.out.println("dk");
+    public String get_action_dk(@RequestParam(value="user_id", required=false, defaultValue = "0") int user_id){
+        System.out.println("dk " + user_id);
         return "test_dk";
     }
 
     @GetMapping("test.eng")
-    public String get_action_eng(){
-        System.out.println("uh");
+    public String get_action_eng(@RequestParam(value="user_id", required=false, defaultValue = "0") int user_id){
+        System.out.println("uh " + user_id);
         return "test_eng";
     }
 

@@ -12,6 +12,7 @@ body{
 
 table, th, td {
 	border: 1px solid black;
+	padding: 5px;
 }
 table{
 	border-collapse: collapse;
@@ -71,8 +72,10 @@ div.header_nav-lg{
 }
 
 div.header_nav-admin{
-	background-color: #ea5045;
+	background-color: orangered;
 	padding: 10px;
+	text-align: center;
+	font-weight: bolder;
 }
 
 div.header_nav a,div.header_nav a:visited,div.header_nav a:link{
@@ -138,6 +141,15 @@ div.headermenu a:link{
 div.headermenu a:hover{
 	color: #ea5045
 }
+#headermenu_right{
+	display: flex;
+	align-items: center;
+	border: 0px;
+	margin: 0px;
+	margin-left: auto;
+	padding: 0px;
+}
+
 #menu_language_wrapper{
 	background-color: white;
 	display: flex;
@@ -222,6 +234,13 @@ a.module,a.module:visited,a.module:link{
 div.content{
 	margin: 0px auto;
 	width: 1000px;
+	margin-top: 15px;
+	padding: 0px;
+}
+
+div.content-admin{
+	margin: 0px auto;
+	width: 1400px;
 	margin-top: 15px;
 	padding: 0px;
 }

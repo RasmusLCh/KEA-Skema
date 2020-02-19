@@ -23,12 +23,19 @@
     <span class="logo">Admin mode</span>
 </div>
 <div class="headermenu">
-    <a href="/" class="kea_orange"><img th:src="@{/images/logo-main-black-single.png}" class="kea_orange"></a>
-    <a href="/admin/users/">Users</a>
-    <a href="/admin/services/">Services</a>
-    <a href="/admin/actions/">Actions</a>
-    <a href="/admin/pageinjections/">Pageinjections</a>
-    <a href="/admin/topmenulinks/">Topmenulinks</a>
+    <a href="/" class="kea_orange homelogo-lg"><img th:src="@{/images/logo-main-black-single.png}" class="kea_orange headermenu_logo-lg"></a>
+    <div class="headermenu_nav">
+        <a href="/admin/users/">Users</a>
+        <a href="/admin/groups/">Groups</a>
+        <a href="/admin/courses/">Courses</a>
+        <a href="/admin/statistics/">Statistics</a>
+    </div>
+    <div id="headermenu_right">
+        <a href="/admin/services/">Services</a>
+        <a href="/admin/actions/">Actions</a>
+        <a href="/admin/pageinjections/">Page Injections</a>
+        <a href="/admin/topmenulinks/">Top Menu Links</a>
+    </div>
 </div>
 
-<div class="content">
+<div class="content-admin">

@@ -1,4 +1,4 @@
-package kea.schedule.modules;
+package kea.schedule.moduls;
 
 import javax.persistence.*;
 
@@ -17,7 +17,7 @@ public class MicroServiceOption {
     private boolean variableValue;
     @Column
     private String description;
-    @Column(name = "microserviceid")
+    @Column(name = "microserviceId")
     private int microserviceId;
     @Column
     private int priority = 50;

@@ -1,4 +1,4 @@
-package kea.schedule.modules;
+package kea.schedule.moduls;
 
 import javax.persistence.*;
 

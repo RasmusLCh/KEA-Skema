@@ -1,7 +1,7 @@
 package kea.schedule.services;
 
-import kea.schedule.modules.FileResource;
-import kea.schedule.modules.MicroService;
+import kea.schedule.moduls.FileResource;
+import kea.schedule.moduls.MicroService;
 import kea.schedule.repositories.ActionRepo;
 import kea.schedule.repositories.FileResourceRepo;
 import kea.schedule.repositories.MicroServiceRepo;
@@ -9,6 +9,7 @@ import kea.schedule.repositories.PageInjectionRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -41,6 +42,10 @@ public class MicroServiceService {
     }
 
     public List<MicroService> findAll(){
-        return msrepo.findAll();
+        List<MicroService> services = msrepo.findAll();
+        if(services == null){
+            services = new ArrayList<>();
+        }
+        return services;
     }
 }

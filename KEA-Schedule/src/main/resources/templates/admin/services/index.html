@@ -1,4 +1,36 @@
 <th:block th:include="/admin/header.html" th:tag="remove"></th:block>
 <h1>Services</h1>
-
+<table>
+    <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>port</th>
+        <th>version</th>
+        <th>description</th>
+        <th>userRequired</th>
+        <th>enabled</th>
+        <th>dependencies</th>
+        <th>Access</th>
+    </tr>
+    <tr th:each="service: ${microservices}" th:if="${service != null}">
+        <td th:text="${service.id}"></td>
+        <td th:text="${service.name}"></td>
+        <td th:text="${service.port}"></td>
+        <td th:text="${service.version}"></td>
+        <td th:text="${service.description}"></td>
+        <td th:text="${service.userRequired}"></td>
+        <td><input type="checkbox" name="" th:checked="${service.enabled}"></td>
+        <td th:text="${service.dependencyMicroserviceId}"></td>
+        <td>
+            <select size="5">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+            </select>
+        </td>
+    </tr>
+</table>
 <th:block th:include="/admin/footer.html" th:tag="remove"></th:block>

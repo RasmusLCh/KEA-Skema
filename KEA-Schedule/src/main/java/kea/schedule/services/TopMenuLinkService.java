@@ -1,6 +1,6 @@
 package kea.schedule.services;
 
-import kea.schedule.modules.TopMenuLink;
+import kea.schedule.moduls.TopMenuLink;
 import kea.schedule.repositories.TopMenuLinkRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

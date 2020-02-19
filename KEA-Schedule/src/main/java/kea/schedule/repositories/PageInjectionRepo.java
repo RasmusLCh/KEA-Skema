@@ -1,6 +1,6 @@
 package kea.schedule.repositories;
 
-import kea.schedule.modules.PageInjection;
+import kea.schedule.moduls.PageInjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
