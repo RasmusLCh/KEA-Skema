@@ -78,19 +78,4 @@ public ResponseEntity mirrorRest(@RequestBody(required = false) String body,
     }
 }
     * */
-
-    @ModelAttribute("language")
-    public String getLanguage(HttpSession session){
-        return langservice.getUserLanguage(session);
-    }
-
-    @ModelAttribute("alternativelanguage")
-    public String getAlternativeLanguage(HttpSession session) {
-        return langservice.getUserAlternativeLanguage(session);
-    }
-
-    @ModelAttribute("page")
-    private String setPage(HttpServletRequest hsr){
-        return hsr.getRequestURI();
-    }
 }
