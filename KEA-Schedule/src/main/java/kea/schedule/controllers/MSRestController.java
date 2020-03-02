@@ -6,13 +6,21 @@ import kea.schedule.services.MicroServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Enumeration;
 
 @RestController
 @RequestMapping("/servicerest/")
@@ -28,6 +36,7 @@ public class MSRestController {
         this.langservice = langservice;
     }
 
+    /*
     @GetMapping("{servicename}/{restpage}")
     @ResponseBody
     public String get_servicename_restpage(@PathVariable String servicename, @PathVariable String restpage) throws IOException {
@@ -46,20 +55,23 @@ public class MSRestController {
         System.out.println("Service: " + servicename);
         return "Unknown service";
     }
-    /*
-    https://stackoverflow.com/questions/14726082/spring-mvc-rest-service-redirect-forward-proxy
- @RequestMapping("/**")
-public ResponseEntity mirrorRest(@RequestBody(required = false) String body,
-    HttpMethod method, HttpServletRequest request, HttpServletResponse response)
+*/
+    //https://stackoverflow.com/questions/14726082/spring-mvc-rest-service-redirect-forward-proxy
+ @RequestMapping(value = "{servicename}/{restpage}")
+ @ResponseBody
+public String /*ResponseEntity*/ get_servicename_restpage(@RequestBody(required = false) String body, @PathVariable String servicename, @PathVariable String restpage,
+                                 HttpMethod method, HttpServletRequest request, HttpServletResponse response)
     throws URISyntaxException {
     String requestUrl = request.getRequestURI();
-
-    URI uri = new URI("http", null, server, port, null, null, null);
-    uri = UriComponentsBuilder.fromUri(uri)
+     MicroService ms = mss.findMSByName(servicename);
+    if(ms == null) return null;
+     URI uri = new URI("http", null, "localhost", ms.getPort(), "/servicerest/" + servicename + "/" + restpage, null, null);
+    /*
+     uri = UriComponentsBuilder.fromUri(uri)
                               .path(requestUrl)
-                              .query(request.getQueryString())
+                              .query("") // request.getQueryString()
                               .build(true).toUri();
-
+*/
     HttpHeaders headers = new HttpHeaders();
     Enumeration<String> headerNames = request.getHeaderNames();
     while (headerNames.hasMoreElements()) {
@@ -70,12 +82,19 @@ public ResponseEntity mirrorRest(@RequestBody(required = false) String body,
     HttpEntity<String> httpEntity = new HttpEntity<>(body, headers);
     RestTemplate restTemplate = new RestTemplate();
     try {
-        return restTemplate.exchange(uri, method, httpEntity, String.class);
+        System.out.println("request mirrorRest: " + uri.toString() );
+        Object o = (restTemplate.exchange(uri, method, httpEntity, String.class)).getBody();
+        if(o != null){
+            o.toString();
+        }
+        return "";
+//        return (restTemplate.exchange(uri, method, httpEntity, String.class)).getBody().toString();
     } catch(HttpStatusCodeException e) {
+        System.out.println(e.getStatusCode());
         return ResponseEntity.status(e.getRawStatusCode())
                              .headers(e.getResponseHeaders())
-                             .body(e.getResponseBodyAsString());
+                             .body(e.getResponseBodyAsString()).toString();
     }
 }
-    * */
+
 }

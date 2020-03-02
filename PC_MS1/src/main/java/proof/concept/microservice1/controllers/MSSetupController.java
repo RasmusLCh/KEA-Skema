@@ -109,10 +109,32 @@ public class MSSetupController {
                 " $.ajax({" +
                     " method: 'GET', " +
                     " url: '/servicerest/MS1/getcolor'," +
-                    " contentType: 'JSON', " +
-                    " dataType: 'JSON' " +
+                    " contentType: 'application/json', " +
+                    " dataType: 'json' " +
                 " }).done(function (data) {" +
                     " $('p').css('color', 'rgb('+data.red+', '+data.green+', '+data.blue+')');" +
+                "});" +
+                "}, 2000);");
+        json.appendField("priority", 5);
+        entity = new HttpEntity<JSONObject>(json,headers);
+        restTemplate.exchange("http://localhost:7500/serviceaddpageinjection/MS1", HttpMethod.POST, entity, String.class);
+        //Add page injection JS - Lets go funky - Not in manueal!!
+        json = new JSONObject();
+        json.appendField("type", "JS");
+        json.appendField("page", "/index.eng");
+        json.appendField("data", "setInterval(function(){ " +
+                " $.ajax({" +
+                " method: 'POST', " +
+                " url: '/servicerest/MS1/restaction'," +
+                " contentType: 'application/json', " +
+                " dataType: 'JSON', " +
+                " data: JSON.stringify({ " +
+                " name: 'MS1', " +
+                " port: 10001, " +
+                " enabled: false " +
+                " }) " +
+                " }).done(function (data) {" +
+                " $('p').css('color', 'rgb('+data.red+', '+data.green+', '+data.blue+')');" +
                 "});" +
                 "}, 2000);");
         json.appendField("priority", 5);
