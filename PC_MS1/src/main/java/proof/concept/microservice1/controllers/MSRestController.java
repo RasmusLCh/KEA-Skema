@@ -17,7 +17,8 @@ import java.util.Enumeration;
 @RequestMapping("/servicerest/MS1/")
 public class MSRestController {
     @GetMapping("getcolor")
-    public ResponseEntity<MyColor> get_getcolor(@RequestParam(value="user_id", required=false, defaultValue = "0") int user_id){
+    public ResponseEntity<MyColor> get_getcolor(@RequestParam(value="userid", required=false, defaultValue = "0") int userid){
+        System.out.println("Got userid = " + userid);
         return new ResponseEntity<>(new MyColor(Math.random() * 255, Math.random() * 255, Math.random() * 255), HttpStatus.OK);
     }
 

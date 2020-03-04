@@ -83,7 +83,7 @@ public class PortConfiguration {
         httpcon.setScheme("http");
         System.out.println("httpPort = " + httpPort);
         httpcon.setPort(httpPort);
-        httpcon.setSecure(false);
+        httpcon.setSecure(true); //This should be false so we forward insecure data to secure line (http => https)
         httpcon.setRedirectPort(httpsPort);
         c[0] = httpcon;
 
