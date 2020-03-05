@@ -9,13 +9,13 @@ public class MicroService {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @Column(name="name", columnDefinition="VARCHAR(50)", unique = true)
-    private String name = null;
+    private String name = "balue";
     @Column(name="port", unique = true)
     private int port;
     @Column
     private float version = 0f;
     @Column
-    private String description = null;
+    private String description = "";
     @Column
     //This refered to if the service should be required for users or not
     private boolean userRequired;

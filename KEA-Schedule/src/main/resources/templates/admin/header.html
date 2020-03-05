@@ -14,9 +14,6 @@
         });
     </script>
     <link rel="stylesheet" th:href="@{/css/css.css}" type="text/css">
-    <style th:inline="text" th:each="pageinjection_css: ${pageinjections_css}" th:if="pageinjection_css.data != null">
-        [[${pageinjection_css.data}]]
-    </style>
 </head>
 <body>
 <div class="header_nav-admin">

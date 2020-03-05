@@ -4,7 +4,6 @@ import kea.schedule.moduls.MicroService;
 import kea.schedule.moduls.ModelInterface;
 import kea.schedule.services.CRUDServiceInterface;
 import kea.schedule.services.MicroServiceService;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,26 +23,39 @@ import java.util.List;
  * For more information about how to implement the CRUDControllerAbstract class, please see http://morcms.dk/wiki/CRUDControllerAbstract
  * */
 
+@Controller
 public abstract class MSCRUDAbstractController<E extends ModelInterface, S extends CRUDServiceInterface<E>>  {
     //Class attributes, set by constructor
     //Path for our Templates
     protected String path;
     //The modelname to use in Thymeleaf and which is used in our modelFactory
-    protected String modelname = "crudlist";
+    protected String modelname = "cruditem";
     //The service that the controller is making use of.
     protected S service;
     MicroServiceService msservice;
 
-    public MSCRUDAbstractController(String path, S service, MicroServiceService msservice){
-        this.path = path;
+    public MSCRUDAbstractController(){}
+
+    public MSCRUDAbstractController(String path, String modelname, S service, MicroServiceService msservice){
+        this.path = "admin/"+path;
         this.service = service;
+        this.modelname = modelname;
         this.msservice = msservice;
     }
 
     @GetMapping({"index", ""})
-    public String get_root_index(Model model, HttpSession session)
+    public String get_root_index(Model model)
     {
         System.out.println("Index");
+        model.addAttribute(modelname + "s", service.findAll());
+        return path + "index";
+    }
+
+    @PostMapping({"index", ""})
+    public String get_root_index(Model model, HttpSession session, @RequestParam("selectedmicroserviceid") int selectedmicroserviceid)
+    {
+        session.setAttribute("selectedmicroserviceid", new Integer(selectedmicroserviceid));
+        model.addAttribute("selectedmicroserviceid", selectedmicroserviceid);
         model.addAttribute(modelname + "s", service.findAll());
         return path + "index";
     }
@@ -94,15 +106,27 @@ public abstract class MSCRUDAbstractController<E extends ModelInterface, S exten
         service.delete(id);
         return "redirect:/" + path;
     }
-    @GetMapping("/info/{id}")
-    public String get_info(@PathVariable int id, Model model, HttpSession session)
+    @GetMapping("/view/{id}")
+    public String get_view(@PathVariable int id, Model model, HttpSession session)
     {
         model.addAttribute(modelname, service.findById(id));
-        return path + "info";
+        return path + "view";
     }
 
     @ModelAttribute("microservices")
     public List<MicroService> model_microservices(){
+        System.out.println("model_microservices");
+        for(MicroService ms : msservice.findAll()){
+            System.out.println(ms.getId() + " " + ms.getName());
+        }
         return msservice.findAll();
+    }
+
+    @ModelAttribute("selectedmicroserviceid")
+    public int selected_microservice(HttpSession session){
+        if(session.getAttribute("selectedmicroserviceid") != null){
+            return ((Integer)session.getAttribute("selectedmicroserviceid")).intValue();
+        }
+        return 0;
     }
 }
