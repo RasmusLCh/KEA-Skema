@@ -14,8 +14,8 @@ public class Action {
     private String callbackurl = null;
     @Column(name = "priority")
     private int priority = 50;
-    @Column
-    private int microserviceId;
+    @ManyToOne
+    private MicroService microservice;
 
     public Action(){
 
@@ -26,15 +26,15 @@ public class Action {
     }
 
     public Action(String actionname, String callbackurl, int priority){
-        this(0, actionname, callbackurl, priority, 0);
+        this(0, actionname, callbackurl, priority, null);
     }
 
-    public Action(int id, String actionname, String callbackurl, int priority, int microserviceId){
+    public Action(int id, String actionname, String callbackurl, int priority, MicroService microservice){
         this.id = id;
         this.actionname = actionname;
         this.callbackurl = callbackurl;
         this.priority = priority;
-        this.microserviceId = microserviceId;
+        this.microservice = microservice;
     }
 
     public int getId() {
@@ -45,12 +45,12 @@ public class Action {
         this.id = id;
     }
 
-    public int getMicroserviceId() {
-        return microserviceId;
+    public MicroService getMicroservice() {
+        return microservice;
     }
 
-    public void setMicroserviceId(int microserviceId) {
-        this.microserviceId = microserviceId;
+    public void setMicroservice(MicroService microservice) {
+        this.microservice = microservice;
     }
 
     public String getActionname() {

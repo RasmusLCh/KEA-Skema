@@ -19,8 +19,9 @@ public class FileResource {
     private String extension= null;
     @Column(name="data", columnDefinition="BLOB")
     private byte[] data = null;
-    @Column(name = "microserviceid")
-    private int microserviceId;
+    @ManyToOne
+    @JoinColumn(name="microserviceid")
+    private MicroService microservice;
 
     public FileResource(){
 
@@ -58,12 +59,12 @@ public class FileResource {
         this.data = data;
     }
 
-    public int getMicroserviceId() {
-        return microserviceId;
+    public MicroService getMicroservice() {
+        return microservice;
     }
 
-    public void setMicroserviceId(int microserviceId) {
-        this.microserviceId = microserviceId;
+    public void setMicroservice(MicroService microservice) {
+        this.microservice = microservice;
     }
 
     public String getFilename() {

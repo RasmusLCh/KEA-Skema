@@ -17,9 +17,9 @@ public class MicroServiceOption {
     private boolean variableValue;
     @Column
     private String description;
-    @Column(name = "microserviceId")
-    private int microserviceId;
-    @Column
+    @ManyToOne
+    private MicroService microservice;
+
     private int priority = 50;
     public MicroServiceOption(){}
 
@@ -59,12 +59,12 @@ public class MicroServiceOption {
         return variableValue;
     }
 
-    public int getMicroserviceId() {
-        return microserviceId;
+    public MicroService getMicroservice() {
+        return microservice;
     }
 
-    public void setMicroserviceId(int microserviceId) {
-        this.microserviceId = microserviceId;
+    public void setMicroservice(MicroService microservice) {
+        this.microservice = microservice;
     }
 
     public int getPriority() {

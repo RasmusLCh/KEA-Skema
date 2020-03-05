@@ -1,4 +1,4 @@
-package kea.schedule.controllers;
+package kea.schedule.controllers.admin;
 
 import kea.schedule.moduls.MicroService;
 import kea.schedule.services.MicroServiceService;
@@ -63,8 +63,21 @@ public class AdminController {
         return "admin/topmenulinks/index";
     }
 
+    /*
+    * ******* pageinjections: start
+    * */
+/*
     @GetMapping({"pageinjections/", "pageinjections/index"})
-    public String get_pageinjections(){
+    public String get_pageinjections(Model model) {
+        List<MicroService> microservices = msservice.findAll();
+        System.out.println("services size = " + microservices.size());
+        model.addAttribute("microservices", microservices);
         return "admin/pageinjections/index";
     }
+
+
+ */
+    /*
+     * ******* pageinjections: end
+     * */
 }

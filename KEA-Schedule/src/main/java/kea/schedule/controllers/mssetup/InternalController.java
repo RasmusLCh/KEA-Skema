@@ -1,4 +1,4 @@
-package kea.schedule.controllers;
+package kea.schedule.controllers.mssetup;
 
 import kea.schedule.moduls.*;
 import kea.schedule.services.MSSetupService;
@@ -58,7 +58,7 @@ public class InternalController {
             MicroService ms = msss.findByName(servicename);
             if(ms != null && mspi.getPage() != null && mspi.getType() != null && mspi.getData() != null) {
                 System.out.println("serviceaddpageinjection");
-                mspi.setMicroserviceid(ms.getId());
+                mspi.setMicroservice(ms);
                 msss.serviceaddpageinjection(mspi);
                 return new ResponseEntity<>(HttpStatus.OK);
             }
@@ -72,7 +72,7 @@ public class InternalController {
         if(hsr.getLocalPort() == serviceport){
             MicroService ms = msss.findByName(servicename);
             if(ms != null && action.getCallbackurl() != null && action.getActionname() != null){
-                action.setMicroserviceId(ms.getId());
+                action.setMicroservice(ms);
                 msss.serviceaddaction(action);
                 return new ResponseEntity<>(HttpStatus.OK);
             }
@@ -86,7 +86,7 @@ public class InternalController {
         if(hsr.getLocalPort() == serviceport){
             MicroService ms = msss.findByName(servicename);
             if(ms != null && tml.getPath() != null && tml.getText() != null){
-                tml.setMicroserviceId(ms.getId());
+                tml.setMicroservice(ms);
                 msss.serviceaddtopmenulink(tml);
                 System.out.println("Menu link added!");
                 return new ResponseEntity<>(HttpStatus.OK);
@@ -106,7 +106,7 @@ public class InternalController {
         if(hsr.getLocalPort() == serviceport){
             MicroService ms = msss.findByName(servicename);
             if(ms != null && microserviceoption.getVariableName() != null && !microserviceoption.getVariableName().equals("")){
-                microserviceoption.setMicroserviceId(ms.getId());
+                microserviceoption.setMicroservice(ms);
                 msss.serviceaddmicroserviceoption(microserviceoption);
                 System.out.println("Menu link added!");
                 return new ResponseEntity<>(HttpStatus.OK);

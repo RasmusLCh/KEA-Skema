@@ -81,8 +81,8 @@ public class MSSetupService {
             fileresource.setType(splitter[0]);
             fileresource.setExtension(splitter[1]);
             fileresource.setData(bytes);
-            fileresource.setMicroserviceId(ms.getId());
-            System.out.println(fileresource.getFilename() + " " + fileresource.getType() + " " + fileresource.getExtension() + " " + fileresource.getMicroserviceId());
+            fileresource.setMicroservice(ms);
+            System.out.println(fileresource.getFilename() + " " + fileresource.getType() + " " + fileresource.getExtension() + " " + fileresource.getMicroservice().getId());
             fileresourcerepo.save(fileresource);
         } catch (IOException e) {
             e.printStackTrace();

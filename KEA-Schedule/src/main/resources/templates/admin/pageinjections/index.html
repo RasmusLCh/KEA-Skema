@@ -1,4 +1,7 @@
 <th:block th:include="/admin/header.html" th:tag="remove"></th:block>
 <h1>Page Injections</h1>
-
+MicroService:
+<select th:each="service: ${microservices}" th:if="${service != null}" >
+    <option th:value:="${service.id}" th:text="${service.name}"></option>
+</select>
 <th:block th:include="/admin/footer.html" th:tag="remove"></th:block>

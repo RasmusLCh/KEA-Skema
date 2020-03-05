@@ -6,9 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class PageInjectionService {
+public class PageInjectionService implements CRUDServiceInterface<PageInjection> {
     private PageInjectionRepo pageinectionrepo;
 
     @Autowired
@@ -28,5 +29,37 @@ public class PageInjectionService {
             page = "/index";
         }
         return pageinectionrepo.findByPageAndType(page, "JS");
+    }
+
+    @Override
+    public PageInjection create(PageInjection pageInjection) {
+        return pageinectionrepo.save(pageInjection);
+    }
+
+    @Override
+    public void edit(PageInjection pageInjection) {
+        pageinectionrepo.save(pageInjection);
+    }
+
+    @Override
+    public void delete(int id) {
+        Optional optpageInjection = pageinectionrepo.findById(id);
+        if(optpageInjection.isPresent()){
+            pageinectionrepo.delete((PageInjection)optpageInjection.get());
+        }
+    }
+
+    @Override
+    public PageInjection findById(int id) {
+        Optional optpageInjection = pageinectionrepo.findById(id);
+        if(optpageInjection.isPresent()){
+            return (PageInjection)optpageInjection.get();
+        }
+        return null;
+    }
+
+    @Override
+    public List<PageInjection> findAll() {
+        return pageinectionrepo.findAll();
     }
 }

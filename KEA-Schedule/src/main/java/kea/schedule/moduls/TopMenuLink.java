@@ -18,26 +18,26 @@ public class TopMenuLink {
     private String language = "eng";
     @Column
     private int priority = 50;
-    @Column
-    private int microserviceId;
+    @ManyToOne
+    private MicroService microservice;
     public TopMenuLink(){}
 
     public TopMenuLink(String path, String text, String description, int priority){
-        this(path, text, description, priority,0);
+        this(path, text, description, priority,null);
     }
 
-    public TopMenuLink(String path, String text, String description, int priority, int microserviceId){
-        this(0, path, text, description, "eng", priority, microserviceId);
+    public TopMenuLink(String path, String text, String description, int priority, MicroService microservice){
+        this(0, path, text, description, "eng", priority, microservice);
     }
 
-    public TopMenuLink(int id, String path, String text, String description, String language, int priority, int microserviceId){
+    public TopMenuLink(int id, String path, String text, String description, String language, int priority, MicroService microservice){
         this.id = id;
         this.path = path;
         this.text = text;
         this.description = description;
         this.language = language;
         this.priority = priority;
-        this.microserviceId = microserviceId;
+        this.microservice = microservice;
     }
 
     public int getId() {
@@ -80,12 +80,12 @@ public class TopMenuLink {
         this.priority = priority;
     }
 
-    public int getMicroserviceId() {
-        return microserviceId;
+    public MicroService getMicroservice() {
+        return microservice;
     }
 
-    public void setMicroserviceId(int microserviceId) {
-        this.microserviceId = microserviceId;
+    public void setMicroservice(MicroService microservice) {
+        this.microservice = microservice;
     }
 
     public String getLanguage() {

@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity(name= "PageInjection")
 @Table(name= "pageinjections")
-public class PageInjection {
+public class PageInjection implements ModelInterface {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -16,8 +16,8 @@ public class PageInjection {
     private String data = null;
     @Column
     private int priority = 50;
-    @Column
-    private int microserviceId;
+    @ManyToOne
+    private MicroService microservice;
 
     public PageInjection(){
 
@@ -28,16 +28,16 @@ public class PageInjection {
     }
 
     public PageInjection(String type, String page, String data, int priority){
-        this(0, type, page, data, priority, 0);
+        this(0, type, page, data, priority, null);
     }
 
-    public PageInjection(int id, String type, String page, String data, int priority, int microserviceId){
+    public PageInjection(int id, String type, String page, String data, int priority, MicroService microservice){
         this.id = id;
         this.type = type;
         this.page = page;
         this.data = data;
         this.priority = priority;
-        this.microserviceId = microserviceId;
+        this.microservice = microservice;
     }
 
     public int getId() {
@@ -84,11 +84,11 @@ public class PageInjection {
         this.priority = priority;
     }
 
-    public int getMicroserviceId() {
-        return microserviceId;
+    public MicroService getMicroservice() {
+        return microservice;
     }
 
-    public void setMicroserviceid(int microserviceid) {
-        this.microserviceId = microserviceId;
+    public void setMicroservice(MicroService microservice) {
+        this.microservice = microservice;
     }
 }
