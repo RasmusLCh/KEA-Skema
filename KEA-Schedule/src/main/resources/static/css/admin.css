@@ -1,0 +1,146 @@
+/* General CSS: Start */
+body{
+    margin: 0px;
+    padding: 0px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #233249;
+    text-rendering: optimizeLegibility;
+    box-sizing: border-box;
+}
+
+table, th, td {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+th{
+    color: white;
+    background-color: #233249;
+}
+
+table{
+    border-collapse: collapse;
+    width: 100%;
+}
+td{
+    padding: 10px;
+    vertical-align: top;
+}
+td.noborder{
+    border: 0px;
+}
+hr{
+    border: 1px dotted black;
+}
+div.content-admin{
+    margin: 0px auto;
+    width: 1400px;
+    margin-top: 15px;
+    padding: 0px;
+}
+
+div.header_nav-admin{
+    background-color: orangered;
+    padding: 10px;
+    text-align: center;
+    font-weight: bolder;
+}
+
+img{
+    vertical-align: middle;
+}
+
+.kea_orange{
+    background-color: #ea5045;
+}
+
+/*+++ Header menu bar: Start */
+
+div.headermenu{
+    border-bottom: 1px solid silver;
+    background: #233249;
+    padding: 0px;
+    margin: 0px;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+    border: 0px;
+}
+
+div.headermenu_nav{
+    display: flex;
+    align-items: center;
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
+}
+
+
+img.headermenu_logo-lg{
+    height: 45px;
+    padding: 0px;
+    margin: 0px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+div.headermenu a,
+div.headermenu a:visited,
+div.headermenu a:link{
+    color: white;
+    vertical-align: center;
+    font-weight: bold;
+    text-decoration: none;
+    font-family: "Helvetica Neue Condensed",sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+div.headermenu a:hover{
+    color: #ea5045
+}
+#headermenu_right{
+    display: flex;
+    align-items: center;
+    border: 0px;
+    margin: 0px;
+    margin-left: auto;
+    padding: 0px;
+}
+
+#menu_language_wrapper{
+    background-color: white;
+    display: flex;
+    align-items: center;
+    border: 0px;
+    margin: 0px;
+    margin-left: auto;
+    padding: 0px;
+}
+
+#menu_language{
+    background-color: white;
+    color: #ea5045; !important;
+    margin-left: auto;
+    text-transform: uppercase;
+}
+
+#menu_settings_wrapper{
+    background-color: #ea5045;
+    display: flex;
+    align-items: center;
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
+}
+
+#menu_settings{
+    background-color: #ea5045;
+    color: black;
+}
+/*+++ Header menu bar: End */

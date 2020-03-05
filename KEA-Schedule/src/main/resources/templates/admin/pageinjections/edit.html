@@ -1,3 +1,7 @@
 <th:block th:include="/admin/header.html" th:tag="remove"></th:block>
 <h1>Edit Page Injections</h1>
+<form method="post" taget="../edit" th:object="${pageinjection}">
+    <label>Header:</label> <input type="text" name="header" path="setHeader" class="form-control">
+    <p class="errortext" th:if="${#fields.hasErrors('header')}">The header must be between 1 and 50 characters long.</p>
+</form>
 <th:block th:include="/admin/footer.html" th:tag="remove"></th:block>

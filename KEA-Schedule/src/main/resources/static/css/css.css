@@ -71,12 +71,7 @@ div.header_nav-lg{
 	padding-right: 15px;
 }
 
-div.header_nav-admin{
-	background-color: orangered;
-	padding: 10px;
-	text-align: center;
-	font-weight: bolder;
-}
+
 
 div.header_nav a,div.header_nav a:visited,div.header_nav a:link{
 	color: #234165;
@@ -238,12 +233,7 @@ div.content{
 	padding: 0px;
 }
 
-div.content-admin{
-	margin: 0px auto;
-	width: 1400px;
-	margin-top: 15px;
-	padding: 0px;
-}
+
 
 div.content a,
 div.content a:visited,
