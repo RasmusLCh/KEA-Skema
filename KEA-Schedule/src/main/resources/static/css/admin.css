@@ -20,6 +20,16 @@ th{
     background-color: #233249;
 }
 
+th.invisible{
+    border: none;
+    background-color: white;
+    color: black;
+}
+
+td.invisible{
+    border: none;
+}
+
 table{
     border-collapse: collapse;
     width: 100%;
@@ -144,3 +154,39 @@ div.headermenu a:hover{
     color: black;
 }
 /*+++ Header menu bar: End */
+
+label{
+    display: block;
+    font-weight: bold;
+    padding-top: 10px;
+    padding-bottom: 2px;
+}
+
+form input, textarea, select, submit{
+    display: block;
+    width: 100%;
+    padding: 8px;
+}
+
+textarea{
+    height: 300px;
+}
+
+submit{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+a.button{
+    color: white;
+    background-color: #233249;
+    border-radius: 25px;
+    padding: 5px;
+    padding-left: 30px;
+    padding-right: 30px;
+    text-decoration: none;
+}
+
+a.button:hover{
+    color: #ea5045;
+}

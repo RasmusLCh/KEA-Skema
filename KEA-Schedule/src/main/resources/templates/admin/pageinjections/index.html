@@ -2,7 +2,7 @@
 <h1>Page Injections</h1>
 <th:block th:include="/admin/msselector.html" th:tag="remove"></th:block>
 <th:block th:if="${selectedmicroserviceid != 0}">
-    <a href="create/">create</a>
+    <a href="create/" class="button">create</a>
     <table>
         <thead>
             <tr>
@@ -10,9 +10,9 @@
                 <th>TYPE</th>
                 <th>PAGE</th>
                 <th>PRIORITY</th>
-                <th></th>
-                <th></th>
-                <th></th>
+                <th class="invisible"></th>
+                <th class="invisible"></th>
+                <th class="invisible"></th>
             </tr>
         </thead>
         <tbody>
@@ -21,9 +21,9 @@
                 <td th:text="${pageinjection.type}"></td>
                 <td th:text="${pageinjection.page}"></td>
                 <td th:text="${pageinjection.priority}"></td>
-                <td><a th:href="'view/' + ${pageinjection.id}">VIEW</a></td>
-                <td><a th:href="'edit/' + ${pageinjection.id}">EDIT</a></td>
-                <td><a th:href="'delete/' + ${pageinjection.id}">DELETE</a></td>
+                <td class="invisible"><a th:href="'view/' + ${pageinjection.id} + '/'" class="button">VIEW</a></td>
+                <td class="invisible"><a th:href="'edit/' + ${pageinjection.id} + '/'" class="button">EDIT</a></td>
+                <td class="invisible"><a th:href="'delete/' + ${pageinjection.id} + '/'" class="button">DELETE</a></td>
             </tr>
         </tbody>
     </table>

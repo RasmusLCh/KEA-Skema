@@ -1,6 +1,10 @@
 package kea.schedule.moduls;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity(name= "PageInjection")
 @Table(name= "pageinjections")
@@ -8,13 +12,19 @@ public class PageInjection implements ModelInterface {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @Column
+    @Column(name = "type", columnDefinition="VARCHAR(5)")
+    @Size(min=1,max=5)
+    @NotNull
     private String type = null;
-    @Column
+    @Column(name = "page", columnDefinition="VARCHAR(200)")
+    @Size(max=200)
     private String page = null;
     @Column(name = "data", columnDefinition="VARCHAR(5000)")
+    @Size(max=5000)
     private String data = null;
     @Column
+    @Min(0)
+    @Max(1000)
     private int priority = 50;
     @ManyToOne
     private MicroService microservice;

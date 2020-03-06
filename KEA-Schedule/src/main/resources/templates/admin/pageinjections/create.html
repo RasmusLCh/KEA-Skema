@@ -1,3 +1,21 @@
 <th:block th:include="/admin/header.html" th:tag="remove"></th:block>
 <h1>Create Page Injections</h1>
+<form method="post" action="../../edit" th:object="${pageinjection}">
+    <label>Type:</label>
+    <select th:field="*{type}">
+        <option value="JS" th:selected="${pageinjection.type=='JS'}">JS</option>
+        <option value="CSS" th:selected="${pageinjection.type=='CSS'}">CSS</option>
+    </select>
+    <p class="errortext" th:if="${#fields.hasErrors('type')}">The type has to be set.</p>
+    <label>Page:</label>
+    <input type="text" th:field="*{page}" th:value="${pageinjection.page}">
+    <p class="errortext" th:if="${#fields.hasErrors('page')}">The max length of the page is 200 characters.</p>
+    <label>Data:</label>
+    <textarea th:field="*{data}" th:utext="${pageinjection.data}"></textarea>
+    <p class="errortext" th:if="${#fields.hasErrors('page')}">The max length of the data is 5000 characters.</p>
+    <label>Priority:</label>
+    <input type="text" th:field="*{priority}" th:value="${pageinjection.priority}">
+    <p class="errortext" th:if="${#fields.hasErrors('priority')}">The max value of the priority 1000.</p>
+    <input type="submit">
+</form>
 <th:block th:include="/admin/footer.html" th:tag="remove"></th:block>
