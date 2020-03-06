@@ -43,7 +43,8 @@ public class RootController {
 
 
     @GetMapping({"index.eng", "index.dk"})
-    public String get_index(Model model) throws IOException {
+    public String get_index(Model model, HttpSession session) throws IOException {
+        System.out.println(session.getId());
         return "index";
     }
 

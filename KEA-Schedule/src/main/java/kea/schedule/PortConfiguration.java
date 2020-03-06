@@ -83,7 +83,8 @@ public class PortConfiguration {
         httpcon.setScheme("http");
         System.out.println("httpPort = " + httpPort);
         httpcon.setPort(httpPort);
-        httpcon.setSecure(true); //This should be false so we forward insecure data to secure line (http => https)
+        //If you choose to not run with http to https forwards, running pages as http can cause cookies to not be saved appropriately!
+        httpcon.setSecure(false);
         httpcon.setRedirectPort(httpsPort);
         c[0] = httpcon;
 

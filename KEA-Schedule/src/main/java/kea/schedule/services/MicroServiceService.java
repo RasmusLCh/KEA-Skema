@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MicroServiceService {
@@ -47,5 +48,13 @@ public class MicroServiceService {
             services = new ArrayList<>();
         }
         return services;
+    }
+
+    public MicroService findById(int id){
+        Optional optms = msrepo.findById(id);
+        if(optms.isPresent()){
+            return (MicroService) optms.get();
+        }
+        return null;
     }
 }

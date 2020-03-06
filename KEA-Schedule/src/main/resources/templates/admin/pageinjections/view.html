@@ -1,13 +1,25 @@
 <th:block th:include="/admin/header.html" th:tag="remove"></th:block>
-<h1>View Page Injections</h1>
+<div class="block">
+    <h1>View Page Injections</h1>
+    <th:block th:if="${selectedmicroserviceid != 0}">
+        <a href="../../" class="button right">Back</a>
+    </th:block>
+</div>
 <table>
-    <thead>
+    <tr>
+        <th colspan="4">
+            MicroService
+        </th>
+    </tr>
+    <tr>
+        <td colspan="4" th:text="${selectedmicroservice.name}"></td>
+    </tr>
+    <tr>
         <th>ID</th>
         <th>TYPE</th>
         <th>PAGE</th>
         <th>PRIORITY</th>
-    </thead>
-    <tbody>
+    </tr>
     <tr>
         <td th:text="${pageinjection.id}"></td>
         <td th:text="${pageinjection.type}"></td>
@@ -23,6 +35,5 @@
     <tr>
         <td colspan="4" th:text="${pageinjection.data}"></td>
     </tr>
-    </tbody>
 </table>
 <th:block th:include="/admin/footer.html" th:tag="remove"></th:block>

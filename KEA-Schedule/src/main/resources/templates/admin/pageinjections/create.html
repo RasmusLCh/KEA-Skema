@@ -1,6 +1,13 @@
 <th:block th:include="/admin/header.html" th:tag="remove"></th:block>
-<h1>Create Page Injections</h1>
-<form method="post" action="../../edit" th:object="${pageinjection}">
+<div class="block">
+    <h1>Create Page Injections</h1>
+    <th:block th:if="${selectedmicroserviceid != 0}">
+        <a href="../" class="button right">Back</a>
+    </th:block>
+</div>
+<label>MicroService:</label>
+<p th:text="${selectedmicroservice.name}" class="disabledinput"></p>
+<form method="post" action="" th:object="${pageinjection}">
     <label>Type:</label>
     <select th:field="*{type}">
         <option value="JS" th:selected="${pageinjection.type=='JS'}">JS</option>
@@ -8,13 +15,13 @@
     </select>
     <p class="errortext" th:if="${#fields.hasErrors('type')}">The type has to be set.</p>
     <label>Page:</label>
-    <input type="text" th:field="*{page}" th:value="${pageinjection.page}">
+    <input type="text" th:field="*{page}">
     <p class="errortext" th:if="${#fields.hasErrors('page')}">The max length of the page is 200 characters.</p>
     <label>Data:</label>
-    <textarea th:field="*{data}" th:utext="${pageinjection.data}"></textarea>
+    <textarea th:field="*{data}"></textarea>
     <p class="errortext" th:if="${#fields.hasErrors('page')}">The max length of the data is 5000 characters.</p>
     <label>Priority:</label>
-    <input type="text" th:field="*{priority}" th:value="${pageinjection.priority}">
+    <input type="text" th:field="*{priority}">
     <p class="errortext" th:if="${#fields.hasErrors('priority')}">The max value of the priority 1000.</p>
     <input type="submit">
 </form>

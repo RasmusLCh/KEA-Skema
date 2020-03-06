@@ -1,4 +1,4 @@
-<lable>MicroService:</lable>
+<label>MicroService:</label>
 <form method="post" action="">
     <select name="selectedmicroserviceid" onchange="javascript: form.submit()">
         <option value="0" th:selected="${selectedmicroserviceid == 0} ? 'SELECTED' : ''">Select microservice</option>
@@ -11,5 +11,4 @@
             </th:block>
         </th:block>
     </select>
-    <p th:text="${selectedmicroserviceid}"></p>
 </form>

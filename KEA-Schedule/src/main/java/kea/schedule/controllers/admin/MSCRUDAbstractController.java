@@ -18,12 +18,10 @@ import java.util.List;
  *
  * This abstract implementation expect a POJO object to be created.
  * The POJO object must implement ModelInterface
- * The POJO can get simple datatypes set from the CRUDControllerAbstract.
+ * The POJO can get simple datatypes set from the MSCRUDAbstractController.
  *
- * For more information about how to implement the CRUDControllerAbstract class, please see http://morcms.dk/wiki/CRUDControllerAbstract
  * */
 
-@Controller
 public abstract class MSCRUDAbstractController<E extends ModelInterface, S extends CRUDServiceInterface<E>>  {
     //Class attributes, set by constructor
     //Path for our Templates
@@ -44,8 +42,15 @@ public abstract class MSCRUDAbstractController<E extends ModelInterface, S exten
     }
 
     @GetMapping({"index", ""})
-    public String get_root_index(Model model)
+    public String get_root_index(Model model, HttpSession session)
     {
+        System.out.println("Session id: " + session.getId());
+        if(session.getAttribute("selectedmicroserviceid") != null){
+            System.out.println("selectedmicroserviceid is " + ((Integer)session.getAttribute("selectedmicroserviceid")).intValue());
+        }
+        else{
+            System.out.println("Session dont have val!");
+        }
         System.out.println("Index");
         model.addAttribute(modelname + "s", service.findAll());
         return path + "index";
@@ -54,7 +59,12 @@ public abstract class MSCRUDAbstractController<E extends ModelInterface, S exten
     @PostMapping({"index", ""})
     public String get_root_index(Model model, HttpSession session, @RequestParam("selectedmicroserviceid") int selectedmicroserviceid)
     {
+        System.out.println("Session id: " + session.getId());
+        System.out.println("Saving attribute in selectedmicroserviceid");
         session.setAttribute("selectedmicroserviceid", new Integer(selectedmicroserviceid));
+        if(session.getAttribute("selectedmicroserviceid") != null){
+            System.out.println("selectedmicroserviceid is " + ((Integer)session.getAttribute("selectedmicroserviceid")).intValue());
+        }
         model.addAttribute("selectedmicroserviceid", selectedmicroserviceid);
         model.addAttribute(modelname + "s", service.findAll());
         return path + "index";
@@ -73,7 +83,7 @@ public abstract class MSCRUDAbstractController<E extends ModelInterface, S exten
             return path + "create";
         }
         E newe = service.create(e);
-        return "redirect:/"+path+"info/" + newe.getId();
+        return "redirect:/"+path+"view/" + newe.getId() + "/";
     }
 
     @GetMapping("/edit/{id}")
@@ -91,7 +101,7 @@ public abstract class MSCRUDAbstractController<E extends ModelInterface, S exten
             return path + "edit";
         }
         service.edit(e);
-        return "redirect:/" + path + "info/" + e.getId();
+        return "redirect:/" + path + "view/" + e.getId() + "/";
     }
 
     @GetMapping("/delete/{id}")
@@ -123,10 +133,18 @@ public abstract class MSCRUDAbstractController<E extends ModelInterface, S exten
     }
 
     @ModelAttribute("selectedmicroserviceid")
-    public int selected_microservice(HttpSession session){
+    public int selected_microserviceid(HttpSession session){
         if(session.getAttribute("selectedmicroserviceid") != null){
             return ((Integer)session.getAttribute("selectedmicroserviceid")).intValue();
         }
         return 0;
+    }
+
+    @ModelAttribute("selectedmicroservice")
+    public MicroService selected_microservice(HttpSession session){
+        if(session.getAttribute("selectedmicroserviceid") != null){
+            return msservice.findById(((Integer)session.getAttribute("selectedmicroserviceid")).intValue());
+        }
+        return null;
     }
 }

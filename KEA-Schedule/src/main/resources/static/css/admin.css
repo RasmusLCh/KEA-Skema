@@ -10,7 +10,35 @@ body{
     box-sizing: border-box;
 }
 
-table, th, td {
+h1{
+    display: inline-block;
+    padding: 0px;
+    margin: 0px;
+}
+
+p.disabledinput{
+    display: block;
+    width: 100%;
+    padding: 8px;
+    border: 1px solid black;
+    background: lightgray;
+}
+
+.bglightgray{
+    background: lightgray;
+}
+
+.block{
+    display: block;
+    width: 100%;
+    margin-bottom: 7px;
+}
+
+.right{
+    float: right;
+}
+
+th, td {
     border: 1px solid black;
     padding: 5px;
 }
@@ -24,14 +52,17 @@ th.invisible{
     border: none;
     background-color: white;
     color: black;
+    width: 100px;
 }
 
 td.invisible{
     border: none;
+    width: 100px;
 }
 
 table{
     border-collapse: collapse;
+    border: 0px;
     width: 100%;
 }
 td{
@@ -162,7 +193,7 @@ label{
     padding-bottom: 2px;
 }
 
-form input, textarea, select, submit{
+form input, textarea, select{
     display: block;
     width: 100%;
     padding: 8px;
@@ -172,9 +203,13 @@ textarea{
     height: 300px;
 }
 
-submit{
+input[type='submit']{
     margin-top: 10px;
     margin-bottom: 10px;
+    background-color: #233249;
+    color: white;
+    border-radius: 35px;
+    padding: 10px;
 }
 
 a.button{

@@ -1,8 +1,14 @@
 <th:block th:include="/admin/header.html" th:tag="remove"></th:block>
-<h1>Page Injections</h1>
+<div class="block">
+    <h1>Page Injections</h1>
+    <th:block th:if="${selectedmicroserviceid != 0}">
+        <a href="create/" class="button right">Create Page Injection</a>
+    </th:block>
+</div>
+
 <th:block th:include="/admin/msselector.html" th:tag="remove"></th:block>
 <th:block th:if="${selectedmicroserviceid != 0}">
-    <a href="create/" class="button">create</a>
+    <br/>
     <table>
         <thead>
             <tr>
@@ -27,8 +33,6 @@
             </tr>
         </tbody>
     </table>
-
-    <p>We got a value! Lets show stuff!</p>
 </th:block>
 <th:block th:if="${selectedmicroserviceid == 0}">
     <p>Please select a MicroService.</p>

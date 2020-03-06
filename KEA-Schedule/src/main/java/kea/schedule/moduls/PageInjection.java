@@ -75,10 +75,6 @@ public class PageInjection implements ModelInterface {
     }
 
     public String getData() {
-        System.out.println("get data");
-        if(data == null){
-            return "blabla";
-        }
         return data;
     }
 
