@@ -4,7 +4,6 @@ import kea.schedule.moduls.MicroService;
 import kea.schedule.moduls.ModelInterface;
 import kea.schedule.services.CRUDServiceInterface;
 import kea.schedule.services.MicroServiceService;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
