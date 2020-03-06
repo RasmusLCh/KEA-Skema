@@ -18,6 +18,10 @@ h1{
 
 p.disabledinput{
     display: block;
+    -ms-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     width: 100%;
     padding: 8px;
     border: 1px solid black;
@@ -194,6 +198,11 @@ label{
 }
 
 form input, textarea, select{
+    /* box fix, makes it so the 100% width is the same for all elements */
+    -ms-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     display: block;
     width: 100%;
     padding: 8px;
@@ -208,7 +217,6 @@ input[type='submit']{
     margin-bottom: 10px;
     background-color: #233249;
     color: white;
-    border-radius: 35px;
     padding: 10px;
 }
 
