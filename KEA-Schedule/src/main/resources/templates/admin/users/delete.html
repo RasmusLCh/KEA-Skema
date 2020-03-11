@@ -1,0 +1,29 @@
+<th:block th:include="/admin/header.html" th:tag="remove"></th:block>
+<div class="block">
+    <h1>Delete User</h1>
+    <a href="../../" class="button right">Back</a>
+</div>
+<p>You are about to delete the user</p>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>DISPLAYNAME</th>
+        <th>IDENTIFIER</th>
+        <th>LANGUAGE</th>
+    </tr>
+    <tr>
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.displayname}"></td>
+        <td th:text="${user.identifier}"></td>
+        <td th:text="${user.language}"></td>
+
+    </tr>
+</table>
+
+<p>Please confirm.</p>
+
+<form method="post" action="../../delete/">
+    <input type="hidden" name="id" th:value="${user.id}">
+    <input type="submit" value="Delete" class="btn-primary form-control">
+</form>
+<th:block th:include="/admin/footer.html" th:tag="remove"></th:block>

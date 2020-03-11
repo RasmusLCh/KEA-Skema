@@ -1,4 +1,32 @@
 <th:block th:include="/admin/header.html" th:tag="remove"></th:block>
-<h1>Users</h1>
+<div class="block">
+    <h1>Users</h1>
+    <a href="create/" class="button right">Create User</a>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>DISPLAYNAME</th>
+        <th>IDENTIFIER</th>
+        <th>LANGUAGE</th>
+        <th class="invisible"></th>
+        <th class="invisible"></th>
+        <th class="invisible"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user:${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.displayname}"></td>
+        <td th:text="${user.identifier}"></td>
+        <td th:text="${user.language}"></td>
+        <td class="invisible"><a th:href="'view/' + ${user.id} + '/'" class="button">VIEW</a></td>
+        <td class="invisible"><a th:href="'edit/' + ${user.id} + '/'" class="button">EDIT</a></td>
+        <td class="invisible"><a th:href="'delete/' + ${user.id} + '/'" class="button">DELETE</a></td>
+    </tr>
+    </tbody>
+</table>
 
 <th:block th:include="/admin/footer.html" th:tag="remove"></th:block>

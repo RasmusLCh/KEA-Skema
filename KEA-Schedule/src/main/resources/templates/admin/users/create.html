@@ -1,0 +1,20 @@
+<th:block th:include="/admin/header.html" th:tag="remove"></th:block>
+<div class="block">
+    <h1>Create User</h1>
+    <a href="../" class="button right">Back</a>
+</div>
+<form method="post" action="" th:object="${user}">
+    <label>Displayname:</label>
+    <input type="text" th:field="*{displayname}">
+    <p class="errortext" th:if="${#fields.hasErrors('displayname')}">Displayname must be set. The max length of displayname is 255 characters.</p>
+    <label>Identifier:</label>
+    <input type="text" th:field="*{identifier}">
+    <p class="errortext" th:if="${#fields.hasErrors('identifier')}">Identifier must be specified. The max length of the identifier is 25 characters.</p>
+    <label>language:</label>
+    <select th:field="*{language}">
+        <option value="ENG" th:selected="${user.language=='ENG'}">ENG</option>
+        <option value="DK" th:selected="${user.language=='DK'}">DK</option>
+    </select>
+    <input type="submit" value="Create">
+</form>
+<th:block th:include="/admin/footer.html" th:tag="remove"></th:block>

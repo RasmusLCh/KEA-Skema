@@ -20,7 +20,7 @@ public class AdminController {
         this.msservice = msservice;
     }
 
-    @GetMapping({"", "index", "users/", "users/index"})
+    @GetMapping({"", "index"})
     public String get_index(){
         return "admin/users/index";
     }
