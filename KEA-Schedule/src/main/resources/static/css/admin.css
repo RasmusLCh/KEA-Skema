@@ -201,7 +201,7 @@ label{
     padding-bottom: 2px;
 }
 
-form input, textarea, select{
+form input[type=text], input[type=password], input[type=submit], textarea, select{
     /* box fix, makes it so the 100% width is the same for all elements */
     -ms-box-sizing: border-box;
     -webkit-box-sizing: border-box;

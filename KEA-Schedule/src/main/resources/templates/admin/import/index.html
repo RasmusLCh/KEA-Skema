@@ -1,0 +1,20 @@
+<th:block th:include="/admin/header.html" th:tag="remove"></th:block>
+<div class="block">
+    <h1>Import</h1>
+</div>
+
+<form method="post" action="./users" enctype="multipart/form-data">
+    <label>User import</label>
+    <input type="file" name="usercsv" placeholder="Add a CSV file"><br/>
+    <p class="hint">Note: CSV data is merged with live data.</p>
+    <input type="submit" value="Import">
+</form>
+
+<br/><br/>
+<form method="post" action="./groups" enctype="multipart/form-data">
+    <label>Group import</label>
+    <input type="file" placeholder="Add a CSV file"><br/>
+    <p class="hint">Note: CSV data is merged with live data.</p>
+    <input type="submit" value="Import">
+</form>
+<th:block th:include="/admin/footer.html" th:tag="remove"></th:block>
