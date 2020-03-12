@@ -1,19 +1,39 @@
-<th:block th:include="morcms/header.html"></th:block>
-
-<h1 class="block">Create User</h1>
-<a href="/users/" class="btn btn-primary right">Back</a>
-<br/>
-<div class="form-group">
-    <form method="post" action="/users/create" th:object="${user}">
-        <label>Username: </label> <input type="text" th:field="*{name}" class="form-control">
-        <p class="errortext" th:if="${#fields.hasErrors('name')}">The name must be between 2 and 50 characters long.</p>
-        <label>Password:</label> <input type="password" th:field="*{password}" class="form-control">
-        <p class="errortext" th:if="${#fields.hasErrors('password')}">The password must be between 8 and 250 characters long.</p>
-        <label>Type:</label>  <select size="1" name="usertypeid" path="setUserTypeId" class="form-control"><option value="1">Administrator</option></select>
-        <br/>
-        <input type="submit" value="Create user" class="btn-primary form-control">
-    </form>
+<th:block th:include="/admin/header.html" th:tag="remove"></th:block>
+<div class="block">
+    <h1>Create Group</h1>
+    <a href="../" class="button right">Back</a>
 </div>
-
-
-<th:block th:include="morcms/footer.html"></th:block>
+<form method="post" action="" th:object="${group}">
+    <label>Name:</label>
+    <input type="text" th:field="*{name}">
+    <p class="errortext" th:if="${#fields.hasErrors('name')}">The max length of the name is 100 characters.</p>
+    <label>Description:</label>
+    <textarea th:field="*{description}"></textarea>
+    <p class="errortext" th:if="${#fields.hasErrors('description')}">The max length of the data is 2000 characters.</p>
+    <label>Users:</label>
+    <select th:field="*{users}" size="20" multiple>
+        <th:block th:each="user : ${users}">
+            <th:block th:if="${group.getUsers().contains(user)}">
+                <option th:value="${user.id}" th:text="${user.displayname + '(' + user.identifier + ')'}" SELECTED="SELECTED"></option>
+            </th:block>
+            <th:block th:unless="${group.getUsers().contains(user)}">
+                <option th:value="${user.id}" th:text="${user.displayname + '(' + user.identifier + ')'}"></option>
+            </th:block>
+        </th:block>
+    </select>
+    <p class="hint">Select multiple users by holding down CTRL while selecting user.</p>
+    <label>Groups:</label>
+    <select th:field="*{groups}" size="10" multiple>
+        <th:block th:each="grp : ${groups}">
+            <th:block th:if="${group.getGroups().contains(grp)}">
+                <option th:value="${grp.id}" th:text="${grp.name}" SELECTED="SELECTED"></option>
+            </th:block>
+            <th:block th:unless="${group.getGroups().contains(grp)}">
+                <option th:value="${grp.id}" th:text="${grp.name}"></option>
+            </th:block>
+        </th:block>
+    </select>
+    <p class="hint">Select multiple groups by holding down CTRL while selecting group.</p>
+    <input type="submit" value="Create">
+</form>
+<th:block th:include="/admin/footer.html" th:tag="remove"></th:block>

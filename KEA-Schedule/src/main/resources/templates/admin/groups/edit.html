@@ -1,31 +1,43 @@
-<th:block th:include="morcms/header.html"></th:block>
-
-<h1>Edit User</h1>
-<a href="/users/" class="btn btn-primary right">Back</a>
-<br/>
-<p>To make any changes, please provide the old password</p>
-<div class="form-group">
-    <form method="post" action="/users/edit" class="fw500" th:object="${user}">
-        <input type="hidden" th:field="*{id}">
-        <div class="block">
-            <label>Username:</label>
-            <input type="text" th:field="*{name}" class="form-control">
-            <p class="errortext" th:if="${#fields.hasErrors('name')}">The name must be between 2 and 50 characters long.</p>
-        </div>
-        <div class="block">
-            <label>Password:</label>
-            <input type="password" th:field="*{password}" class="form-control">
-            <p class="errortext" th:if="${#fields.hasErrors('password')}">The password must be between 8 and 250 characters long. A new password must be created, if you save a user account.</p>
-        </div>
-        <div class="block">
-            <label>Bruger type:</label>
-            <select size="1" name="userTypeid" path="setUserTypeId" class="form-control">
-                        <option value="1">ADMINISTRATOR</option>
-            </select>
-        </div>
-        <br/>
-        <input type="submit" value="Edit" class="btn-primary form-control">
-    </form>
+<th:block th:include="/admin/header.html" th:tag="remove"></th:block>
+<div class="block">
+    <h1>Edit Page Injection</h1>
+    <a href="../../" class="button right">Back</a>
 </div>
+<form method="post" action="../../edit" th:object="${group}">
+    <input type="hidden" th:field="*{id}">
+    <label>Name:</label>
+    <input type="text" th:field="*{name}">
+    <p class="errortext" th:if="${#fields.hasErrors('name')}">The max length of the name is 100 characters.</p>
+    <label>Description:</label>
+    <textarea th:field="*{description}"></textarea>
+    <p class="errortext" th:if="${#fields.hasErrors('description')}">The max length of the data is 2000 characters.</p>
+    <label>Users:</label>
+    <select th:field="*{users}" size="20" multiple>
+        <th:block th:each="user : ${users}">
+            <th:block th:if="${group.getUsers().contains(user)}">
+                <option th:value="${user.id}" th:text="${user.displayname + '(' + user.identifier + ')'}" SELECTED="SELECTED"></option>
+            </th:block>
+            <th:block th:unless="${group.getUsers().contains(user)}">
+                <option th:value="${user.id}" th:text="${user.displayname + '(' + user.identifier + ')'}"></option>
+            </th:block>
+        </th:block>
+    </select>
+    <p class="hint">Select multiple users by holding down CTRL while selecting user.</p>
+    <label>Groups:</label>
+    <select th:field="*{groups}" size="10" multiple>
+        <th:block th:each="grp : ${groups}">
+            <th:block th:unless="${group.id == grp.id}">
+                <th:block th:if="${group.getGroups().contains(grp)}">
+                    <option th:value="${grp.id}" th:text="${grp.name}" SELECTED="SELECTED"></option>
+                </th:block>
+                <th:block th:unless="${group.getGroups().contains(grp)}">
+                    <option th:value="${grp.id}" th:text="${grp.name}"></option>
+                </th:block>
+            </th:block>
 
-<th:block th:include="morcms/footer.html"></th:block>
+        </th:block>
+    </select>
+    <p class="hint">Select multiple groups by holding down CTRL while selecting group.</p>
+    <input type="submit" value="Edit">
+</form>
+<th:block th:include="/admin/footer.html" th:tag="remove"></th:block>

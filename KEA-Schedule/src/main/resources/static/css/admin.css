@@ -16,6 +16,10 @@ h1{
     margin: 0px;
 }
 
+p.hint{
+    color: darkgray;
+}
+
 p.disabledinput{
     display: block;
     -ms-box-sizing: border-box;

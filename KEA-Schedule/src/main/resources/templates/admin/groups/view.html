@@ -1,10 +1,38 @@
-<th:block th:include="morcms/header.html"></th:block>
-
-<h1 class="block">User info</h1>
-<a href="/users/" class="btn btn-primary right">Back</a>
-<br/>
-<label>Id:</label><p th:text="${user.getId()}"></p>
-<label>Username: </label><p th:text="${user.getName()}"></p>
-<label>Brugertype: </label><p th:text="${user.getUserType().getName()}"></p>
-
-<th:block th:include="morcms/footer.html"></th:block>
+<th:block th:include="/admin/header.html" th:tag="remove"></th:block>
+<div class="block">
+    <h1>View Group</h1>
+    <a href="../../" class="button right">Back</a>
+</div>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>NAME</th>
+    </tr>
+    <tr>
+        <td th:text="${group.id}"></td>
+        <td th:text="${group.name}"></td>
+    </tr>
+    <tr>
+        <th colspan="2">Description</th>
+    </tr>
+    <tr>
+        <td colspan="2" th:text="${group.description}"></td>
+    </tr>
+    <th:block th:if="${group.users != null and 0 &lt; group.getUsers().size()}">
+    <tr>
+        <th colspan="2">Users</th>
+    </tr>
+    <tr th:each="user : ${group.users}">
+        <td colspan="2" th:text="${user.displayname}"></td>
+    </tr>
+    </th:block>
+    <th:block th:if="${group.groups != null and 0 &lt; group.getGroups().size() }">
+        <tr>
+            <th colspan="2">Groups</th>
+        </tr>
+        <tr th:each="grp: ${group.groups}">
+            <td colspan="2" th:text="${grp.name}"></td>
+        </tr>
+    </th:block>
+</table>
+<th:block th:include="/admin/footer.html" th:tag="remove"></th:block>

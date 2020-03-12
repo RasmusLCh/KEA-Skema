@@ -25,10 +25,7 @@ public class AdminController {
         return "admin/users/index";
     }
 
-    @GetMapping({"groups/", "groups/index"})
-    public String get_groups(){
-        return "admin/groups/index";
-    }
+
 
     @GetMapping({"courses/", "courses/index"})
     public String get_courses(){
@@ -64,6 +61,11 @@ public class AdminController {
     }
 
     /*
+
+        @GetMapping({"groups/", "groups/index"})
+    public String get_groups(){
+        return "admin/groups/index";
+    }
     * ******* pageinjections: start
     * */
 /*

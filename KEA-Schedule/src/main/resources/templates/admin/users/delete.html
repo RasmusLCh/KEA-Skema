@@ -16,10 +16,18 @@
         <td th:text="${user.displayname}"></td>
         <td th:text="${user.identifier}"></td>
         <td th:text="${user.language}"></td>
-
+    </tr>
+    <tr>
+        <th colspan="4">GROUPS</th>
+    </tr>
+    <tr>
+        <td colspan="4">
+            <th:block th:each="grp: ${user.groups}" th:remove="tag">
+                <p th:text="${grp.name}"></p>
+            </th:block>
+        </td>
     </tr>
 </table>
-
 <p>Please confirm.</p>
 
 <form method="post" action="../../delete/">

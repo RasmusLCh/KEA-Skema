@@ -1,24 +1,34 @@
 package kea.schedule.moduls;
 
+import org.hibernate.validator.constraints.UniqueElements;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import java.util.List;
 import java.util.ArrayList;
 
 @Entity(name= "Group")
 @Table(name= "groups")
-public class Group {
+public class Group implements ModelInterface{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @Column(unique=true)
+    //Name is the same as the Role the group gives access to
+    @Column(unique=true, columnDefinition="VARCHAR(100)")
+    @Size(min=1,max=100)
+    @NotNull
     private String name = null;
-    @ManyToMany
-    List<Group> groups = new ArrayList();
-    @ManyToMany
-    List<User> users = new ArrayList();;
-    @OneToMany
-    List<GroupMetadata> metadata = new ArrayList();;
+    @Column(columnDefinition="VARCHAR(2000)")
+    @Size(max=2000)
+    private String description = null;
+    @ManyToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+    private List<Group> groups = new ArrayList();
+    @ManyToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+    //We want this to be unidirectional, so we can add/remove from users also.
+    @JoinTable(name = "group_user", joinColumns = @JoinColumn(name="group_id", referencedColumnName="id", table="groups"), inverseJoinColumns = @JoinColumn(name="user_id", referencedColumnName="id", table="users"))
+    private List<User> users = new ArrayList();;
 
     public int getId() {
         return id;
@@ -52,11 +62,19 @@ public class Group {
         this.users = users;
     }
 
-    public List<GroupMetadata> getMetadata() {
-        return metadata;
+    public String getDescription() {
+        return description;
     }
 
-    public void setMetadata(List<GroupMetadata> metadata) {
-        this.metadata = metadata;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        if(obj instanceof Group){
+            return ((Group)obj).getId() == this.id;
+        }
+        return false;
     }
 }
