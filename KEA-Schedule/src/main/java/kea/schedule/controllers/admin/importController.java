@@ -1,10 +1,14 @@
 package kea.schedule.controllers.admin;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.MappingIterator;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvParser;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
+import kea.schedule.moduls.Group;
 import kea.schedule.moduls.User;
+import kea.schedule.services.GroupService;
 import kea.schedule.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -15,16 +19,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("admin/import/")
 public class importController {
     private UserService userservice;
+    private GroupService grpservice;
 
     @Autowired
-    public importController(UserService userservice){
+    public importController(UserService userservice, GroupService grpservice){
         this.userservice = userservice;
+        this.grpservice = grpservice;
     }
     @GetMapping({"", "index"})
     public String get_index(){
@@ -61,7 +71,44 @@ public class importController {
     }
 
     @PostMapping("groups")
-    public String post_groups(MultipartFile file){
+    public String post_groups(@RequestParam(name="grpjson") MultipartFile file){
+        try {
+            ObjectMapper jsonMapper = new ObjectMapper();
+            JsonNode jsonNode = jsonMapper.readTree(file.getBytes());
+            Iterator<Map.Entry<String, JsonNode>> it = jsonNode.fields();
+            //Run through all groups in JSON file
+            while (it.hasNext()) {
+                Map.Entry<String,JsonNode> entry = it.next();
+                String name = entry.getKey();
+                if(name != null){
+                    //System.out.println(name);
+                    List<Group> grps = grpservice.findByMetadata(name);
+                    //Check if any groups has the group name defined in their metadata, if so run through the grps
+                    for(Group grp : grps){
+                        System.out.println(grp.getName() + " " + grp.getMetadata());
+                        List<User> userlist = new ArrayList();
+                        Iterator<Map.Entry<String, JsonNode>> grpuserident = entry.getValue().fields();
+                        //Add users to the group list
+                        while(grpuserident.hasNext()){
+                            Map.Entry<String,JsonNode> userentry = grpuserident.next();
+                            String userident = userentry.getKey();
+                            User user = userservice.findByIdentifier(userident);
+                            if(user != null){
+                                userlist.add(user);
+                            }
+                            System.out.println("\t" + userident);
+                        }
+                        //Set users of group and save list.
+                        grp.setUsers(userlist);
+                        grpservice.edit(grp);
+                    }
+                }
+            }
+
+        }
+        catch (IOException e){
+            System.out.println("post_groups: " + e.getMessage());
+        }
         return "admin/import/groups";
     }
 }

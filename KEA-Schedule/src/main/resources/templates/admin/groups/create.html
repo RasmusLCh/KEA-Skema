@@ -10,6 +10,9 @@
     <label>Description:</label>
     <textarea th:field="*{description}"></textarea>
     <p class="errortext" th:if="${#fields.hasErrors('description')}">The max length of the data is 2000 characters.</p>
+    <label>Metadata:</label>
+    <input type="text" th:field="*{metadata}">
+    <p class="errortext" th:if="${#fields.hasErrors('metadata')}">The max length of the data is 100 characters.</p>
     <label>Users:</label>
     <select th:field="*{users}" size="20" multiple>
         <th:block th:each="user : ${users}">

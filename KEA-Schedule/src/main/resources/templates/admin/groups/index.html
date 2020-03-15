@@ -7,6 +7,7 @@
         <th>ID</th>
         <th>NAME</th>
         <th>DESCRIPTION</th>
+        <th>METADATA</th>
         <th>USERS</th>
         <th>GROUPS</th>
         <th class="invisible"></th>
@@ -17,6 +18,7 @@
         <td th:text="${group.id}"></td>
         <td th:text="${group.name}"></td>
         <td th:text="${group.description}"></td>
+        <td th:text="${group.metadata}"></td>
         <td th:text="${group.getUsers().size()}"></td>
         <td th:text="${group.getGroups().size()}"></td>
         <td class="invisible"><a th:href="'view/' + ${group.id} + '/'" class="button">VIEW</a></td>

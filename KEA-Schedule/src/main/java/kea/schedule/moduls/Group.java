@@ -23,6 +23,10 @@ public class Group implements ModelInterface{
     @Column(columnDefinition="VARCHAR(2000)")
     @Size(max=2000)
     private String description = null;
+    @Column(columnDefinition="VARCHAR(500)")
+    @Size(min=1,max=100)
+    @NotNull
+    private String metadata = null;
     @ManyToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     private List<Group> groups = new ArrayList();
     @ManyToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
@@ -68,6 +72,14 @@ public class Group implements ModelInterface{
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getMetadata() {
+        return metadata;
+    }
+
+    public void setMetadata(String metadata) {
+        this.metadata = metadata;
     }
 
     @Override

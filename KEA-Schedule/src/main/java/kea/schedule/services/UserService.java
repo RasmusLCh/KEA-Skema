@@ -40,6 +40,10 @@ public class UserService implements CRUDServiceInterface<User> {
         return null;
     }
 
+    public User findByIdentifier(String identifier){
+        return userrepo.findByIdentifier(identifier);
+    }
+
     @Override
     public List<User> findAll() {
         return userrepo.findAll();

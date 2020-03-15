@@ -42,6 +42,10 @@ public class GroupService implements CRUDServiceInterface<Group> {
         return null;
     }
 
+    public List<Group> findByMetadata(String metadata){
+        return grouprepo.findByMetadata(metadata);
+    }
+
     public List<Group> findAll(){
         return grouprepo.findAll();
     }
