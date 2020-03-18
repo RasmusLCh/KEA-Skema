@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 @Entity(name= "Group")
-@Table(name= "groups")
+@Table(name= "pre_groups") //JPA / Hibernate doesnt allow the table to be called groups..
 public class Group implements ModelInterface{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
