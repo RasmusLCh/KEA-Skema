@@ -1,7 +1,5 @@
 package kea.schedule.moduls;
 
-import org.hibernate.validator.constraints.UniqueElements;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -31,7 +29,7 @@ public class Group implements ModelInterface{
     private List<Group> groups = new ArrayList();
     @ManyToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     //We want this to be unidirectional, so we can add/remove from users also.
-    @JoinTable(name = "group_user", joinColumns = @JoinColumn(name="group_id", referencedColumnName="id", table="groups"), inverseJoinColumns = @JoinColumn(name="user_id", referencedColumnName="id", table="users"))
+    @JoinTable(name = "group_user", joinColumns = @JoinColumn(name="group_id", referencedColumnName="id", table="pre_groups"), inverseJoinColumns = @JoinColumn(name="user_id", referencedColumnName="id", table="users"))
     private List<User> users = new ArrayList();;
 
     public int getId() {

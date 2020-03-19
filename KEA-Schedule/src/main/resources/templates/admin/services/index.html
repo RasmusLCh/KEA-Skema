@@ -11,6 +11,9 @@
         <th>enabled</th>
         <th>dependencies</th>
         <th>Access</th>
+        <th class="invisible"></th>
+        <th class="invisible"></th>
+        <th class="invisible"></th>
     </tr>
     <tr th:each="service: ${microservices}" th:if="${service != null}">
         <td th:text="${service.id}"></td>
@@ -22,15 +25,11 @@
         <td><input type="checkbox" name="" th:checked="${service.enabled}"></td>
         <td th:text="${service.dependencyMicroserviceId}"></td>
         <td>
-            <select size="5">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-            </select>
+            <th:block th:each="grp, iter: ${service.getAccessgroups()}" th:remove="tag"><th:block th:text="${grp.name}" th:if="${iter.index == 0}"></th:block><th:block th:text="${', ' + grp.name}" th:if="${iter.index > 0}"></th:block></th:block>
         </td>
+        <td class="invisible"><a th:href="'view/' + ${service.id} + '/'" class="button">VIEW</a></td>
+        <td class="invisible"><a th:href="'edit/' + ${service.id} + '/'" class="button">EDIT</a></td>
+        <td class="invisible"><a th:href="'delete/' + ${service.id} + '/'" class="button">DELETE</a></td>
     </tr>
 </table>
 <th:block th:include="/admin/footer.html" th:tag="remove"></th:block>

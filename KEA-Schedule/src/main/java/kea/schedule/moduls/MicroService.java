@@ -1,6 +1,7 @@
 package kea.schedule.moduls;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity(name= "MicroService")
 @Table(name= "microservices")
@@ -24,6 +25,13 @@ public class MicroService {
     //If the microservice requires another microservice, an id for the microservice should be specified.
     @Column
     private int dependencyMicroserviceId;
+    @ManyToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+    @JoinTable(
+            name = "microservice_group",
+            joinColumns = @JoinColumn(name="microservice_id", referencedColumnName="id", table="microservices"),
+            inverseJoinColumns = @JoinColumn(name="group_id", referencedColumnName="id", table="pre_groups")
+    )
+    private List<Group> accessgroups;
 
     public MicroService(){ }
 
@@ -95,5 +103,13 @@ public class MicroService {
 
     public void setDependencyMicroserviceId(int dependencyMicroserviceId) {
         this.dependencyMicroserviceId = dependencyMicroserviceId;
+    }
+
+    public List<Group> getAccessgroups() {
+        return accessgroups;
+    }
+
+    public void setAccessgroups(List<Group> accessgroups) {
+        this.accessgroups = accessgroups;
     }
 }

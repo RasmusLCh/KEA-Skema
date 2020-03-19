@@ -24,7 +24,11 @@ public class User implements ModelInterface{
     @NotNull
     private String language; //Default language for user
     @ManyToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
-    @JoinTable(name = "group_user", inverseJoinColumns = @JoinColumn(name="group_id", referencedColumnName="id", table="groups"), joinColumns = @JoinColumn(name="user_id", referencedColumnName="id", table="users"))
+    @JoinTable(
+        name = "group_user",
+        joinColumns = @JoinColumn(name="user_id", referencedColumnName="id", table="users"),
+        inverseJoinColumns = @JoinColumn(name="group_id", referencedColumnName="id", table="pre_groups")
+    )
     private List<Group> groups;
 
 

@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface GroupRepo extends JpaRepository<Group, Integer> {
     List<Group> findByMetadata(String metadata);
+    Group findByName(String name);
 }

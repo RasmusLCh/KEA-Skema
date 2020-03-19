@@ -1,11 +1,10 @@
 package kea.schedule.controllers;
 
+import kea.schedule.moduls.Group;
 import kea.schedule.moduls.PageInjection;
 import kea.schedule.moduls.TopMenuLink;
-import kea.schedule.services.LangService;
-import kea.schedule.services.MicroServiceService;
-import kea.schedule.services.PageInjectionService;
-import kea.schedule.services.TopMenuLinkService;
+import kea.schedule.moduls.User;
+import kea.schedule.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,13 +22,18 @@ public class RootController {
     private TopMenuLinkService topmenuservice;
     private LangService langservice;
     private MicroServiceService msservice;
+    private UserService userservice;
+    private AuthenticationService autservice;
+
 
     @Autowired
-    public RootController(PageInjectionService pageinjectionservice, TopMenuLinkService topmenuservice, LangService langservice, MicroServiceService msservice){
+    public RootController(PageInjectionService pageinjectionservice, TopMenuLinkService topmenuservice, LangService langservice, MicroServiceService msservice, AuthenticationService autservice, UserService userservice){
         this.pageinjectionservice = pageinjectionservice;
         this.topmenuservice = topmenuservice;
         this.langservice = langservice;
         this.msservice = msservice;
+        this.autservice = autservice;
+        this.userservice = userservice;
     }
 
     @GetMapping({"index", ""})
@@ -66,6 +70,32 @@ public class RootController {
         System.out.println("Lang " + language);
         langservice.setLanguage(language, session);
         page = langservice.switchPageLanguage(page, language);
+        return "redirect:"+page;
+    }
+
+    @PostMapping("login")
+    public String post_login(@RequestParam("identifier") String identifier, @RequestParam("password") String password, HttpSession session){
+        String language = langservice.getUserLanguage(session);
+        String page = "index";
+        page = langservice.switchPageLanguage(page, language);
+
+        if(autservice.Authenticate(identifier, password)){
+            //User authenticated
+            System.out.println("User authenticated");
+            for (Group grp: ((User)session.getAttribute("curuser")).getGroups()){
+                System.out.println("\tAccess groups" + grp.getName());
+            }
+            if(autservice.hasAccess("DAT18A")){
+                System.out.println("User has access to DAT18A");
+            }
+            if(autservice.hasAccess("DAT18B")){
+                System.out.println("User has access to DAT18B");
+            }
+            return "redirect:"+page;
+        }
+        //User authentication failed!
+        System.out.println("User authentication failed!");
+
         return "redirect:"+page;
     }
 
