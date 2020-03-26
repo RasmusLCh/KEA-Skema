@@ -9,7 +9,10 @@
     <p class="errortext" th:if="${#fields.hasErrors('displayname')}">Displayname must be set. The max length of displayname is 255 characters.</p>
     <label>Identifier:</label>
     <input type="text" th:field="*{identifier}">
-    <p class="errortext" th:if="${#fields.hasErrors('identifier')}">Identifier must be specified. The max length of the identifier is 25 characters.</p>
+    <p class="errortext" th:if="${#fields.hasErrors('identifier')}">Identifier must be specified. The max length of the identifier is 50 characters.</p>
+    <label>Email:</label>
+    <input type="text" th:field="*{email}">
+    <p class="errortext" th:if="${#fields.hasErrors('email')}">Email must be specified. The max length of the email is 100 characters.</p>
     <label>language:</label>
     <select th:field="*{language}">
         <option value="ENG" th:selected="${user.language=='ENG'}">ENG</option>

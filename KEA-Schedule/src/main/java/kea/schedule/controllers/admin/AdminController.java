@@ -25,8 +25,6 @@ public class AdminController {
         return "admin/users/index";
     }
 
-
-
     @GetMapping({"courses/", "courses/index"})
     public String get_courses(){
         return "admin/courses/index";
@@ -36,10 +34,6 @@ public class AdminController {
     public String get_statistics(){
         return "admin/statistics/index";
     }
-
-
-
-
 
     @GetMapping({"services/", "services/index"})
     public String get_services(Model model){
@@ -60,26 +54,5 @@ public class AdminController {
         return "admin/topmenulinks/index";
     }
 
-    /*
 
-        @GetMapping({"groups/", "groups/index"})
-    public String get_groups(){
-        return "admin/groups/index";
-    }
-    * ******* pageinjections: start
-    * */
-/*
-    @GetMapping({"pageinjections/", "pageinjections/index"})
-    public String get_pageinjections(Model model) {
-        List<MicroService> microservices = msservice.findAll();
-        System.out.println("services size = " + microservices.size());
-        model.addAttribute("microservices", microservices);
-        return "admin/pageinjections/index";
-    }
-
-
- */
-    /*
-     * ******* pageinjections: end
-     * */
 }

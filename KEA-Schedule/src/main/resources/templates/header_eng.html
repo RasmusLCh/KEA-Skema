@@ -49,13 +49,16 @@
 
     </div>
 </div>
-<div class="headersubmenu">
-    <form method="post" action="./login" >
-        Login > User: <input type="text" name="identifier">
-        Password: <input type="password" name="password">
-        <input type="submit" value="Login">
-    </form>
-</div>
+<th:block th:unless="${authenticated}">
+    <div class="headersubmenu">
+        <form method="post" action="./login" >
+            Login > User: <input type="text" name="identifier">
+            Password: <input type="password" name="password">
+            <input type="submit" value="Login">
+        </form>
+    </div>
+</th:block>
+
 <div class="headersubmenu" id="headersubmenu_settings" style="display: none">
     <h2>Settings</h2>
     <h3>Schedueler</h3><br/>

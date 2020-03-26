@@ -140,48 +140,5 @@ public class MSRestController {
         return "";
     }
 
-    /*
 
-    //https://stackoverflow.com/questions/14726082/spring-mvc-rest-service-redirect-forward-proxy
-    @RequestMapping(value = "{servicename}/{restpage}")
-    @ResponseBody
-    public String get_servicename_restpage(@RequestBody(required = false) String body,
-                                           @PathVariable String servicename,
-                                           @PathVariable String restpage,
-                                            HttpMethod method,
-                                            HttpServletRequest request,
-                                            HttpSession session) throws URISyntaxException {
-         String query = null;
-         if(session != null && session.getAttribute("user") != null){
-             User user = (User)session.getAttribute("user");
-             query = "userid=" + user.getId();
-         }
-         MicroService ms = mss.findMSByName(servicename);
-        if(ms == null) return "";
-         URI uri = new URI("http", null, "localhost", ms.getPort(), "/servicerest/" + servicename + "/" + restpage, query, null);
-        HttpHeaders headers = new HttpHeaders();
-        Enumeration<String> headerNames = request.getHeaderNames();
-        while (headerNames.hasMoreElements()) {
-            String headerName = headerNames.nextElement();
-            headers.set(headerName, request.getHeader(headerName));
-        }
-
-        HttpEntity<String> httpEntity = new HttpEntity<>(body, headers);
-        RestTemplate restTemplate = new RestTemplate();
-        try {
-            Object o = (restTemplate.exchange(uri, method, httpEntity, String.class)).getBody();
-            if(o != null){
-                return o.toString();
-            }
-            return "";
-        } catch(HttpStatusCodeException e) {
-            System.out.println(e.getStatusCode());
-            return ResponseEntity.status(e.getRawStatusCode())
-                                 .headers(e.getResponseHeaders())
-                                 .body(e.getResponseBodyAsString()).toString();
-        }
-    }
-
-
-     */
 }

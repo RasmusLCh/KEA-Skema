@@ -91,6 +91,9 @@ public class RootController {
             if(autservice.hasAccess("DAT18B")){
                 System.out.println("User has access to DAT18B");
             }
+            if(autservice.hasAccess("DAT18")){
+                System.out.println("User has access to DAT18");
+            }
             return "redirect:"+page;
         }
         //User authentication failed!
@@ -141,4 +144,8 @@ public class RootController {
         return hsr.getRequestURI();
     }
 
+    @ModelAttribute("authenticated")
+    public boolean getAuthenticated(){
+        return autservice.isAuthenticated();
+    }
 }

@@ -22,8 +22,7 @@ public class Group implements ModelInterface{
     @Size(max=2000)
     private String description = null;
     @Column(columnDefinition="VARCHAR(500)")
-    @Size(min=1,max=100)
-    @NotNull
+    @Size(min=0,max=100)
     private String metadata = null;
     @ManyToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     private List<Group> groups = new ArrayList();

@@ -45,10 +45,12 @@ public class importController {
     public String post_users(@RequestParam(name="usercsv") MultipartFile usercsv){
         try {
             System.out.println(usercsv.getOriginalFilename());
-            CsvSchema bootstrapSchema = CsvSchema.builder().addColumn("displayname").addColumn("identifier").build();
-            bootstrapSchema.skipsFirstDataRow();
-            bootstrapSchema.withColumnSeparator(',');
-            bootstrapSchema.rebuild();
+            CsvSchema bootstrapSchema = CsvSchema.builder()
+                                            .addColumn("displayname")
+                                            .addColumn("email")
+                                            .addColumn("identifier")
+                                            .setSkipFirstDataRow(true)
+                                            .build().withColumnSeparator(',');
             CsvMapper mapper = new CsvMapper();
 
             System.out.println(usercsv.getOriginalFilename());
@@ -58,7 +60,7 @@ public class importController {
             List<User> users = readValues.readAll();
             System.out.println(usercsv.getOriginalFilename());
             for(User usr : users){
-                System.out.println(usr.getDisplayname() + " " + usr.getIdentifier());
+                System.out.println("Displayname: " + usr.getDisplayname() + " Email: " + usr.getEmail() + " Identifier: " + usr.getIdentifier());
                 usr.setLanguage("ENG");
                 userservice.create(usr);
             }

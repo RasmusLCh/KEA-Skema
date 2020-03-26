@@ -10,6 +10,7 @@
         <th>ID</th>
         <th>DISPLAYNAME</th>
         <th>IDENTIFIER</th>
+        <th>Email</th>
         <th>LANGUAGE</th>
         <th>GROUPS</th>
         <th class="invisible"></th>
@@ -22,6 +23,7 @@
         <td th:text="${user.id}"></td>
         <td th:text="${user.displayname}"></td>
         <td th:text="${user.identifier}"></td>
+        <td th:text="${user.email}"></td>
         <td th:text="${user.language}"></td>
         <td>
            <th:block th:each="grp, iter: ${user.groups}" th:remove="tag"><th:block th:text="${grp.name}" th:if="${iter.index == 0}"></th:block><th:block th:text="${', ' + grp.name}" th:if="${iter.index > 0}"></th:block></th:block>

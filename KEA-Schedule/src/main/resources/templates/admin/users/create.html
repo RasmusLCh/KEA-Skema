@@ -10,6 +10,9 @@
     <label>Identifier:</label>
     <input type="text" th:field="*{identifier}">
     <p class="errortext" th:if="${#fields.hasErrors('identifier')}">Identifier must be specified. The max length of the identifier is 25 characters.</p>
+    <label>Email:</label>
+    <input type="text" th:field="*{email}">
+    <p class="errortext" th:if="${#fields.hasErrors('email')}">Email must be specified. The max length of the email is 100 characters.</p>
     <label>language:</label>
     <select th:field="*{language}">
         <option value="ENG" th:selected="${user.language=='ENG'}">ENG</option>

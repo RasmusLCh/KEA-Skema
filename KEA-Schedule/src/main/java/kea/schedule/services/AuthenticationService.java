@@ -3,10 +3,13 @@ package kea.schedule.services;
 import kea.schedule.moduls.Group;
 import kea.schedule.moduls.User;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
+import javax.mail.*;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Properties;
 
 @Service
 public class AuthenticationService {
@@ -14,6 +17,7 @@ public class AuthenticationService {
     private UserService userservice;
     private GroupService groupservice;
     private HttpSession session;
+
     @Autowired
     public AuthenticationService(UserService userservice, GroupService groupservice, HttpSession session){
         this.userservice = userservice;
@@ -25,7 +29,7 @@ public class AuthenticationService {
         return (User)session.getAttribute("curuser");
     }
 
-    public boolean Authenticated(){
+    public boolean isAuthenticated(){
         return session.getAttribute("curuser") != null;
     }
 
@@ -102,13 +106,42 @@ public class AuthenticationService {
     }
 
     public boolean Authenticate(User user, String password){
-        boolean returnvalue = true;
         if(user == null){
-            returnvalue = false;
+            return false;
         }
+        boolean returnvalue = auth(user.getEmail(), password);
         if(returnvalue && session != null){
             session.setAttribute("curuser", user);
         }
-        return true;
+        return returnvalue;
+    }
+
+    //Inspired by https://stackoverflow.com/questions/3060837/validate-smtp-server-credentials-using-java-without-actually-sending-mail
+    private boolean auth(String email, String password){
+        Properties properties = System.getProperties();
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.auth", "true");
+
+        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(email, password);
+            }
+        });
+        try{
+            Transport transport = session.getTransport("smtp");
+            transport.connect("smtp.office365.com", 587, email, password);
+            transport.close();
+            System.out.println("success");
+            return true;
+        }
+        catch(AuthenticationFailedException e) {
+            System.out.println("AuthenticationFailedException - for authentication failures");
+            e.printStackTrace();
+        }
+        catch(MessagingException e) {
+            System.out.println("for other failures");
+            e.printStackTrace();
+        }
+        return false;
     }
 }

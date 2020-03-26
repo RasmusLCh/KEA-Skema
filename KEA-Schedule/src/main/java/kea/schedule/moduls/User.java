@@ -15,6 +15,10 @@ public class User implements ModelInterface{
     @Size(min=1,max=255)
     @NotNull
     private String displayname;
+    @Column(unique=true, name = "email", columnDefinition="VARCHAR(100)")
+    @Size(min=1,max=100)
+    @NotNull
+    private String email; //This is a unique user identifier
     @Column(unique=true, name = "identifier", columnDefinition="VARCHAR(50)")
     @Size(min=1,max=50)
     @NotNull
@@ -55,6 +59,14 @@ public class User implements ModelInterface{
 
     public void setIdentifier(String identifier) {
         this.identifier = identifier;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getLanguage() {
