@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity(name= "Action")
 @Table(name= "actions")
-public class Action {
+public class Action implements ModelInterface {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;

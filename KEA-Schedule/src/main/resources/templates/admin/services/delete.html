@@ -1,0 +1,39 @@
+<th:block th:include="/admin/header.html" th:tag="remove"></th:block>
+<div class="block">
+    <h1>Delete Microservice</h1>
+    <a href="../../" class="button right">Back</a>
+<!--    <th:block th:if="${selectedmicroserviceid != 0}">
+    </th:block> -->
+</div>
+<p>You are about to delete the action</p>
+<table>
+    <!--    <tr>
+            <th colspan="4">
+                MicroService
+            </th>
+        </tr>
+        <tr>
+            <td colspan="4" th:text="${selectedmicroservice.name}"></td>
+        </tr> -->
+    <tr>
+        <th>ID</th>
+        <th>PORT</th>
+        <th>VERSION</th>
+        <th>DESCRIPTION</th>
+    </tr>
+    <tr>
+        <td th:text="${microservice.id}"></td>
+        <td th:text="${microservice.port}"></td>
+        <td th:text="${microservice.version}"></td>
+        <td th:text="${microservice.description}"></td>
+
+    </tr>
+</table>
+
+<p>Please confirm.</p>
+
+<form method="post" action="../../delete/">
+    <input type="hidden" name="id" th:value="${microservice.id}">
+    <input type="submit" value="Delete" class="btn-primary form-control">
+</form>
+<th:block th:include="/admin/footer.html" th:tag="remove"></th:block>

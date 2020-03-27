@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface ActionRepo extends JpaRepository<Action, Integer> {
-    public List<Action> findAllByActionname(String name);
+    List<Action> findAllByActionname(String name);
 }

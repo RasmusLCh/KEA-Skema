@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class MicroServiceService {
+public class MicroServiceService implements CRUDServiceInterface<MicroService> {
     MicroServiceRepo msrepo;
     ActionRepo actionrepo;
     PageInjectionRepo pageinjectionrepo;
@@ -48,6 +48,25 @@ public class MicroServiceService {
             services = new ArrayList<>();
         }
         return services;
+    }
+
+    @Override
+    public MicroService create(MicroService microService) {
+        return msrepo.save(microService);
+    }
+
+    @Override
+    public void edit(MicroService microService) {
+        msrepo.save(microService);
+    }
+
+    @Override
+    public void delete(int id) {
+        Optional ms = msrepo.findById(id);
+        if(ms.isPresent()){
+            msrepo.delete((MicroService) ms.get());
+        }
+
     }
 
     public MicroService findById(int id){

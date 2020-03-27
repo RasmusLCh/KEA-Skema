@@ -7,9 +7,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class TopMenuLinkService {
+public class TopMenuLinkService implements CRUDServiceInterface<TopMenuLink> {
     TopMenuLinkRepo repo;
 
     @Autowired
@@ -17,11 +18,41 @@ public class TopMenuLinkService {
         this.repo = repo;
     }
 
-    public List<TopMenuLink> findAll(String language){
-        List<TopMenuLink> links = repo.findAllByLanguageOrderByPriority(language);
-        if(links == null){
-            links = new ArrayList<>();
-        }
-        return links;
+    @Override
+    public TopMenuLink create(TopMenuLink topMenuLink) {
+        return repo.save(topMenuLink);
     }
+
+    @Override
+    public void edit(TopMenuLink topMenuLink) {
+        repo.save(topMenuLink);
+    }
+
+    @Override
+    public void delete(int id) {
+        Optional tml = repo.findById(id);
+        if(tml.isPresent()){
+            repo.delete((TopMenuLink)tml.get());
+        }
+    }
+
+    @Override
+    public TopMenuLink findById(int id) {
+        Optional tml = repo.findById(id);
+        if(tml.isPresent()){
+            return (TopMenuLink) tml.get();
+        }
+        return null;
+    }
+
+    @Override
+    public List<TopMenuLink> findAll() {
+        return repo.findAll();
+    }
+
+    public List<TopMenuLink> findAll(String language) {
+        return repo.findAll();
+    }
+
+
 }

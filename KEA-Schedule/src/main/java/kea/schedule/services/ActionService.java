@@ -8,10 +8,12 @@ import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class ActionService {
+public class ActionService implements CRUDServiceInterface<Action>{
     ActionRepo actionrepo;
 
     @Autowired
@@ -38,7 +40,36 @@ public class ActionService {
         }
     }
 
-    public void addAction(Action action){
+    @Override
+    public Action create(Action action) {
+        return actionrepo.save(action);
+    }
+
+    @Override
+    public void edit(Action action) {
         actionrepo.save(action);
+    }
+
+    @Override
+    public void delete(int id) {
+        Optional action = actionrepo.findById(id);
+        if(action.isPresent()){
+            actionrepo.delete((Action) action.get());
+        }
+
+    }
+
+    @Override
+    public Action findById(int id) {
+        Optional action = actionrepo.findById(id);
+        if(action.isPresent()){
+            return (Action) action.get();
+        }
+        return null;
+    }
+
+    @Override
+    public List<Action> findAll() {
+        return actionrepo.findAll();
     }
 }

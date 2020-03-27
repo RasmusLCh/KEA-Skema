@@ -35,15 +35,20 @@ public class AdminController {
         return "admin/statistics/index";
     }
 
-    @GetMapping({"services/", "services/index"})
+
+
+/*    @GetMapping({"services/", "services/index"})
     public String get_services(Model model){
         List<MicroService> microservices = msservice.findAll();
         System.out.println("services size = " + microservices.size());
         model.addAttribute("microservices", microservices);
 
         return "admin/services/index";
-    }
+    }*/
 
+
+
+/*
     @GetMapping({"actions/", "actions/index"})
     public String get_actions(){
         return "admin/actions/index";
@@ -53,6 +58,7 @@ public class AdminController {
     public String get_topmenulinks(){
         return "admin/topmenulinks/index";
     }
+*/
 
 
 }

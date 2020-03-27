@@ -5,7 +5,7 @@ import java.util.List;
 
 @Entity(name= "MicroService")
 @Table(name= "microservices")
-public class MicroService {
+public class MicroService implements ModelInterface {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;

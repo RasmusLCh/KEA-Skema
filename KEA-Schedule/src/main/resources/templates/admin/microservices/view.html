@@ -1,0 +1,31 @@
+<th:block th:include="/admin/header.html" th:tag="remove"></th:block>
+<div class="block">
+    <h1>View Microservice</h1>
+    <th:block th:if="${selectedmicroserviceid != 0}">
+        <a href="../../" class="button right">Back</a>
+    </th:block>
+</div>
+<table>
+    <tr>
+        <th colspan="4">
+            MicroService
+        </th>
+    </tr>
+    <tr>
+        <td colspan="4" th:text="${selectedmicroservice.name}"></td>
+    </tr>
+    <tr>
+        <th>ID</th>
+        <th>PORT</th>
+        <th>VERSION</th>
+        <th>DESCRIPTION</th>
+    </tr>
+    <tr>
+        <td th:text="${microservice.id}"></td>
+        <td th:text="${microservice.port}"></td>
+        <td th:text="${microservice.version}"></td>
+        <td th:text="${microservice.description}"></td>
+
+    </tr>
+</table>
+<th:block th:include="/admin/footer.html" th:tag="remove"></th:block>

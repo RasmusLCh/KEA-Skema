@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity(name= "TopMenuLink")
 @Table(name= "topmenulinks")
-public class TopMenuLink {
+public class TopMenuLink implements ModelInterface {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
