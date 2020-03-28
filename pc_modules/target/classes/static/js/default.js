@@ -1,0 +1,48 @@
+$(document).ready(function() {
+    $("#menu_settings").click(function(event){
+        if($("#headersubmenu_settings").is(':visible')){
+            $('#headersubmenu_settings').hide();
+        }
+        else{
+            $('#headersubmenu_settings').show();
+        }
+        return false;
+    });
+
+    $("#menu_settings").click(function(){
+        return false;
+    });
+
+    $("#course_info_showname").click(function(){
+        if($("#course_info_showname").prop("checked")){
+            $('p.coursetitle').show();
+        }
+        else{
+            $('p.coursetitle').hide();
+        }
+    });
+    $("#course_info_showlocation").click(function(){
+        if($("#course_info_showlocation").prop("checked")){
+            $('p.courselocation').show();
+        }
+        else{
+            $('p.courselocation').hide();
+        }
+    });
+    $("#course_info_showteacher").click(function(){
+        if($("#course_info_showteacher").prop("checked")){
+            $('p.courseteacher').show();
+        }
+        else{
+            $('p.courseteacher').hide();
+        }
+    });
+    $("#course_info_showhomework").click(function(){
+        if($("#course_info_showhomework").prop("checked")){
+            $('p.coursehomework').show();
+        }
+        else{
+            $('p.coursehomework').hide();
+        }
+    });
+});

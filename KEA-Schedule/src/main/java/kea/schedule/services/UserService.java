@@ -44,6 +44,8 @@ public class UserService implements CRUDServiceInterface<User> {
         return userrepo.findByIdentifier(identifier);
     }
 
+    public User findByEmail(String email){ return userrepo.findByEmail(email); }
+
     @Override
     public List<User> findAll() {
         return userrepo.findAll();

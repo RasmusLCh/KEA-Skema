@@ -78,8 +78,11 @@ public class RootController {
         String language = langservice.getUserLanguage(session);
         String page = "index";
         page = langservice.switchPageLanguage(page, language);
-
-        if(autservice.Authenticate(identifier, password)){
+        boolean authenticated = autservice.Authenticate(identifier, password);
+        if(!authenticated){
+            authenticated = autservice.Authenticate(userservice.findByEmail(identifier), password);
+        }
+        if(authenticated){
             //User authenticated
             System.out.println("User authenticated");
             for (Group grp: ((User)session.getAttribute("curuser")).getGroups()){
