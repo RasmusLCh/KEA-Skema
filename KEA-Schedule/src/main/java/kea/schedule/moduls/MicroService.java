@@ -112,4 +112,8 @@ public class MicroService implements ModelInterface {
     public void setAccessgroups(List<Group> accessgroups) {
         this.accessgroups = accessgroups;
     }
+
+    public boolean inAccessgroups(Group grp){
+        return accessgroups.contains(grp);
+    }
 }

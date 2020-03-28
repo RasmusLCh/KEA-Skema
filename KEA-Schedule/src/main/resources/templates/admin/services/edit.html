@@ -9,6 +9,9 @@
     <input type="hidden" th:field="*{id}">
     <!--        <label>MicroService:</label>
             <p th:text="${selectedmicroservice.name}" class="disabledinput"></p> -->
+    <label>Name:</label>
+    <input type="text" th:field="*{name}">
+    <p class="errortext" th:if="${#fields.hasErrors('name')}">Name must be unique and a maximum of 50 characters.</p>
     <label>Port:</label>
     <input type="text" th:field="*{port}">
     <p class="errortext" th:if="${#fields.hasErrors('port')}">Port must be between 1024 and 65535.</p>
@@ -25,5 +28,15 @@
     <input type="checkbox" th:field="*{enabled}">
     <p class="errortext" th:if="${#fields.hasErrors('enabled')}"></p>
     <input type="submit" value="Edit">
+    <p>Access Groups:
+        <select size="10" name="accessgroups" class="form-control" multiple>
+            <option th:each="group : ${accessgroups}"
+                    th:value="${group.getId()}"
+                    th:selected="${microservice.inAccessgroups(group)}"
+                    th:text="${group.getName()}">
+            </option>
+        </select>
+    </p>
+
 </form>
 <th:block th:include="/admin/footer.html" th:tag="remove"></th:block>
