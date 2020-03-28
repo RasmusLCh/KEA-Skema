@@ -10,7 +10,7 @@ public class LangService {
     public String getUserLanguage(HttpSession session){
         Object language = session.getAttribute("language");
         if(language != null){
-            System.out.println("No user language found");
+            System.out.println("No user language found " + (String) language);
             return (String) language;
         }
         System.out.println("returning default language");

@@ -28,6 +28,9 @@ public class CRUDMicroServiceController extends MSCRUDAbstractController<MicroSe
     @GetMapping({"", "index"})
     @Override
     public String get_root_index(Model model, HttpSession session){
+        if(!authservice.isAdmin()){
+            return "forbidden";
+        }
         List<MicroService> microservices = msservice.findAll();
         System.out.println("services size = " + microservices.size());
         model.addAttribute("microservices", microservices);
@@ -39,6 +42,9 @@ public class CRUDMicroServiceController extends MSCRUDAbstractController<MicroSe
     @GetMapping("create")
     @Override
     public String get_create(Model model, HttpSession session, MicroService modelojb) {
+        if(!authservice.isAdmin()){
+            return "forbidden";
+        }
         model.addAttribute("accessgroups", gs.findAll());
         return super.get_create(model, session, modelojb);
     }
@@ -46,6 +52,9 @@ public class CRUDMicroServiceController extends MSCRUDAbstractController<MicroSe
     @GetMapping("/edit/{id}")
     @Override
     public String get_edit(@PathVariable int id, Model model, HttpSession session) {
+        if(!authservice.isAdmin()){
+            return "forbidden";
+        }
         model.addAttribute("accessgroups", gs.findAll());
         return super.get_edit(id, model, session);
     }

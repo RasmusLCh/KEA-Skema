@@ -1,6 +1,7 @@
 package kea.schedule.controllers.admin;
 
 import kea.schedule.moduls.MicroService;
+import kea.schedule.services.AuthenticationService;
 import kea.schedule.services.MicroServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,52 +14,35 @@ import java.util.List;
 @Controller
 @RequestMapping("/admin/")
 public class AdminController {
-    MicroServiceService msservice;
-
+    private MicroServiceService msservice;
+    private AuthenticationService authservice;
     @Autowired
-    public AdminController(MicroServiceService msservice){
+    public AdminController(MicroServiceService msservice, AuthenticationService authservice){
         this.msservice = msservice;
+        this.authservice = authservice;
     }
 
     @GetMapping({"", "index"})
     public String get_index(){
+        if(!authservice.isAdmin()){
+            return "forbidden";
+        }
         return "admin/users/index";
     }
 
     @GetMapping({"courses/", "courses/index"})
     public String get_courses(){
+        if(!authservice.isAdmin()){
+            return "forbidden";
+        }
         return "admin/courses/index";
     }
 
     @GetMapping({"statistics/", "statistics/index"})
     public String get_statistics(){
+        if(!authservice.isAdmin()){
+            return "forbidden";
+        }
         return "admin/statistics/index";
     }
-
-
-
-/*    @GetMapping({"services/", "services/index"})
-    public String get_services(Model model){
-        List<MicroService> microservices = msservice.findAll();
-        System.out.println("services size = " + microservices.size());
-        model.addAttribute("microservices", microservices);
-
-        return "admin/services/index";
-    }*/
-
-
-
-/*
-    @GetMapping({"actions/", "actions/index"})
-    public String get_actions(){
-        return "admin/actions/index";
-    }
-
-    @GetMapping({"topmenulinks/", "topmenulinks/index"})
-    public String get_topmenulinks(){
-        return "admin/topmenulinks/index";
-    }
-*/
-
-
 }

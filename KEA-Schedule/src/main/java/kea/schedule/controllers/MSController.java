@@ -3,6 +3,7 @@ package kea.schedule.controllers;
 import kea.schedule.moduls.MicroService;
 import kea.schedule.moduls.TopMenuLink;
 import kea.schedule.moduls.User;
+import kea.schedule.services.AuthenticationService;
 import kea.schedule.services.LangService;
 import kea.schedule.services.MicroServiceService;
 import kea.schedule.services.TopMenuLinkService;
@@ -31,14 +32,16 @@ import java.util.List;
 public class MSController {
     private MicroServiceService mss;
     private TopMenuLinkService topmenuservice;
+    private AuthenticationService authservice;
     private ResourceLoader rl;
     private LangService langservice;
 
 
     @Autowired
-    public MSController(MicroServiceService mss, TopMenuLinkService topmenuservice, ResourceLoader rl, LangService langservice){
+    public MSController(MicroServiceService mss, TopMenuLinkService topmenuservice, AuthenticationService authservice, ResourceLoader rl, LangService langservice){
         this.mss = mss;
         this.topmenuservice = topmenuservice;
+        this.authservice = authservice;
         this.rl = rl;
         this.langservice = langservice;
     }
@@ -52,14 +55,18 @@ public class MSController {
                                            HttpServletRequest request,
                                            HttpSession session,
                                            Model model) throws URISyntaxException, IOException {
+        MicroService ms = mss.findMSByName(servicename);
+        if(ms == null) return "";
+        if(!authservice.hasAccess(ms)){
+            return "forbidden";
+        }
         model.addAttribute("data", "");
         String query = "userid=0";
         if(session != null && session.getAttribute("user") != null){
             User user = (User)session.getAttribute("user");
             query = "userid=" + user.getId();
         }
-        MicroService ms = mss.findMSByName(servicename);
-        if(ms == null) return "";
+
         RestTemplate restTemplate = new RestTemplate();
         URI uri = new URI("http", null, "localhost", ms.getPort(), "/servicepages/" + servicename + "/" + page, query, null);
 
@@ -144,7 +151,7 @@ public class MSController {
 
     @ModelAttribute("topmenu")
     private List<TopMenuLink> getTopMenuLink(HttpServletRequest hsr){
-        return topmenuservice.findAll(getLanguage(hsr));
+        return topmenuservice.findAllByLanguageAndAccess(getLanguage(hsr));
     }
 
     @ModelAttribute("language")
@@ -160,5 +167,10 @@ public class MSController {
     @ModelAttribute("page")
     private String setPage(HttpServletRequest hsr){
         return hsr.getRequestURI();
+    }
+
+    @ModelAttribute("authenticated")
+    public boolean getAuthenticated(){
+        return authservice.isAuthenticated();
     }
 }

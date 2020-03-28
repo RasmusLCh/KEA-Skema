@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 
 @Entity(name= "PageInjection")
 @Table(name= "pageinjections")
-public class PageInjection implements ModelInterface {
+public class PageInjection implements ModelInterface, MicroServiceElement {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;

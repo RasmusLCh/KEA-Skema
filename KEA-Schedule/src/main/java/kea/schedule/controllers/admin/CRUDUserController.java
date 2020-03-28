@@ -28,6 +28,9 @@ public class CRUDUserController extends MSCRUDAbstractController<User, UserServi
     @Override
     @GetMapping("create")
     public String get_create(Model model, HttpSession session, User modelojb) {
+        if(!authservice.isAdmin()){
+            return "forbidden";
+        }
         model.addAttribute("groups", groupservice.findAll());
         return super.get_create(model, session, modelojb);
     }
@@ -35,6 +38,9 @@ public class CRUDUserController extends MSCRUDAbstractController<User, UserServi
     @Override
     @PostMapping("create")
     public String post_create(@ModelAttribute @Valid User e, BindingResult result, HttpSession session, Model model){
+        if(!authservice.isAdmin()){
+            return "forbidden";
+        }
         model.addAttribute(modelname, e);
         if (result.hasErrors()) {
             model.addAttribute("groups", groupservice.findAll());
@@ -52,6 +58,9 @@ public class CRUDUserController extends MSCRUDAbstractController<User, UserServi
     @GetMapping("/edit/{id}")
     public String get_edit(@PathVariable int id, Model model, HttpSession session)
     {
+        if(!authservice.isAdmin()){
+            return "forbidden";
+        }
         model.addAttribute("groups", groupservice.findAll());
         return super.get_edit(id, model, session);
     }
@@ -60,6 +69,9 @@ public class CRUDUserController extends MSCRUDAbstractController<User, UserServi
     @PostMapping("/edit")
     public String post_edit(@ModelAttribute @Valid User e, BindingResult result, HttpSession session, Model model)
     {
+        if(!authservice.isAdmin()){
+            return "forbidden";
+        }
         model.addAttribute(modelname, e);
         if (result.hasErrors()) {
             model.addAttribute("groups", groupservice.findAll());

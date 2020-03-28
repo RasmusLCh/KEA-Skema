@@ -1,6 +1,8 @@
 package kea.schedule.controllers;
 
 import kea.schedule.moduls.FileResource;
+import kea.schedule.moduls.MicroService;
+import kea.schedule.services.AuthenticationService;
 import kea.schedule.services.MicroServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -14,22 +16,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/serviceresource/")
 public class MSFileResource {
-
-    public MicroServiceService msservice;
+    private MicroServiceService msservice;
+    private AuthenticationService authservice;
 
     @Autowired
-    public MSFileResource(MicroServiceService msservice){
+    public MSFileResource(MicroServiceService msservice, AuthenticationService authservice){
         this.msservice = msservice;
+        this.authservice = authservice;
     }
     /*
 
     /**
-     * An administrator can download a file, calling with subject . extension
+     * An download a file, calling with subject . extension
      * */
 
     @GetMapping("{servicename}/{filename}")
     public HttpEntity<byte[]> get_download(@PathVariable String servicename,
                                            @PathVariable String filename){
+        MicroService ms = msservice.findMSByName(servicename);
+        if(ms == null){
+            return new HttpEntity(HttpStatus.BAD_REQUEST);
+        }
+        if(!authservice.hasAccess(ms)){
+            return new HttpEntity(HttpStatus.FORBIDDEN);
+        }
         FileResource file = msservice.findFileResourceByMSAndFilename(servicename,filename);
         if(file != null){
             System.out.println("File != null");

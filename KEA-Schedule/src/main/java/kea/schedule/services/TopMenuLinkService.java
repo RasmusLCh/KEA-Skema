@@ -11,11 +11,13 @@ import java.util.Optional;
 
 @Service
 public class TopMenuLinkService implements CRUDServiceInterface<TopMenuLink> {
-    TopMenuLinkRepo repo;
+    private TopMenuLinkRepo repo;
+    private AuthenticationService authservice;
 
     @Autowired
-    public TopMenuLinkService(TopMenuLinkRepo repo){
+    public TopMenuLinkService(TopMenuLinkRepo repo, AuthenticationService authservice){
         this.repo = repo;
+        this.authservice = authservice;
     }
 
     @Override
@@ -50,8 +52,18 @@ public class TopMenuLinkService implements CRUDServiceInterface<TopMenuLink> {
         return repo.findAll();
     }
 
-    public List<TopMenuLink> findAll(String language) {
-        return repo.findAll();
+    /**
+     * Only Top Menu Links that the current user has access too, are returned
+     * */
+    public List<TopMenuLink> findAllByLanguageAndAccess(String language) {
+        List<TopMenuLink> list = repo.findAllByLanguageOrderByPriority(language.toLowerCase());
+        List<TopMenuLink> alist = new ArrayList<>();
+        for(TopMenuLink tml: list){
+            if(authservice.hasAccess(tml)){
+                alist.add(tml);
+            }
+        }
+        return alist;
     }
 
 

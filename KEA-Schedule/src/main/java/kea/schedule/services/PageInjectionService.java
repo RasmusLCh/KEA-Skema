@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+
+/**
+ * There is no error handling on page injections, since they shouldnt be injected if the user doesnt have access to the page in the first case.
+ * */
 @Service
 public class PageInjectionService implements CRUDServiceInterface<PageInjection> {
     private PageInjectionRepo pageinectionrepo;
@@ -16,6 +20,7 @@ public class PageInjectionService implements CRUDServiceInterface<PageInjection>
     public PageInjectionService(PageInjectionRepo pageinectionrepo){
         this.pageinectionrepo = pageinectionrepo;
     }
+
 
     public List<PageInjection> getCSSPageInjection(String page){
         if(page.equals("/")){

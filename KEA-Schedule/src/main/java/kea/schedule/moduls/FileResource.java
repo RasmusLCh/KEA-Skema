@@ -7,7 +7,7 @@ import javax.persistence.*;
         uniqueConstraints={
                 @UniqueConstraint(columnNames = {"filename", "microserviceid"})
         })
-public class FileResource {
+public class FileResource implements MicroServiceElement {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;

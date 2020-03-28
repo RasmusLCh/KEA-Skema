@@ -7,7 +7,7 @@ import javax.persistence.*;
  * */
 @Entity(name= "MicroServiceOption")
 @Table(name= "microserviceoptions")
-public class MicroServiceOption {
+public class MicroServiceOption implements MicroServiceElement {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;

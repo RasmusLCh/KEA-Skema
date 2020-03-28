@@ -23,16 +23,16 @@ public class RootController {
     private LangService langservice;
     private MicroServiceService msservice;
     private UserService userservice;
-    private AuthenticationService autservice;
+    private AuthenticationService authservice;
 
 
     @Autowired
-    public RootController(PageInjectionService pageinjectionservice, TopMenuLinkService topmenuservice, LangService langservice, MicroServiceService msservice, AuthenticationService autservice, UserService userservice){
+    public RootController(PageInjectionService pageinjectionservice, TopMenuLinkService topmenuservice, LangService langservice, MicroServiceService msservice, AuthenticationService authservice, UserService userservice){
         this.pageinjectionservice = pageinjectionservice;
         this.topmenuservice = topmenuservice;
         this.langservice = langservice;
         this.msservice = msservice;
-        this.autservice = autservice;
+        this.authservice = authservice;
         this.userservice = userservice;
     }
 
@@ -75,28 +75,30 @@ public class RootController {
 
     @PostMapping("login")
     public String post_login(@RequestParam("identifier") String identifier, @RequestParam("password") String password, HttpSession session){
-        String language = langservice.getUserLanguage(session);
         String page = "index";
-        page = langservice.switchPageLanguage(page, language);
-        boolean authenticated = autservice.Authenticate(identifier, password);
+        boolean authenticated = authservice.Authenticate(identifier, password);
         if(!authenticated){
-            authenticated = autservice.Authenticate(userservice.findByEmail(identifier), password);
+            authenticated = authservice.Authenticate(userservice.findByEmail(identifier), password);
         }
         if(authenticated){
             //User authenticated
             System.out.println("User authenticated");
+            User curuser = (User)session.getAttribute("curuser");
             for (Group grp: ((User)session.getAttribute("curuser")).getGroups()){
                 System.out.println("\tAccess groups" + grp.getName());
             }
-            if(autservice.hasAccess("DAT18A")){
+            if(authservice.hasAccess("DAT18A")){
                 System.out.println("User has access to DAT18A");
             }
-            if(autservice.hasAccess("DAT18B")){
+            if(authservice.hasAccess("DAT18B")){
                 System.out.println("User has access to DAT18B");
             }
-            if(autservice.hasAccess("DAT18")){
+            if(authservice.hasAccess("DAT18")){
                 System.out.println("User has access to DAT18");
             }
+            langservice.setLanguage(curuser.getLanguage(), session);
+            String language = curuser.getLanguage();
+            page = langservice.switchPageLanguage(page, language);
             return "redirect:"+page;
         }
         //User authentication failed!
@@ -107,7 +109,8 @@ public class RootController {
 
     @ModelAttribute("topmenu")
     private List<TopMenuLink> getTopMenuLink(HttpServletRequest hsr){
-        return topmenuservice.findAll(getLanguage(hsr));
+        System.out.println("topmenu lang = " + getLanguage(hsr));
+        return topmenuservice.findAllByLanguageAndAccess(getLanguage(hsr));
     }
 
     @ModelAttribute("pageinjections_js")
@@ -149,6 +152,6 @@ public class RootController {
 
     @ModelAttribute("authenticated")
     public boolean getAuthenticated(){
-        return autservice.isAuthenticated();
+        return authservice.isAuthenticated();
     }
 }

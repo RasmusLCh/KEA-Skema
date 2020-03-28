@@ -1,7 +1,6 @@
 package kea.schedule.services;
 
-import kea.schedule.moduls.Group;
-import kea.schedule.moduls.User;
+import kea.schedule.moduls.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
@@ -17,11 +16,12 @@ public class AuthenticationService {
     private UserService userservice;
     private GroupService groupservice;
     private HttpSession session;
-
+    private MicroServiceService microserviceservice;
     @Autowired
-    public AuthenticationService(UserService userservice, GroupService groupservice, HttpSession session){
+    public AuthenticationService(UserService userservice, GroupService groupservice, MicroServiceService microserviceservice,HttpSession session){
         this.userservice = userservice;
         this.groupservice = groupservice;
+        this.microserviceservice = microserviceservice;
         this.session = session;
     }
 
@@ -32,6 +32,36 @@ public class AuthenticationService {
     public boolean isAuthenticated(){
         return session.getAttribute("curuser") != null;
     }
+
+    public boolean isAdmin(){
+        MicroService ms = microserviceservice.findMSByName("adminpanel");
+        if(ms == null){
+            System.out.println("Everybody is currently an administrator. Please create a MicroService named adminpanel that uses port 0!");
+            return true;
+        }
+        if(ms.getPort() == 0){
+            return hasAccess(ms);
+        }
+        System.out.println("Everybody is currently an administrator. The adminpanel must be defined as an internal service running on port 0!");
+        return true;
+    }
+
+    public boolean hasAccess(MicroService ms){
+        if(ms == null){
+            return false;
+        }
+        return hasAccess(ms.getAccessgroups());
+    }
+    /**
+     * Being a MicroServiceElement impliece that access is only available if the user has access to the MicroService
+     * */
+    public boolean hasAccess(MicroServiceElement element){
+        if(element == null){
+            return false;
+        }
+        return hasAccess(element.getMicroservice().getAccessgroups());
+    }
+
 
     public boolean hasAccess(User user, String accessrequired){
         return hasAccess(user, groupservice.findByName(accessrequired));
