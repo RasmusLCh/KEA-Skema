@@ -107,6 +107,13 @@ public class RootController {
         return "redirect:"+page;
     }
 
+    @GetMapping("logout")
+    public String get_logout(HttpSession session){
+        session.setAttribute("curuser", null);
+        return "redirect:/index";
+    }
+
+
     @ModelAttribute("topmenu")
     private List<TopMenuLink> getTopMenuLink(HttpServletRequest hsr){
         System.out.println("topmenu lang = " + getLanguage(hsr));

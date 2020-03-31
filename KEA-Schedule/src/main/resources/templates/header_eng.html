@@ -42,6 +42,11 @@
                 <input type="hidden" name="language" th:value="${alternativelanguage}">
             </form>
         </div>
+        <th:block th:if="${authenticated}">
+            <div id="menu_logout_wrapper">
+                <a href="/logout" id="menu_logout" class="">Logout</a>
+            </div>
+        </th:block>
         <div id="menu_settings_wrapper">
             <a th:href="'settings.' + ${language}" id="menu_settings" class="kea_orange">Settings</a>
         </div>
@@ -49,11 +54,6 @@
 
     </div>
 </div>
-<th:block th:if="${authenticated}">
-    <div class="headersubmenu">
-        You have logged in!
-    </div>
-</th:block>
 <th:block th:unless="${authenticated}">
     <div class="headersubmenu">
         <form method="post" action="./login" >

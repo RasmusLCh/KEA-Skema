@@ -162,6 +162,20 @@ div.headermenu a:hover{
 	text-transform: uppercase;
 }
 
+#menu_logout_wrapper{
+	background-color: #ea5045;
+	display: flex;
+	align-items: center;
+	border: 0px;
+	margin: 0px;
+	padding: 0px;
+}
+
+#menu_logout{
+	background-color: #ea5045;
+	color: black;
+}
+
 #menu_settings_wrapper{
 	background-color: #ea5045;
 	display: flex;
