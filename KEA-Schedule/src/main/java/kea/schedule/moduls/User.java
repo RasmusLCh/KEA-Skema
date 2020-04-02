@@ -97,7 +97,7 @@ public class User implements ModelInterface{
 
     public JSONObject appendJSON(JSONObject obj){
         obj.appendField("id", getId());
-                
+
         return obj;
     }
 }
