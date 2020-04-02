@@ -1,0 +1,42 @@
+<th:block th:include="/admin/header.html" th:tag="remove"></th:block>
+<div class="block">
+    <h1>Delete Top Menu Link</h1>
+    <th:block th:if="${selectedmicroserviceid != 0}">
+        <a href="../../" class="button right">Back</a>
+    </th:block>
+</div>
+<p>You are about to delete the link</p>
+<table>
+    <tr>
+        <th colspan="6">
+            MicroService
+        </th>
+    </tr>
+    <tr>
+        <td colspan="6" th:text="${selectedmicroservice.name}"></td>
+    </tr>
+    <tr>
+        <th>ID</th>
+        <th>PATH</th>
+        <th>TEXT</th>
+        <th>DESCRIPTION</th>
+        <th>LANGUAGE</th>
+        <th>PRIORITY</th>
+    </tr>
+    <tr>
+        <td th:text="${topmenulink.id}"></td>
+        <td th:text="${topmenulink.path}"></td>
+        <td th:text="${topmenulink.text}"></td>
+        <td th:text="${topmenulink.description}"></td>
+        <td th:text="${topmenulink.language}"></td>
+        <td th:text="${topmenulink.priority}"></td>
+    </tr>
+</table>
+
+<p>Please confirm.</p>
+
+<form method="post" action="../../delete/">
+    <input type="hidden" name="id" th:value="${topmenulink.id}">
+    <input type="submit" value="Delete" class="btn-primary form-control">
+</form>
+<th:block th:include="/admin/footer.html" th:tag="remove"></th:block>

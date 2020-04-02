@@ -2,31 +2,33 @@
 <div class="block">
     <h1>Delete Microservice</h1>
     <a href="../../" class="button right">Back</a>
-<!--    <th:block th:if="${selectedmicroserviceid != 0}">
-    </th:block> -->
 </div>
 <p>You are about to delete the action</p>
 <table>
-    <!--    <tr>
-            <th colspan="4">
-                MicroService
-            </th>
-        </tr>
-        <tr>
-            <td colspan="4" th:text="${selectedmicroservice.name}"></td>
-        </tr> -->
     <tr>
-        <th>ID</th>
-        <th>PORT</th>
-        <th>VERSION</th>
-        <th>DESCRIPTION</th>
+    <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>port</th>
+        <th>version</th>
+        <th>description</th>
+        <th>userRequired</th>
+        <th>enabled</th>
+        <th>dependencies</th>
+        <th>Access</th>
     </tr>
     <tr>
         <td th:text="${microservice.id}"></td>
+        <td th:text="${microservice.name}"></td>
         <td th:text="${microservice.port}"></td>
         <td th:text="${microservice.version}"></td>
         <td th:text="${microservice.description}"></td>
-
+        <td><input type="checkbox" name="" th:checked="${service.userRequired}" disabled></td>
+        <td><input type="checkbox" name="" th:checked="${microservice.enabled}" disabled></td>
+        <td th:text="${microservice.dependencyMicroserviceId}"></td>
+        <td>
+            <th:block th:each="grp, iter: ${microservice.getAccessgroups()}" th:remove="tag"><th:block th:text="${grp.name}" th:if="${iter.index == 0}"></th:block><th:block th:text="${', ' + grp.name}" th:if="${iter.index > 0}"></th:block></th:block>
+        </td>
     </tr>
 </table>
 
