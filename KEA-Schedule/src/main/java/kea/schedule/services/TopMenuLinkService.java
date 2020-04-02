@@ -2,6 +2,7 @@ package kea.schedule.services;
 
 import kea.schedule.moduls.TopMenuLink;
 import kea.schedule.repositories.TopMenuLinkRepo;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,29 +14,39 @@ import java.util.Optional;
 public class TopMenuLinkService implements CRUDServiceInterface<TopMenuLink> {
     private TopMenuLinkRepo repo;
     private AuthenticationService authservice;
+    private ActionService actionservice;
 
     @Autowired
-    public TopMenuLinkService(TopMenuLinkRepo repo, AuthenticationService authservice){
+    public TopMenuLinkService(TopMenuLinkRepo repo, AuthenticationService authservice, ActionService actionservice){
         this.repo = repo;
         this.authservice = authservice;
+        this.actionservice = actionservice;
     }
 
     @Override
     public TopMenuLink create(TopMenuLink topMenuLink) {
-        return repo.save(topMenuLink);
+        TopMenuLink newtml = repo.save(topMenuLink);
+        actionservice.doAction("TopMenuLinkService.create", topMenuLink.toJSON(new JSONObject()));
+        return newtml;
     }
 
     @Override
     public void edit(TopMenuLink topMenuLink) {
         repo.save(topMenuLink);
+        actionservice.doAction("TopMenuLinkService.edit", topMenuLink.toJSON(new JSONObject()));
     }
 
     @Override
     public void delete(int id) {
+        /*
         Optional tml = repo.findById(id);
         if(tml.isPresent()){
             repo.delete((TopMenuLink)tml.get());
         }
+
+         */
+        repo.deleteById(id);
+        actionservice.doAction("TopMenuLinkService.delete", new JSONObject().appendField("id", id));
     }
 
     @Override

@@ -6,6 +6,7 @@ import kea.schedule.repositories.ActionRepo;
 import kea.schedule.repositories.FileResourceRepo;
 import kea.schedule.repositories.MicroServiceRepo;
 import kea.schedule.repositories.PageInjectionRepo;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,17 +16,19 @@ import java.util.Optional;
 
 @Service
 public class MicroServiceService implements CRUDServiceInterface<MicroService> {
-    MicroServiceRepo msrepo;
-    ActionRepo actionrepo;
-    PageInjectionRepo pageinjectionrepo;
-    FileResourceRepo fileresourcerepo;
+    private MicroServiceRepo msrepo;
+    private ActionRepo actionrepo;
+    private PageInjectionRepo pageinjectionrepo;
+    private FileResourceRepo fileresourcerepo;
+    private ActionService actionservice;
 
     @Autowired
-    public MicroServiceService(MicroServiceRepo msrepo, ActionRepo actionrepo, PageInjectionRepo pageinjectionrepo, FileResourceRepo fileresourcerepo){
+    public MicroServiceService(MicroServiceRepo msrepo, ActionRepo actionrepo, PageInjectionRepo pageinjectionrepo, FileResourceRepo fileresourcerepo, ActionService actionservice){
         this.msrepo = msrepo;
         this.actionrepo = actionrepo;
         this.pageinjectionrepo = pageinjectionrepo;
         this.fileresourcerepo = fileresourcerepo;
+        this.actionservice = actionservice;
     }
 
     public MicroService findMSByName(String servicename){
@@ -52,20 +55,28 @@ public class MicroServiceService implements CRUDServiceInterface<MicroService> {
 
     @Override
     public MicroService create(MicroService microService) {
-        return msrepo.save(microService);
+        MicroService newms = msrepo.save(microService);
+        actionservice.doAction("MicroServiceService.create", newms.toJSON(new JSONObject()));
+        return newms;
     }
 
     @Override
     public void edit(MicroService microService) {
         msrepo.save(microService);
+        actionservice.doAction("MicroServiceService.create", microService.toJSON(new JSONObject()));
     }
 
     @Override
     public void delete(int id) {
+        /*
         Optional ms = msrepo.findById(id);
         if(ms.isPresent()){
             msrepo.delete((MicroService) ms.get());
         }
+
+         */
+        msrepo.deleteById(id);
+        actionservice.doAction("MicroServiceService.delete", new JSONObject().appendField("id", id));
 
     }
 

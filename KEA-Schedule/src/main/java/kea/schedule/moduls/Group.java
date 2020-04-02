@@ -1,5 +1,7 @@
 package kea.schedule.moduls;
 
+import net.minidev.json.JSONObject;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -85,5 +87,24 @@ public class Group implements ModelInterface{
             return ((Group)obj).getId() == this.id;
         }
         return false;
+    }
+
+    @Override
+    public JSONObject toJSON(JSONObject obj) {
+        obj.appendField("id", getId());
+        obj.appendField("name", getName());
+        obj.appendField("metadata", getMetadata());
+        obj.appendField("description", getDescription());
+        JSONObject grps = new JSONObject();
+        for(Group group : groups){
+            grps.appendField(group.getName(), group.toJSON(new JSONObject()));
+        }
+        obj.appendField("groups", grps);
+        JSONObject usrs = new JSONObject();
+        for(User user : users){
+            grps.appendField(user.getIdentifier(), user.toJSON(new JSONObject()));
+        }
+        obj.appendField("users", usrs);
+        return obj;
     }
 }

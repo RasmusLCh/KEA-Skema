@@ -22,10 +22,12 @@ public class ActionService implements CRUDServiceInterface<Action>{
     }
 
     public void doAction(String actionname, JSONObject data){
+        System.out.println("-----" + actionname + ": START -----");
         if(data == null){
             data = new JSONObject();
-            //TEST DATA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            data.appendField("My field", "My value");
+        }
+        if(data != null){
+            System.out.println(data.toJSONString());
         }
         List<Action> acl = actionrepo.findAllByActionname(actionname);
         RestTemplate restTemplate = new RestTemplate();
@@ -38,24 +40,33 @@ public class ActionService implements CRUDServiceInterface<Action>{
             //We dont care about the response
             restTemplate.exchange(a.getCallbackurl(), HttpMethod.POST, entity, String.class);
         }
+        System.out.println("-----" + actionname + ": END -----");
     }
 
     @Override
     public Action create(Action action) {
-        return actionrepo.save(action);
+        Action newaction = actionrepo.save(action);
+        doAction("ActionService.create", newaction.toJSON(new JSONObject()));
+        return newaction;
     }
 
     @Override
     public void edit(Action action) {
         actionrepo.save(action);
+        doAction("ActionService.edit", action.toJSON(new JSONObject()));
     }
 
     @Override
     public void delete(int id) {
+        /*
         Optional action = actionrepo.findById(id);
         if(action.isPresent()){
             actionrepo.delete((Action) action.get());
         }
+
+         */
+        actionrepo.deleteById(id);
+        doAction("ActionService.delete", new JSONObject().appendField("id", id));
 
     }
 

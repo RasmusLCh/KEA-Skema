@@ -1,5 +1,7 @@
 package kea.schedule.moduls;
 
+import net.minidev.json.JSONObject;
+
 import javax.persistence.*;
 
 @Entity(name= "TopMenuLink")
@@ -94,5 +96,17 @@ public class TopMenuLink implements ModelInterface, MicroServiceElement {
 
     public void setLanguage(String language) {
         this.language = language;
+    }
+
+    @Override
+    public JSONObject toJSON(JSONObject obj) {
+        obj.appendField("id", getId());
+        obj.appendField("text", getText());
+        obj.appendField("path", getPath());
+        obj.appendField("description", getDescription());
+        obj.appendField("language", getLanguage());
+        obj.appendField("priority", getPriority());
+        obj.appendField("microservice", getMicroservice().toJSON(new JSONObject()));
+        return obj;
     }
 }

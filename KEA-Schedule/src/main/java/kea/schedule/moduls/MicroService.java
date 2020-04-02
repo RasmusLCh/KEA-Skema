@@ -1,5 +1,7 @@
 package kea.schedule.moduls;
 
+import net.minidev.json.JSONObject;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -115,5 +117,18 @@ public class MicroService implements ModelInterface {
 
     public boolean inAccessgroups(Group grp){
         return accessgroups.contains(grp);
+    }
+
+    public JSONObject toJSON(JSONObject obj){
+        obj.appendField("id", getId());
+        obj.appendField("name", getName());
+        obj.appendField("port", getPort());
+        obj.appendField("dependencyMicroserviceId", getDependencyMicroserviceId());
+        obj.appendField("description", getDescription());
+        obj.appendField("version", getVersion());
+        obj.appendField("enabled", isEnabled());
+        obj.appendField("userRequired", isUserRequired());
+        //accessgroups
+        return obj;
     }
 }

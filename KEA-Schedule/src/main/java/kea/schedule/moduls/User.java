@@ -95,9 +95,17 @@ public class User implements ModelInterface{
         return false;
     }
 
-    public JSONObject appendJSON(JSONObject obj){
+    public JSONObject toJSON(JSONObject obj){
         obj.appendField("id", getId());
-
+        obj.appendField("identifier", getIdentifier());
+        obj.appendField("displayname", getDisplayname());
+        obj.appendField("email", getEmail());
+        obj.appendField("language", getLanguage());
+        JSONObject grps = new JSONObject();
+        for(Group group : groups){
+            grps.appendField(group.getName(), group.toJSON(new JSONObject()));
+        }
+        obj.appendField("groups", grps);
         return obj;
     }
 }

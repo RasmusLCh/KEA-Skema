@@ -1,5 +1,7 @@
 package kea.schedule.moduls;
 
+import net.minidev.json.JSONObject;
+
 import javax.persistence.*;
 
 @Entity(name= "Action")
@@ -75,5 +77,15 @@ public class Action implements ModelInterface, MicroServiceElement {
 
     public void setPriority(int priority) {
         this.priority = priority;
+    }
+
+    public JSONObject toJSON(JSONObject obj){
+        obj.appendField("id", getId());
+        obj.appendField("callbackurl", getCallbackurl());
+        obj.appendField("actionname", getActionname());
+        obj.appendField("priority", getPriority());
+        obj.appendField("microservice", getMicroservice().toJSON(new JSONObject()));
+        //Groups
+        return obj;
     }
 }

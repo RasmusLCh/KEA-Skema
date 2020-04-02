@@ -2,6 +2,8 @@ package kea.schedule.services;
 
 import kea.schedule.moduls.Group;
 import kea.schedule.repositories.GroupRepo;
+import net.minidev.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,27 +12,38 @@ import java.util.Optional;
 @Service
 public class GroupService implements CRUDServiceInterface<Group> {
     private GroupRepo grouprepo;
+    private ActionService actionservice;
 
-    public GroupService(GroupRepo grouprepo){
+    @Autowired
+    public GroupService(GroupRepo grouprepo, ActionService actionservice){
         this.grouprepo = grouprepo;
+        this.actionservice = actionservice;
     }
 
     @Override
     public Group create(Group group) {
-        return grouprepo.save(group);
+        Group newgrp = grouprepo.save(group);
+        actionservice.doAction("GroupService.create", group.toJSON(new JSONObject()));
+        return newgrp;
     }
 
     @Override
     public void edit(Group group) {
         grouprepo.save(group);
+        actionservice.doAction("GroupService.edit", group.toJSON(new JSONObject()));
     }
 
     @Override
     public void delete(int id) {
+        /*
         Group grp = findById(id);
         if(grp != null){
             grouprepo.delete(grp);
         }
+
+         */
+        grouprepo.deleteById(id);
+        actionservice.doAction("GroupService.edit", new JSONObject().appendField("id", id));
     }
 
     @Override

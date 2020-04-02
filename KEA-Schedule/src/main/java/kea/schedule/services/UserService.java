@@ -22,19 +22,21 @@ public class UserService implements CRUDServiceInterface<User> {
 
     @Override
     public User create(User user) {
-        JSONObject jsonuser = new JSONObject();
-        actionservice.doAction("createUser", null);
-        return userrepo.save(user);
+        User newuser = userrepo.save(user);
+        actionservice.doAction("UserService.create", user.toJSON(new JSONObject()));
+        return newuser;
     }
 
     @Override
     public void edit(User user) {
         userrepo.save(user);
+        actionservice.doAction("UserService.edit", user.toJSON(new JSONObject()));
     }
 
     @Override
     public void delete(int id) {
         userrepo.deleteById(id);
+        actionservice.doAction("UserService.delete", new JSONObject().appendField("id", id));
     }
 
     @Override

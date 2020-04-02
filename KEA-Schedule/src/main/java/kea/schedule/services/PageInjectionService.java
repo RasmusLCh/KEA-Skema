@@ -2,6 +2,7 @@ package kea.schedule.services;
 
 import kea.schedule.moduls.PageInjection;
 import kea.schedule.repositories.PageInjectionRepo;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +16,12 @@ import java.util.Optional;
 @Service
 public class PageInjectionService implements CRUDServiceInterface<PageInjection> {
     private PageInjectionRepo pageinectionrepo;
+    private ActionService actionservice;
 
     @Autowired
-    public PageInjectionService(PageInjectionRepo pageinectionrepo){
+    public PageInjectionService(PageInjectionRepo pageinectionrepo, ActionService actionservice){
         this.pageinectionrepo = pageinectionrepo;
+        this.actionservice = actionservice;
     }
 
 
@@ -38,20 +41,29 @@ public class PageInjectionService implements CRUDServiceInterface<PageInjection>
 
     @Override
     public PageInjection create(PageInjection pageInjection) {
-        return pageinectionrepo.save(pageInjection);
+        PageInjection newpi = pageinectionrepo.save(pageInjection);
+        actionservice.doAction("PageInjectionService.create", newpi.toJSON(new JSONObject()));
+        return newpi;
     }
 
     @Override
     public void edit(PageInjection pageInjection) {
         pageinectionrepo.save(pageInjection);
+        actionservice.doAction("PageInjectionService.edit", pageInjection.toJSON(new JSONObject()));
+
     }
 
     @Override
     public void delete(int id) {
+        /*
         Optional optpageInjection = pageinectionrepo.findById(id);
         if(optpageInjection.isPresent()){
             pageinectionrepo.delete((PageInjection)optpageInjection.get());
         }
+
+         */
+        pageinectionrepo.deleteById(id);
+        actionservice.doAction("PageInjectionService.delete", new JSONObject().appendField("id", id));
     }
 
     @Override

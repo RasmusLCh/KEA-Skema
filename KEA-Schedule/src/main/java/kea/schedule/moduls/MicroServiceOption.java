@@ -1,5 +1,7 @@
 package kea.schedule.moduls;
 
+import net.minidev.json.JSONObject;
+
 import javax.persistence.*;
 
 /**
@@ -7,7 +9,7 @@ import javax.persistence.*;
  * */
 @Entity(name= "MicroServiceOption")
 @Table(name= "microserviceoptions")
-public class MicroServiceOption implements MicroServiceElement {
+public class MicroServiceOption implements MicroServiceElement, ModelInterface {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -73,5 +75,16 @@ public class MicroServiceOption implements MicroServiceElement {
 
     public void setPriority(int priority) {
         this.priority = priority;
+    }
+
+    @Override
+    public JSONObject toJSON(JSONObject obj) {
+        obj.appendField("id", getId());
+        obj.appendField("VariableName", getVariableName());
+        obj.appendField("VariableValue", getVariableValue());
+        obj.appendField("description", getDescription());
+        obj.appendField("priority", getPriority());
+        obj.appendField("microservice", getMicroservice().toJSON(new JSONObject()));
+        return obj;
     }
 }
