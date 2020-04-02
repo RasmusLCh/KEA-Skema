@@ -2,8 +2,10 @@ package kea.schedule.controllers.admin;
 
 import kea.schedule.moduls.MicroService;
 import kea.schedule.moduls.ModelInterface;
+import kea.schedule.services.AuthenticationService;
 import kea.schedule.services.CRUDServiceInterface;
 import kea.schedule.services.MicroServiceService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +31,9 @@ public abstract class MSCRUDAbstractController<E extends ModelInterface, S exten
     protected String modelname = "cruditem";
     //The service that the controller is making use of.
     protected S service;
-    MicroServiceService msservice;
+    protected MicroServiceService msservice;
+    @Autowired
+    protected AuthenticationService authservice;
 
     public MSCRUDAbstractController(){}
 
@@ -40,9 +44,21 @@ public abstract class MSCRUDAbstractController<E extends ModelInterface, S exten
         this.msservice = msservice;
     }
 
+    public MSCRUDAbstractController(String path, String modelname, S service, MicroServiceService msservice, AuthenticationService authservice){
+        this.path = "admin/"+path;
+        this.service = service;
+        this.modelname = modelname;
+        this.msservice = msservice;
+        this.authservice = authservice;
+    }
+
+
     @GetMapping({"index", ""})
     public String get_root_index(Model model, HttpSession session)
     {
+        if(!authservice.isAdmin()){
+            return "forbidden";
+        }
         System.out.println("Session id: " + session.getId());
         if(session.getAttribute("selectedmicroserviceid") != null){
             System.out.println("selectedmicroserviceid is " + ((Integer)session.getAttribute("selectedmicroserviceid")).intValue());
@@ -58,6 +74,9 @@ public abstract class MSCRUDAbstractController<E extends ModelInterface, S exten
     @PostMapping({"index", ""})
     public String get_root_index(Model model, HttpSession session, @RequestParam("selectedmicroserviceid") int selectedmicroserviceid)
     {
+        if(!authservice.isAdmin()){
+            return "forbidden";
+        }
         System.out.println("Session id: " + session.getId());
         System.out.println("Saving attribute in selectedmicroserviceid");
         session.setAttribute("selectedmicroserviceid", new Integer(selectedmicroserviceid));
@@ -71,12 +90,18 @@ public abstract class MSCRUDAbstractController<E extends ModelInterface, S exten
 
     @GetMapping("create")
     public String get_create(Model model, HttpSession session, E modelojb) {
+        if(!authservice.isAdmin()){
+            return "forbidden";
+        }
         model.addAttribute(modelname, modelojb);
         return path + "create";
     }
 
     @PostMapping("create")
     public String post_create(@ModelAttribute @Valid E e, BindingResult result, HttpSession session, Model model){
+        if(!authservice.isAdmin()){
+            return "forbidden";
+        }
         model.addAttribute(modelname, e);
         if (result.hasErrors()) {
             return path + "create";
@@ -88,6 +113,9 @@ public abstract class MSCRUDAbstractController<E extends ModelInterface, S exten
     @GetMapping("/edit/{id}")
     public String get_edit(@PathVariable int id, Model model, HttpSession session)
     {
+        if(!authservice.isAdmin()){
+            return "forbidden";
+        }
         model.addAttribute(modelname, service.findById(id));
         return path+"edit";
     }
@@ -95,6 +123,9 @@ public abstract class MSCRUDAbstractController<E extends ModelInterface, S exten
     @PostMapping("/edit")
     public String post_edit(@ModelAttribute @Valid E e, BindingResult result, HttpSession session, Model model)
     {
+        if(!authservice.isAdmin()){
+            return "forbidden";
+        }
         model.addAttribute(modelname, e);
         if (result.hasErrors()) {
             return path + "edit";
@@ -106,24 +137,34 @@ public abstract class MSCRUDAbstractController<E extends ModelInterface, S exten
     @GetMapping("/delete/{id}")
     public String get_delete(@PathVariable int id, Model model, HttpSession session)
     {
+        if(!authservice.isAdmin()){
+            return "forbidden";
+        }
         model.addAttribute(modelname, service.findById(id));
         return path + "delete";
     }
     @PostMapping("/delete")
     public String post_delete(@RequestParam(value="id") int id, HttpSession session)
     {
+        if(!authservice.isAdmin()){
+            return "forbidden";
+        }
         service.delete(id);
         return "redirect:/" + path;
     }
     @GetMapping("/view/{id}")
     public String get_view(@PathVariable int id, Model model, HttpSession session)
     {
+        if(!authservice.isAdmin()){
+            return "forbidden";
+        }
         model.addAttribute(modelname, service.findById(id));
         return path + "view";
     }
 
     @ModelAttribute("microservices")
     public List<MicroService> model_microservices(){
+
         System.out.println("model_microservices");
         for(MicroService ms : msservice.findAll()){
             System.out.println(ms.getId() + " " + ms.getName());

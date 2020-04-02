@@ -8,6 +8,7 @@ import com.fasterxml.jackson.dataformat.csv.CsvParser;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import kea.schedule.moduls.Group;
 import kea.schedule.moduls.User;
+import kea.schedule.services.AuthenticationService;
 import kea.schedule.services.GroupService;
 import kea.schedule.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +31,13 @@ import java.util.Map;
 public class importController {
     private UserService userservice;
     private GroupService grpservice;
+    private AuthenticationService authservice;
 
     @Autowired
-    public importController(UserService userservice, GroupService grpservice){
+    public importController(UserService userservice, GroupService grpservice, AuthenticationService authservice){
         this.userservice = userservice;
         this.grpservice = grpservice;
+        this.authservice = authservice;
     }
     @GetMapping({"", "index"})
     public String get_index(){
@@ -43,6 +46,9 @@ public class importController {
 
     @PostMapping("users")
     public String post_users(@RequestParam(name="usercsv") MultipartFile usercsv){
+        if(!authservice.isAdmin()){
+            return "forbidden";
+        }
         try {
             System.out.println(usercsv.getOriginalFilename());
             CsvSchema bootstrapSchema = CsvSchema.builder()
@@ -74,6 +80,9 @@ public class importController {
 
     @PostMapping("groups")
     public String post_groups(@RequestParam(name="grpjson") MultipartFile file){
+        if(!authservice.isAdmin()){
+            return "forbidden";
+        }
         try {
             ObjectMapper jsonMapper = new ObjectMapper();
             JsonNode jsonNode = jsonMapper.readTree(file.getBytes());

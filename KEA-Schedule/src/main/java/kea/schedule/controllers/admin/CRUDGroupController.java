@@ -29,6 +29,9 @@ public class CRUDGroupController  extends MSCRUDAbstractController<Group, GroupS
     @Override
     @GetMapping("create")
     public String get_create(Model model, HttpSession session, Group modelojb) {
+        if(!authservice.isAdmin()){
+            return "forbidden";
+        }
         model.addAttribute("groups", service.findAll());
         model.addAttribute("users", userservice.findAll());
         model.addAttribute(modelname, modelojb);
@@ -39,6 +42,9 @@ public class CRUDGroupController  extends MSCRUDAbstractController<Group, GroupS
     @GetMapping("/edit/{id}")
     public String get_edit(@PathVariable int id, Model model, HttpSession session)
     {
+        if(!authservice.isAdmin()){
+            return "forbidden";
+        }
         model.addAttribute("groups", service.findAll());
         model.addAttribute("users", userservice.findAll());
         model.addAttribute(modelname, service.findById(id));

@@ -2,6 +2,7 @@ package kea.schedule.controllers;
 
 import kea.schedule.moduls.MicroService;
 import kea.schedule.moduls.User;
+import kea.schedule.services.AuthenticationService;
 import kea.schedule.services.LangService;
 import kea.schedule.services.MicroServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,12 +32,14 @@ import java.util.Enumeration;
 @RequestMapping("/servicerest/")
 public class MSRestController {
     private MicroServiceService mss;
+    private AuthenticationService authservice;
     private ResourceLoader rl;
     private LangService langservice;
 
     @Autowired
-    public MSRestController(MicroServiceService mss, ResourceLoader rl, LangService langservice){
+    public MSRestController(MicroServiceService mss, AuthenticationService authservice, ResourceLoader rl, LangService langservice){
         this.mss = mss;
+        this.authservice = authservice;
         this.rl = rl;
         this.langservice = langservice;
     }
@@ -50,14 +53,17 @@ public class MSRestController {
                                            HttpServletRequest request,
                                            HttpSession session,
                                            Model model) throws URISyntaxException, IOException {
+        MicroService ms = mss.findMSByName(servicename);
+        if(ms == null) return "";
+        if(!authservice.hasAccess(ms)){
+            return "forbidden";
+        }
         model.addAttribute("data", "");
         String query = "userid=0";
         if(session != null && session.getAttribute("user") != null){
             User user = (User)session.getAttribute("user");
             query = "userid=" + user.getId();
         }
-        MicroService ms = mss.findMSByName(servicename);
-        if(ms == null) return "";
         RestTemplate restTemplate = new RestTemplate();
         URI uri = new URI("http", null, "localhost", ms.getPort(), "/servicerest/" + servicename + "/" + page, query, null);
 

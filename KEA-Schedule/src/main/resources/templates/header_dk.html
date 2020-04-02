@@ -42,45 +42,23 @@
                 <input type="hidden" name="language" th:value="${alternativelanguage}">
             </form>
         </div>
+        <th:block th:if="${authenticated}">
+            <div id="menu_logout_wrapper">
+                <a href="/logout" id="menu_logout" class="">Log ud</a>
+            </div>
+        </th:block>
         <div id="menu_settings_wrapper">
             <a th:href="'settings.' + ${language}" id="menu_settings" class="kea_orange">Indstillinger</a>
         </div>
     </div>
 </div>
-<div class="headersubmenu" id="headersubmenu_settings" style="display: none">
-    <h2>Settings</h2>
-    <h3>Schedueler</h3><br/>
-    <input type="checkbox"> Use infinit scrollbar til at vise uge planer <span style="color: red"><-- Ikke implementeret i prototype</span><br/><br/>
-    <b>Course info</b><br/>
-    <input type="checkbox" id="course_info_showname" checked>Show course name (Bold)<br/>
-    <input type="checkbox" id="course_info_showlocation" checked>Show course location (Italic)<br/>
-    <input type="checkbox" id="course_info_showteacher" checked>Show course teacher name (Underline)<br/>
-    <input type="checkbox" id="course_info_showhomework" checked>Show course homework (Link if source is available)<br/>
-    <br/>
-    <input type="checkbox" disabled="true" CHECKED>
-    <div class="module">
-        <h4><a href="" class="module">Homework tracker</a></h4><br/>
-        Items that are read, are shown as <span style="background: green; height: 20px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.<br/>
-        Items that are not read, and where the data of the course is past is shown as <span style="background: red; height: 20px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.<br/>
-        To mark a lection as read, click on <img class="check" th:src="@{/images/check.png}">.<br/> To unmark click on <img class="check" th:src="@{/images/minus.png}">
-    </div><br/>
-    <input type="checkbox">
-    <div class="module">
-        <h4><a href="" class="module">Class surveys</a></h4><br/>
-        <input type="checkbox" checked> Display survey, if available for lection.<br/>
-        <input type="checkbox"> Display option to create surveys to lection.
+<th:block th:unless="${authenticated}">
+    <div class="headersubmenu">
+        <form method="post" action="./login" >
+            Login > User: <input type="text" name="identifier">
+            Password: <input type="password" name="password">
+            <input type="submit" value="Login">
+        </form>
     </div>
-    <br/>
-    <input type="checkbox">
-    <div class="module">
-        <h4><a href="" class="module">Course notes</a></h4><br/>
-        Add notes to each lection / course.
-    </div>
-    <br/>
-    <input type="checkbox">
-    <div class="module">
-        <h4><a href="" class="module">Course protocol</a></h4><br/>
-        See if you where present at the lecture.
-    </div>
-</div>
+</th:block>
 <div class="content">
