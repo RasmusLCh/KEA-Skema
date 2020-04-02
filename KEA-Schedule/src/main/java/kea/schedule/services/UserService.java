@@ -2,6 +2,7 @@ package kea.schedule.services;
 
 import kea.schedule.moduls.User;
 import kea.schedule.repositories.UserRepo;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,14 +11,19 @@ import java.util.Optional;
 
 @Service
 public class UserService implements CRUDServiceInterface<User> {
-    UserRepo userrepo;
+    private UserRepo userrepo;
+    private ActionService actionservice;
+
     @Autowired
-    public UserService(UserRepo userrepo){
+    public UserService(UserRepo userrepo, ActionService actionservice){
         this.userrepo = userrepo;
+        this.actionservice = actionservice;
     }
 
     @Override
     public User create(User user) {
+        JSONObject jsonuser = new JSONObject();
+        actionservice.doAction("createUser", null);
         return userrepo.save(user);
     }
 
@@ -50,4 +56,6 @@ public class UserService implements CRUDServiceInterface<User> {
     public List<User> findAll() {
         return userrepo.findAll();
     }
+
+
 }

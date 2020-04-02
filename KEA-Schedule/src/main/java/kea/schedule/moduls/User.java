@@ -1,5 +1,7 @@
 package kea.schedule.moduls;
 
+import net.minidev.json.JSONObject;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -91,5 +93,11 @@ public class User implements ModelInterface{
             return ((User)obj).getId() == this.id;
         }
         return false;
+    }
+
+    public JSONObject appendJSON(JSONObject obj){
+        obj.appendField("id", getId());
+                
+        return obj;
     }
 }
