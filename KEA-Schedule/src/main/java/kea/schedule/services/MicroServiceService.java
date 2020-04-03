@@ -37,7 +37,7 @@ public class MicroServiceService implements CRUDServiceInterface<MicroService> {
     public MicroService findByName(String servicename){
         return findByName(servicename, false);
     }
-    
+
     /**
      * Default behavious is that disabled MicroServices arent visible by name, you can choose to set includedisabled to true, to be able to get disabled microservices
      * */
