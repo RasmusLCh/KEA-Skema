@@ -29,14 +29,14 @@ public class PageInjectionService implements CRUDServiceInterface<PageInjection>
         if(page.equals("/")){
             page = "/index";
         }
-        return pageinectionrepo.findByPageAndType(page, "CSS");
+        return pageinectionrepo.findByPageAndTypeAndMicroserviceEnabledIsTrue(page, "CSS");
     }
 
     public List<PageInjection> getJSPageInjection(String page){
         if(page.equals("/")){
             page = "/index";
         }
-        return pageinectionrepo.findByPageAndType(page, "JS");
+        return pageinectionrepo.findByPageAndTypeAndMicroserviceEnabledIsTrue(page, "JS");
     }
 
     @Override

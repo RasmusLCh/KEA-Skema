@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository
 public interface PageInjectionRepo extends JpaRepository<PageInjection, Integer> {
-    public List<PageInjection> findByPageAndType(String page, String type);
+    //List<PageInjection> findByPageAndType(String page, String type);
+    List<PageInjection> findByPageAndTypeAndMicroserviceEnabledIsTrue(String page, String type);
 }

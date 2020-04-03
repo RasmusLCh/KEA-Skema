@@ -55,7 +55,7 @@ public class MSController {
                                            HttpServletRequest request,
                                            HttpSession session,
                                            Model model) throws URISyntaxException, IOException {
-        MicroService ms = mss.findMSByName(servicename);
+        MicroService ms = mss.findByName(servicename);
         if(ms == null) return "";
         if(!authservice.hasAccess(ms)){
             return "forbidden";

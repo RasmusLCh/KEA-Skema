@@ -34,7 +34,7 @@ public class AuthenticationService {
     }
 
     public boolean isAdmin(){
-        MicroService ms = microserviceservice.findMSByName("adminpanel");
+        MicroService ms = microserviceservice.findByName("adminpanel");
         if(ms == null){
             System.out.println("Everybody is currently an administrator. Please create a MicroService named adminpanel that uses port 0!");
             return true;

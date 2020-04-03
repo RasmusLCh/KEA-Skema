@@ -67,7 +67,7 @@ public class TopMenuLinkService implements CRUDServiceInterface<TopMenuLink> {
      * Only Top Menu Links that the current user has access too, are returned
      * */
     public List<TopMenuLink> findAllByLanguageAndAccess(String language) {
-        List<TopMenuLink> list = repo.findAllByLanguageOrderByPriority(language.toLowerCase());
+        List<TopMenuLink> list = repo.findAllByLanguageAndMicroserviceEnabledIsTrue(language.toLowerCase());
         List<TopMenuLink> alist = new ArrayList<>();
         for(TopMenuLink tml: list){
             if(authservice.hasAccess(tml)){

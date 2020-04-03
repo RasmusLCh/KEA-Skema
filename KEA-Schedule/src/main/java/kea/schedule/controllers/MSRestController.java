@@ -6,7 +6,6 @@ import kea.schedule.services.AuthenticationService;
 import kea.schedule.services.LangService;
 import kea.schedule.services.MicroServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.*;
 import org.springframework.ui.Model;
@@ -15,15 +14,11 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Enumeration;
@@ -53,7 +48,7 @@ public class MSRestController {
                                            HttpServletRequest request,
                                            HttpSession session,
                                            Model model) throws URISyntaxException, IOException {
-        MicroService ms = mss.findMSByName(servicename);
+        MicroService ms = mss.findByName(servicename);
         if(ms == null) return "";
         if(!authservice.hasAccess(ms)){
             return "forbidden";

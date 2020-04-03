@@ -33,7 +33,7 @@ public class MSFileResource {
     @GetMapping("{servicename}/{filename}")
     public HttpEntity<byte[]> get_download(@PathVariable String servicename,
                                            @PathVariable String filename){
-        MicroService ms = msservice.findMSByName(servicename);
+        MicroService ms = msservice.findByName(servicename);
         if(ms == null){
             return new HttpEntity(HttpStatus.BAD_REQUEST);
         }

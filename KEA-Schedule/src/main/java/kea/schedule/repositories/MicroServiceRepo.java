@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MicroServiceRepo extends JpaRepository<MicroService, Integer> {
     MicroService findByName(String name);
+    MicroService findByNameAndEnabledIsTrue(String name);
 }

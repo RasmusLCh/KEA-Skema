@@ -31,8 +31,21 @@ public class MicroServiceService implements CRUDServiceInterface<MicroService> {
         this.actionservice = actionservice;
     }
 
-    public MicroService findMSByName(String servicename){
-        return msrepo.findByName(servicename);
+    /**
+     * Default behavious is that disabled MicroServices arent visible by name
+     * */
+    public MicroService findByName(String servicename){
+        return findByName(servicename, false);
+    }
+    
+    /**
+     * Default behavious is that disabled MicroServices arent visible by name, you can choose to set includedisabled to true, to be able to get disabled microservices
+     * */
+    public MicroService findByName(String servicename, boolean includedisabled){
+        if(includedisabled){
+            return msrepo.findByName(servicename);
+        }
+        return msrepo.findByNameAndEnabledIsTrue(servicename);
     }
 
     public FileResource findFileResourceByMSAndFilename(String servicename, String filename){
@@ -40,7 +53,7 @@ public class MicroServiceService implements CRUDServiceInterface<MicroService> {
         System.out.println("1 " + filename);
         if(ms != null){
             System.out.println("2 " + ms.getId());
-            return fileresourcerepo.findByFilenameAndMicroserviceId(filename, ms.getId());
+            return fileresourcerepo.findByFilenameAndMicroserviceIdAndMicroserviceEnabledIsTrue(filename, ms.getId());
         }
         return null;
     }

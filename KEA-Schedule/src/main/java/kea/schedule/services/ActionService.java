@@ -29,7 +29,7 @@ public class ActionService implements CRUDServiceInterface<Action>{
         if(data != null){
             System.out.println(data.toJSONString());
         }
-        List<Action> acl = actionrepo.findAllByActionname(actionname);
+        List<Action> acl = actionrepo.findAllByActionnameAndMicroserviceEnabledIsTrue(actionname);
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
