@@ -100,13 +100,26 @@ public class TopMenuLink implements ModelInterface, MicroServiceElement {
 
     @Override
     public JSONObject toJSON(JSONObject obj) {
+        return toJSON(obj, false);
+    }
+
+    public JSONObject toJSON(JSONObject obj, boolean recursive) {
         obj.appendField("id", getId());
         obj.appendField("text", getText());
         obj.appendField("path", getPath());
         obj.appendField("description", getDescription());
         obj.appendField("language", getLanguage());
         obj.appendField("priority", getPriority());
-        obj.appendField("microservice", getMicroservice().toJSON(new JSONObject()));
+        if(recursive){
+            if(getMicroservice() != null){
+                obj.appendField("microservice", getMicroservice().toJSON(new JSONObject()));
+            }
+        }
+        else{
+            if(getMicroservice() != null){
+                obj.appendField("microservice", getMicroservice().getId());
+            }
+        }
         return obj;
     }
 }

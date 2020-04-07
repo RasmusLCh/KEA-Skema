@@ -79,12 +79,21 @@ public class MicroServiceOption implements MicroServiceElement, ModelInterface {
 
     @Override
     public JSONObject toJSON(JSONObject obj) {
+        return toJSON(obj, false);
+    }
+
+    public JSONObject toJSON(JSONObject obj, boolean recursive) {
         obj.appendField("id", getId());
         obj.appendField("VariableName", getVariableName());
         obj.appendField("VariableValue", getVariableValue());
         obj.appendField("description", getDescription());
         obj.appendField("priority", getPriority());
-        obj.appendField("microservice", getMicroservice().toJSON(new JSONObject()));
+        if(recursive){
+            obj.appendField("microservice", getMicroservice().toJSON(new JSONObject()));
+        }
+        else{
+            obj.appendField("microservice", getMicroservice().getId());
+        }
         return obj;
     }
 }

@@ -1,5 +1,7 @@
 package kea.schedule.moduls;
 
+import net.minidev.json.JSONObject;
+
 import javax.persistence.*;
 
 @Entity(name= "FileResource")
@@ -7,7 +9,7 @@ import javax.persistence.*;
         uniqueConstraints={
                 @UniqueConstraint(columnNames = {"filename", "microserviceid"})
         })
-public class FileResource implements MicroServiceElement {
+public class FileResource implements MicroServiceElement, ModelInterface {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -73,5 +75,30 @@ public class FileResource implements MicroServiceElement {
 
     public void setFilename(String filename) {
         this.filename = filename;
+    }
+
+    @Override
+    public JSONObject toJSON(JSONObject obj) {
+        return toJSON(obj, false);
+    }
+
+    @Override
+    public JSONObject toJSON(JSONObject obj, boolean recursive) {
+        obj.appendField("id", getId());
+        obj.appendField("filename", getFilename());
+        obj.appendField("type", getType());
+        obj.appendField("extension", getExtension());
+        if(recursive){
+            if(getMicroservice() != null){
+                obj.appendField("microservice", getMicroservice().toJSON(new JSONObject()));
+            }
+        }
+        else{
+            if(getMicroservice() != null){
+                obj.appendField("microservice", getMicroservice().getId());
+            }
+        }
+        //Groups
+        return obj;
     }
 }

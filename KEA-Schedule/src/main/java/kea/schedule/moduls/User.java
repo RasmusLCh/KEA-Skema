@@ -96,16 +96,30 @@ public class User implements ModelInterface{
     }
 
     public JSONObject toJSON(JSONObject obj){
+        return toJSON(obj, false);
+    }
+
+    public JSONObject toJSON(JSONObject obj, boolean recursive){
         obj.appendField("id", getId());
         obj.appendField("identifier", getIdentifier());
         obj.appendField("displayname", getDisplayname());
         obj.appendField("email", getEmail());
         obj.appendField("language", getLanguage());
-        JSONObject grps = new JSONObject();
-        for(Group group : groups){
-            grps.appendField(group.getName(), group.toJSON(new JSONObject()));
+        if(recursive){
+            JSONObject grps = new JSONObject();
+            for(Group group : groups){
+                grps.appendField(Integer.toString(group.getId()), group.toJSON(new JSONObject()));
+            }
+            obj.appendField("groups", grps);
         }
-        obj.appendField("groups", grps);
+        else{
+            JSONObject grps = new JSONObject();
+            for(Group group : groups){
+                grps.appendField(Integer.toString(group.getId()), group.getName());
+            }
+            obj.appendField("groups", grps);
+        }
+
         return obj;
     }
 }

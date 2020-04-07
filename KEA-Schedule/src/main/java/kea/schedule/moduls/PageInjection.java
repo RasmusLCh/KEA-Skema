@@ -102,13 +102,24 @@ public class PageInjection implements ModelInterface, MicroServiceElement {
 
     @Override
     public JSONObject toJSON(JSONObject obj) {
+        return toJSON(obj, false);
+    }
+
+    public JSONObject toJSON(JSONObject obj, boolean recursive) {
         obj.appendField("id", getId());
         obj.appendField("type", getType());
         obj.appendField("page", getPage());
         obj.appendField("data", getData());
         obj.appendField("priority", getPriority());
-        if(getMicroservice() != null){
-            obj.appendField("microservice", getMicroservice().toJSON(new JSONObject()));
+        if(recursive){
+            if(getMicroservice() != null){
+                obj.appendField("microservice", getMicroservice().toJSON(new JSONObject()));
+            }
+        }
+        else{
+            if(getMicroservice() != null){
+                obj.appendField("microservice", getMicroservice().getId());
+            }
         }
         return obj;
     }

@@ -120,6 +120,10 @@ public class MicroService implements ModelInterface {
     }
 
     public JSONObject toJSON(JSONObject obj){
+        return toJSON(obj, false);
+    }
+
+    public JSONObject toJSON(JSONObject obj, boolean recursive){
         obj.appendField("id", getId());
         obj.appendField("name", getName());
         obj.appendField("port", getPort());

@@ -91,20 +91,38 @@ public class Group implements ModelInterface{
 
     @Override
     public JSONObject toJSON(JSONObject obj) {
+        return toJSON(obj, false);
+    }
+
+    public JSONObject toJSON(JSONObject obj, boolean recursive) {
         obj.appendField("id", getId());
         obj.appendField("name", getName());
         obj.appendField("metadata", getMetadata());
         obj.appendField("description", getDescription());
-        JSONObject grps = new JSONObject();
-        for(Group group : groups){
-            grps.appendField(group.getName(), group.toJSON(new JSONObject()));
+        if(recursive) {
+            JSONObject grps = new JSONObject();
+            for (Group group : groups) {
+                grps.appendField(Integer.toString(group.getId()), group.toJSON(new JSONObject()));
+            }
+            obj.appendField("groups", grps);
+            JSONObject usrs = new JSONObject();
+            for (User user : users) {
+                usrs.appendField(Integer.toString(user.getId()), user.toJSON(new JSONObject()));
+            }
+            obj.appendField("users", usrs);
         }
-        obj.appendField("groups", grps);
-        JSONObject usrs = new JSONObject();
-        for(User user : users){
-            grps.appendField(user.getIdentifier(), user.toJSON(new JSONObject()));
+        else{
+            JSONObject grps = new JSONObject();
+            for (Group group : groups) {
+                grps.appendField(Integer.toString(group.getId()), group.getName());
+            }
+            obj.appendField("groups", grps);
+            JSONObject usrs = new JSONObject();
+            for (User user : users) {
+                usrs.appendField(Integer.toString(user.getId()), user.getIdentifier());
+            }
+            obj.appendField("users", usrs);
         }
-        obj.appendField("users", usrs);
         return obj;
     }
 }

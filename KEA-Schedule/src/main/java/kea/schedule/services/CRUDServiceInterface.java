@@ -1,5 +1,7 @@
 package kea.schedule.services;
 
+import kea.schedule.moduls.ModelInterface;
+
 import java.util.List;
 
 /**
@@ -12,7 +14,7 @@ import java.util.List;
  * findAll: Get all item(s)
  * */
 
-public interface CRUDServiceInterface<E> {
+public interface CRUDServiceInterface<E extends ModelInterface> {
     E create(E e);
     void edit(E e);
     void delete(int id);

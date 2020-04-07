@@ -1,6 +1,7 @@
 package kea.schedule.services;
 
 import kea.schedule.moduls.*;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
@@ -17,12 +18,15 @@ public class AuthenticationService {
     private GroupService groupservice;
     private HttpSession session;
     private MicroServiceService microserviceservice;
+    private ActionService actionservice;
+
     @Autowired
-    public AuthenticationService(UserService userservice, GroupService groupservice, MicroServiceService microserviceservice,HttpSession session){
+    public AuthenticationService(UserService userservice, GroupService groupservice, MicroServiceService microserviceservice,HttpSession session, ActionService actionservice){
         this.userservice = userservice;
         this.groupservice = groupservice;
         this.microserviceservice = microserviceservice;
         this.session = session;
+        this.actionservice = actionservice;
     }
 
     private User getUser(){
@@ -144,12 +148,22 @@ return true;
     }
 
     public boolean Authenticate(User user, String password){
+        boolean returnvalue = true;
         if(user == null){
-            return false;
+            returnvalue = false;
         }
-        boolean returnvalue = auth(user.getEmail(), password);
-        if(returnvalue && session != null){
-            session.setAttribute("curuser", user);
+        if(returnvalue)
+        {
+            returnvalue = auth(user.getEmail(), password);
+            if(returnvalue && session != null){
+                session.setAttribute("curuser", user);
+            }
+        }
+        if(returnvalue){
+            JSONObject json = new JSONObject();
+            json.appendField("result", returnvalue);
+            json.appendField("user", user.toJSON(new JSONObject()));
+            actionservice.doAction("AuthenticationService.Authenticate", json);
         }
         return returnvalue;
     }
