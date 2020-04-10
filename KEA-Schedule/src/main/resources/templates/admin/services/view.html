@@ -5,11 +5,6 @@
 </div>
 <table>
     <tr>
-        <th colspan="9">
-            MicroService
-        </th>
-    </tr>
-    <tr>
         <th>id</th>
         <th>name</th>
         <th>port</th>
@@ -26,7 +21,7 @@
         <td th:text="${microservice.port}"></td>
         <td th:text="${microservice.version}"></td>
         <td th:text="${microservice.description}"></td>
-        <td><input type="checkbox" name="" th:checked="${service.userRequired}" disabled></td>
+        <td><input type="checkbox" name="" th:checked="${microservice.userRequired}" disabled></td>
         <td><input type="checkbox" name="" th:checked="${microservice.enabled}" disabled></td>
         <td th:text="${microservice.dependencyMicroserviceId}"></td>
         <td>

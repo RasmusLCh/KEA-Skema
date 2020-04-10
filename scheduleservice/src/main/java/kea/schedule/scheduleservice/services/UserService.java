@@ -1,0 +1,57 @@
+package kea.schedule.scheduleservice.services;
+
+import kea.schedule.scheduleservice.models.User;
+import kea.schedule.scheduleservice.repositories.UserRepo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class UserService implements CRUDServiceInterface<User> {
+    private UserRepo userrepo;
+
+    @Autowired
+    public UserService(UserRepo userrepo){
+        this.userrepo = userrepo;
+    }
+
+    @Override
+    public User create(User user) {
+        User newuser = userrepo.save(user);
+        return newuser;
+    }
+
+    @Override
+    public void edit(User user) {
+        userrepo.save(user);
+    }
+
+    @Override
+    public void delete(int id) {
+        userrepo.deleteById(id);
+    }
+
+    @Override
+    public User findById(int id) {
+        Optional optuser = userrepo.findById(id);
+        if(optuser.isPresent()){
+            return (User)optuser.get();
+        }
+        return null;
+    }
+
+    public User findByIdentifier(String identifier){
+        return userrepo.findByIdentifier(identifier);
+    }
+
+    public User findByEmail(String email){ return userrepo.findByEmail(email); }
+
+    @Override
+    public List<User> findAll() {
+        return userrepo.findAll();
+    }
+
+
+}

@@ -21,7 +21,7 @@ public class FileResource implements MicroServiceElement, ModelInterface {
     private String extension= null;
     @Column(name="data", columnDefinition="BLOB")
     private byte[] data = null;
-    @ManyToOne
+    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinColumn(name="microserviceid")
     private MicroService microservice;
 

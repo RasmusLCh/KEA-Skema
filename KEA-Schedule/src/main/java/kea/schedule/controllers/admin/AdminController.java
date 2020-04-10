@@ -27,7 +27,7 @@ public class AdminController {
         if(!authservice.isAdmin()){
             return "forbidden";
         }
-        return "admin/users/index";
+        return "admin/index";
     }
 
     @GetMapping({"courses/", "courses/index"})

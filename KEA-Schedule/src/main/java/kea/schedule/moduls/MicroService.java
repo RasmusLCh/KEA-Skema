@@ -12,17 +12,17 @@ public class MicroService implements ModelInterface {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @Column(name="name", columnDefinition="VARCHAR(50)", unique = true)
-    private String name = "balue";
+    private String name = "";
     @Column(name="port", unique = true)
     private int port;
     @Column
     private float version = 0f;
     @Column
     private String description = "";
-    @Column
+    @Column(columnDefinition = "boolean default false")
     //This refered to if the service should be required for users or not
-    private boolean userRequired;
-    @Column(name="enabled")
+    private boolean userRequired = false;
+    @Column(name="enabled", columnDefinition = "boolean default false")
     private boolean enabled = false;
     //If the microservice requires another microservice, an id for the microservice should be specified.
     @Column
@@ -34,6 +34,16 @@ public class MicroService implements ModelInterface {
             inverseJoinColumns = @JoinColumn(name="group_id", referencedColumnName="id", table="pre_groups")
     )
     private List<Group> accessgroups;
+    @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "microservice", orphanRemoval = true)
+    private List<Action> actions;
+    @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "microservice", orphanRemoval = true)
+    private List<FileResource> fileresources;
+    @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "microservice", orphanRemoval = true)
+    private List<MicroServiceOption> microserviceoptions;
+    @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "microservice", orphanRemoval = true)
+    private List<PageInjection> pageinjections;
+    @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "microservice", orphanRemoval = true)
+    private List<TopMenuLink> topmenulinks;
 
     public MicroService(){ }
 
@@ -72,7 +82,7 @@ public class MicroService implements ModelInterface {
     }
 
     public boolean isEnabled(){ return this.enabled; }
-
+    public boolean getEnabled(){ return this.enabled; }
     public void setEnabled(boolean enabled){ this.enabled = enabled; }
 
     public float getVersion() {
@@ -94,7 +104,9 @@ public class MicroService implements ModelInterface {
     public boolean isUserRequired() {
         return userRequired;
     }
-
+    public boolean getUserRequired() {
+        return userRequired;
+    }
     public void setUserRequired(boolean userRequired) {
         this.userRequired = userRequired;
     }

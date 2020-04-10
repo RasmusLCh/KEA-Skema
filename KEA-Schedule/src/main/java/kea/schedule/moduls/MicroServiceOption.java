@@ -19,7 +19,7 @@ public class MicroServiceOption implements MicroServiceElement, ModelInterface {
     private boolean variableValue;
     @Column
     private String description;
-    @ManyToOne
+    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.REMOVE})
     private MicroService microservice;
 
     private int priority = 50;

@@ -1,5 +1,6 @@
 package kea.schedule.controllers.internal;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import kea.schedule.moduls.*;
 import kea.schedule.services.CRUDServiceInterface;
 import kea.schedule.services.MSSetupService;
