@@ -1,8 +1,7 @@
 package kea.schedule.services;
 
-import kea.schedule.moduls.PageInjection;
+import kea.schedule.models.PageInjection;
 import kea.schedule.repositories.PageInjectionRepo;
-import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,14 +41,14 @@ public class PageInjectionService implements CRUDServiceInterface<PageInjection>
     @Override
     public PageInjection create(PageInjection pageInjection) {
         PageInjection newpi = pageinectionrepo.save(pageInjection);
-        actionservice.doAction("PageInjectionService.create", newpi.toJSON(new JSONObject()));
+        actionservice.doAction("PageInjectionService.create", newpi);
         return newpi;
     }
 
     @Override
     public void edit(PageInjection pageInjection) {
         pageinectionrepo.save(pageInjection);
-        actionservice.doAction("PageInjectionService.edit", pageInjection.toJSON(new JSONObject()));
+        actionservice.doAction("PageInjectionService.edit", pageInjection);
 
     }
 
@@ -63,7 +62,7 @@ public class PageInjectionService implements CRUDServiceInterface<PageInjection>
 
          */
         pageinectionrepo.deleteById(id);
-        actionservice.doAction("PageInjectionService.delete", new JSONObject().appendField("id", id));
+        actionservice.doAction("PageInjectionService.delete", new PageInjection(id));
     }
 
     @Override

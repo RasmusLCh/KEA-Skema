@@ -1,7 +1,7 @@
 package kea.schedule.controllers.admin;
 
-import kea.schedule.moduls.MicroService;
-import kea.schedule.moduls.ModelInterface;
+import kea.schedule.models.MicroService;
+import kea.schedule.models.ModelInterface;
 import kea.schedule.services.AuthenticationService;
 import kea.schedule.services.CRUDServiceInterface;
 import kea.schedule.services.MicroServiceService;

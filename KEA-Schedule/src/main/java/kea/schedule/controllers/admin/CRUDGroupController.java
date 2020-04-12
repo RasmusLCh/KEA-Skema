@@ -1,6 +1,6 @@
 package kea.schedule.controllers.admin;
 
-import kea.schedule.moduls.Group;
+import kea.schedule.models.Group;
 import kea.schedule.services.GroupService;
 import kea.schedule.services.MicroServiceService;
 import kea.schedule.services.UserService;

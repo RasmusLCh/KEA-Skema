@@ -1,6 +1,6 @@
 package kea.schedule.services;
 
-import kea.schedule.moduls.*;
+import kea.schedule.models.*;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -162,7 +162,7 @@ return true;
         if(returnvalue){
             JSONObject json = new JSONObject();
             json.appendField("result", returnvalue);
-            json.appendField("user", user.toJSON(new JSONObject()));
+            json.appendField("user", user);
             actionservice.doAction("AuthenticationService.Authenticate", json);
         }
         return returnvalue;

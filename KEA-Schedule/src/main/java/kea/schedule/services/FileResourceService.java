@@ -1,8 +1,7 @@
 package kea.schedule.services;
 
-import kea.schedule.moduls.FileResource;
+import kea.schedule.models.FileResource;
 import kea.schedule.repositories.FileResourceRepo;
-import net.minidev.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,20 +20,20 @@ public class FileResourceService implements CRUDServiceInterface<FileResource> {
     @Override
     public FileResource create(FileResource fileResource) {
         FileResource newfileresource = repo.save(fileResource);
-        actionservice.doAction("FileResourceService.create", newfileresource.toJSON(new JSONObject()));
+        actionservice.doAction("FileResourceService.create", newfileresource);
         return newfileresource;
     }
 
     @Override
     public void edit(FileResource fileResource) {
         repo.save(fileResource);
-        actionservice.doAction("FileResourceService.edit", fileResource.toJSON(new JSONObject()));
+        actionservice.doAction("FileResourceService.edit", fileResource);
     }
 
     @Override
     public void delete(int id) {
         repo.deleteById(id);
-        actionservice.doAction("FileResourceService.delete", new JSONObject().appendField("id", id));
+        actionservice.doAction("FileResourceService.delete", new FileResource(id));
     }
 
     @Override

@@ -1,6 +1,4 @@
-package kea.schedule.moduls;
-
-import net.minidev.json.JSONObject;
+package kea.schedule.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -33,6 +31,10 @@ public class PageInjection implements ModelInterface, MicroServiceElement {
 
     public PageInjection(){
 
+    }
+
+    public PageInjection(int id){
+        setId(id);
     }
 
     public PageInjection(String type, String page, String data){
@@ -98,29 +100,5 @@ public class PageInjection implements ModelInterface, MicroServiceElement {
 
     public void setMicroservice(MicroService microservice) {
         this.microservice = microservice;
-    }
-
-    @Override
-    public JSONObject toJSON(JSONObject obj) {
-        return toJSON(obj, false);
-    }
-
-    public JSONObject toJSON(JSONObject obj, boolean recursive) {
-        obj.appendField("id", getId());
-        obj.appendField("type", getType());
-        obj.appendField("page", getPage());
-        obj.appendField("data", getData());
-        obj.appendField("priority", getPriority());
-        if(recursive){
-            if(getMicroservice() != null){
-                obj.appendField("microservice", getMicroservice().toJSON(new JSONObject()));
-            }
-        }
-        else{
-            if(getMicroservice() != null){
-                obj.appendField("microservice", getMicroservice().getId());
-            }
-        }
-        return obj;
     }
 }

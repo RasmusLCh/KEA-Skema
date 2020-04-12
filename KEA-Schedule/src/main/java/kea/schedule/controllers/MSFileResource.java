@@ -1,7 +1,7 @@
 package kea.schedule.controllers;
 
-import kea.schedule.moduls.FileResource;
-import kea.schedule.moduls.MicroService;
+import kea.schedule.models.FileResource;
+import kea.schedule.models.MicroService;
 import kea.schedule.services.AuthenticationService;
 import kea.schedule.services.MicroServiceService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,4 @@
-package kea.schedule.moduls;
-
-import net.minidev.json.JSONObject;
+package kea.schedule.models;
 
 import javax.persistence.*;
 
@@ -23,8 +21,12 @@ public class Action implements ModelInterface, MicroServiceElement {
 
     }
 
-    public Action(String actionname, String callbackurl){
+    public Action(int id){
+        setId(id);
+    }
 
+    public Action(String actionname, String callbackurl){
+        this(actionname, callbackurl, 50);
     }
 
     public Action(String actionname, String callbackurl, int priority){
@@ -77,29 +79,5 @@ public class Action implements ModelInterface, MicroServiceElement {
 
     public void setPriority(int priority) {
         this.priority = priority;
-    }
-
-    public JSONObject toJSON(JSONObject obj){
-        return toJSON(obj, false);
-    }
-
-    @Override
-    public JSONObject toJSON(JSONObject obj, boolean recursive) {
-        obj.appendField("id", getId());
-        obj.appendField("callbackurl", getCallbackurl());
-        obj.appendField("actionname", getActionname());
-        obj.appendField("priority", getPriority());
-        if(recursive){
-            if(getMicroservice() != null){
-                obj.appendField("microservice", getMicroservice().toJSON(new JSONObject()));
-            }
-        }
-        else{
-            if(getMicroservice() != null){
-                obj.appendField("microservice", getMicroservice().getId());
-            }
-        }
-        //Groups
-        return obj;
     }
 }

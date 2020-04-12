@@ -1,6 +1,6 @@
 package kea.schedule.repositories;
 
-import kea.schedule.moduls.FileResource;
+import kea.schedule.models.FileResource;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

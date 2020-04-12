@@ -1,6 +1,4 @@
-package kea.schedule.scheduleservice.models;
-
-import net.minidev.json.JSONObject;
+package kea.schedule.models;
 
 /**
  * The ModelInterface is used for making sure that out Objects has an getId method.

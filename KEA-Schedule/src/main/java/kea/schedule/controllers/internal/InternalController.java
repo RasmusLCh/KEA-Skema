@@ -1,11 +1,9 @@
 package kea.schedule.controllers.internal;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import kea.schedule.moduls.*;
+import kea.schedule.models.*;
 import kea.schedule.services.CRUDServiceInterface;
 import kea.schedule.services.MSSetupService;
 import kea.schedule.services.ModelService;
-import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ResourceLoader;
@@ -16,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -150,28 +149,30 @@ public class InternalController {
     }
 
     @GetMapping("find/all/{classname}/")
-    public ResponseEntity<JSONObject> get_all(@PathVariable(name="classname", required = true) String classname, HttpServletRequest hsr){
+    public ResponseEntity<List> get_all(@PathVariable(name="classname", required = true) String classname, HttpServletRequest hsr){
         if(hsr.getLocalPort() == serviceport){
             CRUDServiceInterface service = modelservice.getService(classname);
-            List list = service.findAll();
-            JSONObject json = new JSONObject();
-            for(Object mi : list){
-                ModelInterface minter = (ModelInterface)mi;
-                json.appendField(Integer.toString(minter.getId()), minter.toJSON(new JSONObject()));
+            if(service != null){
+                List list = service.findAll();
+                if(list == null){
+                    list = new ArrayList();
+                }
+                return new ResponseEntity<>(list, HttpStatus.OK);
             }
-            return new ResponseEntity<>(json, HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
     @GetMapping("find/ById/{classname}/{id}")
-    public ResponseEntity<JSONObject> get_byid(@PathVariable(name="classname", required = true) String classname, @PathVariable(name="id", required = true) int id, HttpServletRequest hsr){
+    public ResponseEntity<ModelInterface> get_byid(@PathVariable(name="classname", required = true) String classname, @PathVariable(name="id", required = true) int id, HttpServletRequest hsr){
         if(hsr.getLocalPort() == serviceport){
             CRUDServiceInterface service = modelservice.getService(classname);
-            ModelInterface model = service.findById(id);
-            JSONObject json = new JSONObject();
-            json = model.toJSON(json);
-            return new ResponseEntity<>(json, HttpStatus.OK);
+            if(service != null){
+                ModelInterface model = service.findById(id);
+                return new ResponseEntity<>(model, HttpStatus.OK);
+            }
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }

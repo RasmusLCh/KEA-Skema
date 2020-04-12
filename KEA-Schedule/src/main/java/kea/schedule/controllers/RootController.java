@@ -1,9 +1,9 @@
 package kea.schedule.controllers;
 
-import kea.schedule.moduls.Group;
-import kea.schedule.moduls.PageInjection;
-import kea.schedule.moduls.TopMenuLink;
-import kea.schedule.moduls.User;
+import kea.schedule.models.Group;
+import kea.schedule.models.PageInjection;
+import kea.schedule.models.TopMenuLink;
+import kea.schedule.models.User;
 import kea.schedule.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

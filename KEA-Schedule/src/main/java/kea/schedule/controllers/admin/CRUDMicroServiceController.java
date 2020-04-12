@@ -1,16 +1,16 @@
 package kea.schedule.controllers.admin;
 
-import kea.schedule.moduls.MicroService;
+import kea.schedule.models.MicroService;
 import kea.schedule.services.GroupService;
 import kea.schedule.services.MicroServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -57,6 +57,30 @@ public class CRUDMicroServiceController extends MSCRUDAbstractController<MicroSe
         }
         model.addAttribute("accessgroups", gs.findAll());
         return super.get_edit(id, model, session);
+    }
+
+    @PostMapping("/edit")
+    @Override
+    public String post_edit(@ModelAttribute @Valid MicroService e, BindingResult result, HttpSession session, Model model)
+    {
+        if(!authservice.isAdmin()){
+            return "forbidden";
+        }
+        model.addAttribute(modelname, e);
+        if (result.hasErrors()) {
+            return path + "edit";
+        }
+        MicroService ms = service.findById(e.getId());
+        ms.setName(e.getName());
+        ms.setPort(e.getPort());
+        ms.setVersion(e.getVersion());
+        ms.setDescription(e.getDescription());
+        ms.setUserRequired(e.getUserRequired());
+        ms.setEnabled(e.getEnabled());
+        ms.setDependencyMicroserviceId(e.getDependencyMicroserviceId());
+        ms.setAccessgroups(e.getAccessgroups());
+        service.edit(ms);
+        return "redirect:/" + path + "view/" + ms.getId() + "/";
     }
 
 }

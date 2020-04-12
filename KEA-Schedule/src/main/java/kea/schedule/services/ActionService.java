@@ -1,6 +1,8 @@
 package kea.schedule.services;
 
-import kea.schedule.moduls.Action;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import kea.schedule.models.Action;
+import kea.schedule.models.ModelInterface;
 import kea.schedule.repositories.ActionRepo;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,14 @@ public class ActionService implements CRUDServiceInterface<Action>{
         this.actionrepo = actionrepo;
     }
 
+    public void doAction(String actionname, ModelInterface model){
+        ObjectMapper bla = new ObjectMapper();
+        JSONObject data = bla.convertValue(model, JSONObject.class);
+        doAction(actionname, data);
+    }
+
     public void doAction(String actionname, JSONObject data){
+
         System.out.println("-----" + actionname + ": START -----");
         if(data == null){
             data = new JSONObject();
@@ -45,14 +54,14 @@ public class ActionService implements CRUDServiceInterface<Action>{
     @Override
     public Action create(Action action) {
         Action newaction = actionrepo.save(action);
-        doAction("ActionService.create", newaction.toJSON(new JSONObject()));
+        doAction("ActionService.create", newaction);
         return newaction;
     }
 
     @Override
     public void edit(Action action) {
         actionrepo.save(action);
-        doAction("ActionService.edit", action.toJSON(new JSONObject()));
+        doAction("ActionService.edit", action);
     }
 
     @Override
@@ -65,7 +74,7 @@ public class ActionService implements CRUDServiceInterface<Action>{
 
          */
         actionrepo.deleteById(id);
-        doAction("ActionService.delete", new JSONObject().appendField("id", id));
+        doAction("ActionService.delete", new Action(id));
 
     }
 

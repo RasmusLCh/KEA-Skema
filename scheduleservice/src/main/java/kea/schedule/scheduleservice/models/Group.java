@@ -1,15 +1,19 @@
 package kea.schedule.scheduleservice.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import net.minidev.json.JSONObject;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import kea.schedule.scheduleservice.converters.deserialize.ListGroupDeserializer;
+import kea.schedule.scheduleservice.converters.deserialize.ListUserDeserializer;
+import kea.schedule.scheduleservice.converters.serialize.ListGroupSerializer;
+import kea.schedule.scheduleservice.converters.serialize.ListUserSerializer;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.List;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+import java.util.List;
+import java.util.ArrayList;
+
 @Entity(name= "Group")
 @Table(name= "pre_groups") //JPA / Hibernate doesnt allow the table to be called groups..
 public class Group implements ModelInterface{
@@ -27,11 +31,23 @@ public class Group implements ModelInterface{
     @Size(min=0,max=100)
     private String metadata = null;
     @ManyToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+    @JsonSerialize(converter = ListGroupSerializer.class)
+    @JsonDeserialize(converter = ListGroupDeserializer.class)
     private List<Group> groups = new ArrayList();
     @ManyToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     //We want this to be unidirectional, so we can add/remove from users also.
     @JoinTable(name = "group_user", joinColumns = @JoinColumn(name="group_id", referencedColumnName="id", table="pre_groups"), inverseJoinColumns = @JoinColumn(name="user_id", referencedColumnName="id", table="users"))
-    private List<User> users = new ArrayList();;
+    @JsonSerialize(converter = ListUserSerializer.class)
+    @JsonDeserialize(converter = ListUserDeserializer.class)
+    private List<User> users = new ArrayList();
+
+    public Group(){
+
+    }
+
+    public Group(int id){
+        setId(id);
+    }
 
     public int getId() {
         return id;
@@ -87,42 +103,5 @@ public class Group implements ModelInterface{
             return ((Group)obj).getId() == this.id;
         }
         return false;
-    }
-
-    @Override
-    public JSONObject toJSON(JSONObject obj) {
-        return toJSON(obj, false);
-    }
-
-    public JSONObject toJSON(JSONObject obj, boolean recursive) {
-        obj.appendField("id", getId());
-        obj.appendField("name", getName());
-        obj.appendField("metadata", getMetadata());
-        obj.appendField("description", getDescription());
-        if(recursive) {
-            JSONObject grps = new JSONObject();
-            for (Group group : groups) {
-                grps.appendField(Integer.toString(group.getId()), group.toJSON(new JSONObject()));
-            }
-            obj.appendField("groups", grps);
-            JSONObject usrs = new JSONObject();
-            for (User user : users) {
-                usrs.appendField(Integer.toString(user.getId()), user.toJSON(new JSONObject()));
-            }
-            obj.appendField("users", usrs);
-        }
-        else{
-            JSONObject grps = new JSONObject();
-            for (Group group : groups) {
-                grps.appendField(Integer.toString(group.getId()), group.getName());
-            }
-            obj.appendField("groups", grps);
-            JSONObject usrs = new JSONObject();
-            for (User user : users) {
-                usrs.appendField(Integer.toString(user.getId()), user.getIdentifier());
-            }
-            obj.appendField("users", usrs);
-        }
-        return obj;
     }
 }

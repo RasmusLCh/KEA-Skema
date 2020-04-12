@@ -1,12 +1,11 @@
 package kea.schedule.services;
 
-import kea.schedule.moduls.FileResource;
-import kea.schedule.moduls.MicroService;
+import kea.schedule.models.FileResource;
+import kea.schedule.models.MicroService;
 import kea.schedule.repositories.ActionRepo;
 import kea.schedule.repositories.FileResourceRepo;
 import kea.schedule.repositories.MicroServiceRepo;
 import kea.schedule.repositories.PageInjectionRepo;
-import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -69,14 +68,14 @@ public class MicroServiceService implements CRUDServiceInterface<MicroService> {
     @Override
     public MicroService create(MicroService microService) {
         MicroService newms = msrepo.save(microService);
-        actionservice.doAction("MicroServiceService.create", newms.toJSON(new JSONObject()));
+        actionservice.doAction("MicroServiceService.create", newms);
         return newms;
     }
 
     @Override
-    public void edit(MicroService microService) {
-        msrepo.save(microService);
-        actionservice.doAction("MicroServiceService.create", microService.toJSON(new JSONObject()));
+    public void edit(MicroService microservice) {
+        msrepo.save(microservice);
+        actionservice.doAction("MicroServiceService.create", microservice);
     }
 
     @Override
@@ -89,7 +88,7 @@ public class MicroServiceService implements CRUDServiceInterface<MicroService> {
 
          */
         msrepo.deleteById(id);
-        actionservice.doAction("MicroServiceService.delete", new JSONObject().appendField("id", id));
+        actionservice.doAction("MicroServiceService.delete", new MicroService(id));
 
     }
 

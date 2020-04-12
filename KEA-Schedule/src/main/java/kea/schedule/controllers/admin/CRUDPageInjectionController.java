@@ -1,6 +1,6 @@
 package kea.schedule.controllers.admin;
 
-import kea.schedule.moduls.PageInjection;
+import kea.schedule.models.PageInjection;
 import kea.schedule.services.MicroServiceService;
 import kea.schedule.services.PageInjectionService;
 import org.springframework.beans.factory.annotation.Autowired;

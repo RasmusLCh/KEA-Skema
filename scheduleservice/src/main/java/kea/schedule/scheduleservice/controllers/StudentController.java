@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping("/servicepages/scheduleservicestudent/")
+@RequestMapping("/servicepages/KEA-Schedule-Student/")
 public class StudentController {
     @Value("${ms.port.student:7511}")
     int studentport;
 
-    @GetMapping({"", "/", "index"})
+    @GetMapping({"", "/", "index", "index.eng"})
     public String get_root(HttpServletRequest hsr){
         if(hsr.getLocalPort() == studentport){
             return "student/index";

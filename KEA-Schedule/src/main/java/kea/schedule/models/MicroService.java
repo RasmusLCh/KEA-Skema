@@ -1,6 +1,4 @@
-package kea.schedule.moduls;
-
-import net.minidev.json.JSONObject;
+package kea.schedule.models;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,7 +12,7 @@ public class MicroService implements ModelInterface {
     @Column(name="name", columnDefinition="VARCHAR(50)", unique = true)
     private String name = "";
     @Column(name="port", unique = true)
-    private int port;
+    private int port = 0;
     @Column
     private float version = 0f;
     @Column
@@ -49,6 +47,10 @@ public class MicroService implements ModelInterface {
 
     public MicroService(String name, int port){
         this(0, name, port);
+    }
+
+    public MicroService(int id){
+        this(id, "", 0);
     }
 
     public MicroService(int id, String name, int port){
@@ -129,22 +131,5 @@ public class MicroService implements ModelInterface {
 
     public boolean inAccessgroups(Group grp){
         return accessgroups.contains(grp);
-    }
-
-    public JSONObject toJSON(JSONObject obj){
-        return toJSON(obj, false);
-    }
-
-    public JSONObject toJSON(JSONObject obj, boolean recursive){
-        obj.appendField("id", getId());
-        obj.appendField("name", getName());
-        obj.appendField("port", getPort());
-        obj.appendField("dependencyMicroserviceId", getDependencyMicroserviceId());
-        obj.appendField("description", getDescription());
-        obj.appendField("version", getVersion());
-        obj.appendField("enabled", isEnabled());
-        obj.appendField("userRequired", isUserRequired());
-        //accessgroups
-        return obj;
     }
 }

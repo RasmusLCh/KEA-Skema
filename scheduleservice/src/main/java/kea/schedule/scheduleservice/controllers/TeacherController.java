@@ -8,15 +8,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping("/servicepages/scheduleserviceteacher/")
+@RequestMapping("/servicepages/KEA-Schedule-Teacher/")
 public class TeacherController {
     @Value("${ms.port.teacher:7512}")
     int teacherport;
 
-    @GetMapping({"", "/", "index"})
+    @GetMapping({"", "/", "index", "index.eng"})
     public String get_root(HttpServletRequest hsr){
         if(hsr.getLocalPort() == teacherport){
             return "teacher/index";
+        }
+        return "forbidden";
+    }
+
+    @GetMapping({"upload.eng"})
+    public String get_upload(HttpServletRequest hsr){
+        if(hsr.getLocalPort() == teacherport){
+            return "teacher/upload";
         }
         return "forbidden";
     }

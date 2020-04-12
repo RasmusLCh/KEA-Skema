@@ -1,5 +1,6 @@
 package kea.schedule.services;
 
+import net.minidev.json.JSONObject;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,6 @@ public class CronService {
     @Scheduled(fixedDelay = 30000)
     public void fixedDelayTask() {
         System.out.println("Lets do an action!");
-        actionservice.doAction("cron", null);
+        actionservice.doAction("cron", new JSONObject());
     }
 }

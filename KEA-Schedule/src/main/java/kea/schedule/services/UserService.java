@@ -1,8 +1,7 @@
 package kea.schedule.services;
 
-import kea.schedule.moduls.User;
+import kea.schedule.models.User;
 import kea.schedule.repositories.UserRepo;
-import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,20 +22,20 @@ public class UserService implements CRUDServiceInterface<User> {
     @Override
     public User create(User user) {
         User newuser = userrepo.save(user);
-        actionservice.doAction("UserService.create", user.toJSON(new JSONObject()));
+        actionservice.doAction("UserService.create", user);
         return newuser;
     }
 
     @Override
     public void edit(User user) {
         userrepo.save(user);
-        actionservice.doAction("UserService.edit", user.toJSON(new JSONObject()));
+        actionservice.doAction("UserService.edit", user);
     }
 
     @Override
     public void delete(int id) {
         userrepo.deleteById(id);
-        actionservice.doAction("UserService.delete", new JSONObject().appendField("id", id));
+        actionservice.doAction("UserService.delete", new User(id));
     }
 
     @Override

@@ -1,6 +1,4 @@
-package kea.schedule.moduls;
-
-import net.minidev.json.JSONObject;
+package kea.schedule.models;
 
 import javax.persistence.*;
 
@@ -27,6 +25,10 @@ public class FileResource implements MicroServiceElement, ModelInterface {
 
     public FileResource(){
 
+    }
+
+    public FileResource(int id){
+        setId(id);
     }
 
     public int getId() {
@@ -75,30 +77,5 @@ public class FileResource implements MicroServiceElement, ModelInterface {
 
     public void setFilename(String filename) {
         this.filename = filename;
-    }
-
-    @Override
-    public JSONObject toJSON(JSONObject obj) {
-        return toJSON(obj, false);
-    }
-
-    @Override
-    public JSONObject toJSON(JSONObject obj, boolean recursive) {
-        obj.appendField("id", getId());
-        obj.appendField("filename", getFilename());
-        obj.appendField("type", getType());
-        obj.appendField("extension", getExtension());
-        if(recursive){
-            if(getMicroservice() != null){
-                obj.appendField("microservice", getMicroservice().toJSON(new JSONObject()));
-            }
-        }
-        else{
-            if(getMicroservice() != null){
-                obj.appendField("microservice", getMicroservice().getId());
-            }
-        }
-        //Groups
-        return obj;
     }
 }

@@ -1,8 +1,6 @@
 package kea.schedule.services;
 
-import kea.schedule.moduls.FileResource;
-import kea.schedule.moduls.ModelInterface;
-import kea.schedule.moduls.PageInjection;
+import kea.schedule.models.ModelInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +23,7 @@ public class ModelService {
         this.servicemap.put("Action", actionservice);
         this.servicemap.put("FileResource", fileresourceservice);
         this.servicemap.put("Group", groupservice);
-        this.servicemap.put("MicroServiceService", microserviceservice);
+        this.servicemap.put("MicroService", microserviceservice);
         this.servicemap.put("PageInjection", pageinjectionservice);
         this.servicemap.put("TopMenu", topmenuservice);
         this.servicemap.put("User", userservice);

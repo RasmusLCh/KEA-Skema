@@ -1,6 +1,4 @@
-package kea.schedule.moduls;
-
-import net.minidev.json.JSONObject;
+package kea.schedule.models;
 
 import javax.persistence.*;
 
@@ -23,6 +21,10 @@ public class TopMenuLink implements ModelInterface, MicroServiceElement {
     @ManyToOne(cascade= {CascadeType.ALL})
     private MicroService microservice;
     public TopMenuLink(){}
+
+    public TopMenuLink(int id){
+        setId(id);
+    }
 
     public TopMenuLink(String path, String text, String description, int priority){
         this(path, text, description, priority,null);
@@ -96,30 +98,5 @@ public class TopMenuLink implements ModelInterface, MicroServiceElement {
 
     public void setLanguage(String language) {
         this.language = language;
-    }
-
-    @Override
-    public JSONObject toJSON(JSONObject obj) {
-        return toJSON(obj, false);
-    }
-
-    public JSONObject toJSON(JSONObject obj, boolean recursive) {
-        obj.appendField("id", getId());
-        obj.appendField("text", getText());
-        obj.appendField("path", getPath());
-        obj.appendField("description", getDescription());
-        obj.appendField("language", getLanguage());
-        obj.appendField("priority", getPriority());
-        if(recursive){
-            if(getMicroservice() != null){
-                obj.appendField("microservice", getMicroservice().toJSON(new JSONObject()));
-            }
-        }
-        else{
-            if(getMicroservice() != null){
-                obj.appendField("microservice", getMicroservice().getId());
-            }
-        }
-        return obj;
     }
 }

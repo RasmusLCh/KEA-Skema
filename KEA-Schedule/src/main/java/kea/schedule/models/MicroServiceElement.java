@@ -1,4 +1,4 @@
-package kea.schedule.moduls;
+package kea.schedule.models;
 
 public interface MicroServiceElement {
     public MicroService getMicroservice();

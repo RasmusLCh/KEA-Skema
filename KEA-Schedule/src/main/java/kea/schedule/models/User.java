@@ -1,6 +1,9 @@
-package kea.schedule.moduls;
+package kea.schedule.models;
 
-import net.minidev.json.JSONObject;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import kea.schedule.converters.deserialize.ListGroupDeserializer;
+import kea.schedule.converters.serialize.ListGroupSerializer;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -35,8 +38,17 @@ public class User implements ModelInterface{
         joinColumns = @JoinColumn(name="user_id", referencedColumnName="id", table="users"),
         inverseJoinColumns = @JoinColumn(name="group_id", referencedColumnName="id", table="pre_groups")
     )
+    @JsonSerialize(converter = ListGroupSerializer.class)
+    @JsonDeserialize(converter = ListGroupDeserializer.class)
     private List<Group> groups;
 
+    public User(){
+
+    }
+
+    public User(int id){
+        setId(id);
+    }
 
     @Override
     public int getId() {
@@ -93,33 +105,5 @@ public class User implements ModelInterface{
             return ((User)obj).getId() == this.id;
         }
         return false;
-    }
-
-    public JSONObject toJSON(JSONObject obj){
-        return toJSON(obj, false);
-    }
-
-    public JSONObject toJSON(JSONObject obj, boolean recursive){
-        obj.appendField("id", getId());
-        obj.appendField("identifier", getIdentifier());
-        obj.appendField("displayname", getDisplayname());
-        obj.appendField("email", getEmail());
-        obj.appendField("language", getLanguage());
-        if(recursive){
-            JSONObject grps = new JSONObject();
-            for(Group group : groups){
-                grps.appendField(Integer.toString(group.getId()), group.toJSON(new JSONObject()));
-            }
-            obj.appendField("groups", grps);
-        }
-        else{
-            JSONObject grps = new JSONObject();
-            for(Group group : groups){
-                grps.appendField(Integer.toString(group.getId()), group.getName());
-            }
-            obj.appendField("groups", grps);
-        }
-
-        return obj;
     }
 }

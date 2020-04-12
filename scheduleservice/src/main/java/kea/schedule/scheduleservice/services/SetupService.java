@@ -11,6 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import net.minidev.json.JSONObject;
 import kea.schedule.scheduleservice.models.User;
+
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class SetupService {
     @Value("${infrastructure.port:7500}")
@@ -28,8 +32,8 @@ public class SetupService {
     }
 
     public void setup() {
-        //System.out.println("Synchronize users.... this might take a while");
-        //synchronizeUsers();
+        System.out.println("Synchronize users.... this might take a while");
+        synchronizeUsers();
         System.out.println("Synchronize groups");
         synchronizeGroups();
         System.out.println("Setup admin ms");
@@ -50,7 +54,14 @@ public class SetupService {
         User[] users = response.getBody();
         for(User usr : users){
             System.out.println(usr.getIdentifier());
-            userservice.create(usr);
+            //We dont want to import any groups, since they are just ids
+            usr.setGroups(new ArrayList());
+            if(userservice.findById(usr.getId()) == null){
+                userservice.create(usr);
+            }
+            else{
+                userservice.edit(usr);
+            }
         }
     }
 
@@ -59,40 +70,51 @@ public class SetupService {
         HttpHeaders headers = new HttpHeaders();
         ResponseEntity<Group[]> response =
                 restTemplate.getForEntity(
-                        "http://localhost:7500/find/all/Groups/",
+                        "http://localhost:7500/find/all/Group/",
                         Group[].class);
         Group[] groups = response.getBody();
         for(Group grp : groups){
-            System.out.println(grp.getName());
-            groupservice.create(grp);
-        }
-        /*
-        ResponseEntity<JSONObject> response =
-                restTemplate.getForEntity(
-                        "http://localhost:7500/find/all/Group/",
-                        JSONObject.class);
-        JSONObject json = response.getBody();
-        ObjectMapper mapper = new ObjectMapper();
-        for(String key: json.keySet()){
-            System.out.println(json.get(key));
-            try {
-                Group grp = mapper.readValue(((JSONObject)json.get(key)).toJSONString(), Group.class);
-                System.out.println("grp object: " + grp.toJSON(new JSONObject()).toString());
-            } catch (JsonProcessingException e) {
-                System.out.println("Failed to convert");
-                e.printStackTrace();
+            grp.setGroups(new ArrayList<>());
+            //We want this creation of groups to take as short as possible, so we omit users
+            grp.setUsers(new ArrayList<>());
+            if(groupservice.findById(grp.getId()) == null){
+                groupservice.create(grp);
+            }
+            else{
+                //Notting needed we update with all other info in next step
             }
         }
-
-         */
-        /*
-        Group[] groups = response.getBody();
+        //Now all groups are loaded, so we can add the groups that are inside other groups
+        //We are forced to reload, or we could have cloned initial groups.
+        //Potential issue if more groups are added inbetween theese 2 operations!
+        response =
+                restTemplate.getForEntity(
+                        "http://localhost:7500/find/all/Group/",
+                        Group[].class);
+        groups = response.getBody();
         for(Group grp : groups){
-            System.out.println(grp.getName());
-            groupservice.create(grp);
-        }
+            List<Group> grpsingrp = new ArrayList();
+            //Convert the groups that only has an ID to group groups.
+            for(Group gid : grp.getGroups()){
+                Group gf = groupservice.findById(gid.getId());
+                if(gf != null){
+                    grpsingrp.add(gf);
+                }
+            }
+            grp.setGroups(grpsingrp);
 
-         */
+            //Convert the users that only has an ID to group users.
+            List<User> usersingrp = new ArrayList();
+            for(User usr : grp.getUsers()){
+                User uf = userservice.findById(usr.getId());
+                if(uf != null){
+                    usersingrp.add(uf);
+                }
+            }
+            grp.setUsers(usersingrp);
+
+            groupservice.edit(grp);
+        }
     }
 
 
@@ -112,7 +134,7 @@ public class SetupService {
 
         //Add topmenulink eng
         json = new JSONObject();
-        json.appendField("path", "https://localhost/servicepages/scheduleserviceteacher/index.eng");
+        json.appendField("path", "https://localhost/servicepages/KEA-Schedule-Teacher/index.eng");
         json.appendField("text", "Schedule");
         json.appendField("language", "eng");
         json.appendField("description", "");
@@ -120,7 +142,7 @@ public class SetupService {
         restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceaddtopmenulink/KEA-Schedule-Teacher", HttpMethod.POST, entity, String.class);
         //Add topmenulink dk
         json = new JSONObject();
-        json.appendField("path", "https://localhost/servicepages/scheduleserviceteacher/index.dk");
+        json.appendField("path", "https://localhost/servicepages/KEA-Schedule-Teacher/index.dk");
         json.appendField("text", "Skema");
         json.appendField("language", "dk");
         json.appendField("description", "");
@@ -129,7 +151,7 @@ public class SetupService {
 
         //Add topmenulink eng
         json = new JSONObject();
-        json.appendField("path", "https://localhost/servicepages/scheduleserviceteacher/upload.eng");
+        json.appendField("path", "https://localhost/servicepages/KEA-Schedule-Teacher/upload.eng");
         json.appendField("text", "Upload schedule");
         json.appendField("language", "eng");
         json.appendField("description", "");
@@ -137,7 +159,7 @@ public class SetupService {
         restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceaddtopmenulink/KEA-Schedule-Teacher", HttpMethod.POST, entity, String.class);
         //Add topmenulink dk
         json = new JSONObject();
-        json.appendField("path", "https://localhost/servicepages/scheduleserviceteacher/upload.dk");
+        json.appendField("path", "https://localhost/servicepages/KEA-Schedule-Teacher/upload.dk");
         json.appendField("text", "Upload skema");
         json.appendField("language", "dk");
         json.appendField("description", "");
@@ -161,7 +183,7 @@ public class SetupService {
 
         //Add topmenulink eng
         json = new JSONObject();
-        json.appendField("path", "https://localhost/servicepages/scheduleservicestudent/index.eng");
+        json.appendField("path", "https://localhost/servicepages/KEA-Schedule-Student/index.eng");
         json.appendField("text", "Schedule");
         json.appendField("language", "eng");
         json.appendField("description", "");
@@ -169,7 +191,7 @@ public class SetupService {
         restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceaddtopmenulink/KEA-Schedule-Student", HttpMethod.POST, entity, String.class);
         //Add topmenulink dk
         json = new JSONObject();
-        json.appendField("path", "https://localhost/servicepages/scheduleservicestudent/index.dk");
+        json.appendField("path", "https://localhost/servicepages/KEA-Schedule-Student/index.dk");
         json.appendField("text", "Skema");
         json.appendField("language", "dk");
         json.appendField("description", "");
@@ -193,7 +215,7 @@ public class SetupService {
 
         //Add topmenulink eng
         json = new JSONObject();
-        json.appendField("path", "https://localhost/servicepages/scheduleserviceadmin/index.eng");
+        json.appendField("path", "https://localhost/servicepages/KEA-Schedule-Admin/index.eng");
         json.appendField("text", "Schedule admin");
         json.appendField("language", "eng");
         json.appendField("description", "");
@@ -201,7 +223,7 @@ public class SetupService {
         restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceaddtopmenulink/KEA-Schedule-Admin", HttpMethod.POST, entity, String.class);
         //Add topmenulink dk
         json = new JSONObject();
-        json.appendField("path", "https://localhost/servicepages/scheduleserviceadmin/index.dk");
+        json.appendField("path", "https://localhost/servicepages/KEA-Schedule-Admin/index.dk");
         json.appendField("text", "Skema admin");
         json.appendField("language", "dk");
         json.appendField("description", "");

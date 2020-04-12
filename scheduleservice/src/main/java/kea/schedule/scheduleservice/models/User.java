@@ -1,6 +1,10 @@
 package kea.schedule.scheduleservice.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import kea.schedule.scheduleservice.converters.deserialize.ListGroupDeserializer;
+import kea.schedule.scheduleservice.converters.serialize.ListGroupSerializer;
 import net.minidev.json.JSONObject;
 
 import javax.persistence.*;
@@ -8,7 +12,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity(name= "User")
 @Table(name= "users")
 public class User implements ModelInterface{
@@ -32,12 +35,21 @@ public class User implements ModelInterface{
     private String language; //Default language for user
     @ManyToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     @JoinTable(
-        name = "group_user",
-        joinColumns = @JoinColumn(name="user_id", referencedColumnName="id", table="users"),
-        inverseJoinColumns = @JoinColumn(name="group_id", referencedColumnName="id", table="pre_groups")
+            name = "group_user",
+            joinColumns = @JoinColumn(name="user_id", referencedColumnName="id", table="users"),
+            inverseJoinColumns = @JoinColumn(name="group_id", referencedColumnName="id", table="pre_groups")
     )
+    @JsonSerialize(converter = ListGroupSerializer.class)
+    @JsonDeserialize(converter = ListGroupDeserializer.class)
     private List<Group> groups;
 
+    public User(){
+
+    }
+
+    public User(int id){
+        setId(id);
+    }
 
     @Override
     public int getId() {
@@ -94,33 +106,5 @@ public class User implements ModelInterface{
             return ((User)obj).getId() == this.id;
         }
         return false;
-    }
-
-    public JSONObject toJSON(JSONObject obj){
-        return toJSON(obj, false);
-    }
-
-    public JSONObject toJSON(JSONObject obj, boolean recursive){
-        obj.appendField("id", getId());
-        obj.appendField("identifier", getIdentifier());
-        obj.appendField("displayname", getDisplayname());
-        obj.appendField("email", getEmail());
-        obj.appendField("language", getLanguage());
-        if(recursive){
-            JSONObject grps = new JSONObject();
-            for(Group group : groups){
-                grps.appendField(Integer.toString(group.getId()), group.toJSON(new JSONObject()));
-            }
-            obj.appendField("groups", grps);
-        }
-        else{
-            JSONObject grps = new JSONObject();
-            for(Group group : groups){
-                grps.appendField(Integer.toString(group.getId()), group.getName());
-            }
-            obj.appendField("groups", grps);
-        }
-
-        return obj;
     }
 }

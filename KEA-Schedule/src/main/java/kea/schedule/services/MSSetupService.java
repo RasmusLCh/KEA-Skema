@@ -1,6 +1,6 @@
 package kea.schedule.services;
 
-import kea.schedule.moduls.*;
+import kea.schedule.models.*;
 import kea.schedule.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

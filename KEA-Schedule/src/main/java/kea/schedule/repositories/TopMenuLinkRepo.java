@@ -1,6 +1,6 @@
 package kea.schedule.repositories;
 
-import kea.schedule.moduls.TopMenuLink;
+import kea.schedule.models.TopMenuLink;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,6 +1,4 @@
-package kea.schedule.moduls;
-
-import net.minidev.json.JSONObject;
+package kea.schedule.models;
 
 import javax.persistence.*;
 
@@ -75,25 +73,5 @@ public class MicroServiceOption implements MicroServiceElement, ModelInterface {
 
     public void setPriority(int priority) {
         this.priority = priority;
-    }
-
-    @Override
-    public JSONObject toJSON(JSONObject obj) {
-        return toJSON(obj, false);
-    }
-
-    public JSONObject toJSON(JSONObject obj, boolean recursive) {
-        obj.appendField("id", getId());
-        obj.appendField("VariableName", getVariableName());
-        obj.appendField("VariableValue", getVariableValue());
-        obj.appendField("description", getDescription());
-        obj.appendField("priority", getPriority());
-        if(recursive){
-            obj.appendField("microservice", getMicroservice().toJSON(new JSONObject()));
-        }
-        else{
-            obj.appendField("microservice", getMicroservice().getId());
-        }
-        return obj;
     }
 }

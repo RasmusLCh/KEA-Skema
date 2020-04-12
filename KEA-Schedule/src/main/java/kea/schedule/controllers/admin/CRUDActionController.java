@@ -1,6 +1,6 @@
 package kea.schedule.controllers.admin;
 
-import kea.schedule.moduls.Action;
+import kea.schedule.models.Action;
 import kea.schedule.services.ActionService;
 import kea.schedule.services.MicroServiceService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package kea.schedule.controllers.admin;
 
-import kea.schedule.moduls.TopMenuLink;
+import kea.schedule.models.TopMenuLink;
 import kea.schedule.services.MicroServiceService;
 import kea.schedule.services.TopMenuLinkService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package kea.schedule.services;
 
-import kea.schedule.moduls.ModelInterface;
+import kea.schedule.models.ModelInterface;
 
 import java.util.List;
 
