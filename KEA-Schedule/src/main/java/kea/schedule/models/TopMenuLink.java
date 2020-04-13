@@ -18,7 +18,7 @@ public class TopMenuLink implements ModelInterface, MicroServiceElement {
     private String language = "eng";
     @Column
     private int priority = 50;
-    @ManyToOne(cascade= {CascadeType.ALL})
+    @ManyToOne(cascade= {CascadeType.DETACH})
     private MicroService microservice;
     public TopMenuLink(){}
 

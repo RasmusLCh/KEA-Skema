@@ -1,0 +1,18 @@
+<th:block th:include="/admin/header.html" th:tag="remove"></th:block>
+<div class="block">
+    <h1>Create File Resource</h1>
+    <th:block th:if="${selectedmicroserviceid != 0}">
+        <a href="../" class="button right">Back</a>
+    </th:block>
+</div>
+<label>MicroService:</label>
+<p th:text="${selectedmicroservice.name}" class="disabledinput"></p>
+<form method="post" action="../bind/" enctype="multipart/form-data" th:object="${fileresource}">
+    <input type="text" name="microservice.id" id="microservice.id" th:value="${selectedmicroserviceid}" style="display:none;">
+    <label>Upload file:</label>
+    <input type="file" id="multipartfile" name="multipartfile">
+    <p class="errortext" th:if="${#fields.hasErrors('filename')}">An error occured, filename must be between 1 and 255 characters long.</p>
+    <p class="errortext" th:if="${#fields.hasErrors('type')}">The document type is not allowed.</p>
+    <input type="submit" value="Create">
+</form>
+<th:block th:include="/admin/footer.html" th:tag="remove"></th:block>

@@ -1,6 +1,7 @@
 package kea.schedule.controllers.admin;
 
 import kea.schedule.models.MicroService;
+import kea.schedule.models.MicroServiceElement;
 import kea.schedule.models.ModelInterface;
 import kea.schedule.services.AuthenticationService;
 import kea.schedule.services.CRUDServiceInterface;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -59,15 +61,13 @@ public abstract class MSCRUDAbstractController<E extends ModelInterface, S exten
         if(!authservice.isAdmin()){
             return "forbidden";
         }
-        System.out.println("Session id: " + session.getId());
         if(session.getAttribute("selectedmicroserviceid") != null){
-            System.out.println("selectedmicroserviceid is " + ((Integer)session.getAttribute("selectedmicroserviceid")).intValue());
+            System.out.println("Find all get" + (int)session.getAttribute("selectedmicroserviceid"));
+            model.addAttribute(modelname + "s", service.findAll((int)session.getAttribute("selectedmicroserviceid")));
         }
         else{
-            System.out.println("Session dont have val!");
+            model.addAttribute(modelname + "s", new ArrayList());
         }
-        System.out.println("Index");
-        model.addAttribute(modelname + "s", service.findAll());
         return path + "index";
     }
 
@@ -77,14 +77,15 @@ public abstract class MSCRUDAbstractController<E extends ModelInterface, S exten
         if(!authservice.isAdmin()){
             return "forbidden";
         }
-        System.out.println("Session id: " + session.getId());
-        System.out.println("Saving attribute in selectedmicroserviceid");
         session.setAttribute("selectedmicroserviceid", new Integer(selectedmicroserviceid));
+        model.addAttribute("selectedmicroserviceid", session.getAttribute("selectedmicroserviceid"));
         if(session.getAttribute("selectedmicroserviceid") != null){
-            System.out.println("selectedmicroserviceid is " + ((Integer)session.getAttribute("selectedmicroserviceid")).intValue());
+            System.out.println("Find all post " + selectedmicroserviceid);
+            model.addAttribute(modelname + "s", service.findAll(selectedmicroserviceid));
         }
-        model.addAttribute("selectedmicroserviceid", selectedmicroserviceid);
-        model.addAttribute(modelname + "s", service.findAll());
+        else{
+            model.addAttribute(modelname + "s", new ArrayList());
+        }
         return path + "index";
     }
 
@@ -101,6 +102,12 @@ public abstract class MSCRUDAbstractController<E extends ModelInterface, S exten
     public String post_create(@ModelAttribute @Valid E e, BindingResult result, HttpSession session, Model model){
         if(!authservice.isAdmin()){
             return "forbidden";
+        }
+        if(e instanceof MicroServiceElement && ((MicroServiceElement) e).getMicroservice() == null && session.getAttribute("selectedmicroserviceid") != null){
+            ((MicroServiceElement)e).setMicroservice(msservice.findById((int)session.getAttribute("selectedmicroserviceid")));
+        }
+        else if(e instanceof MicroServiceElement){
+            ((MicroServiceElement) e).setMicroservice(msservice.findById(((MicroServiceElement) e).getMicroservice().getId()));
         }
         model.addAttribute(modelname, e);
         if (result.hasErrors()) {
@@ -129,6 +136,12 @@ public abstract class MSCRUDAbstractController<E extends ModelInterface, S exten
         model.addAttribute(modelname, e);
         if (result.hasErrors()) {
             return path + "edit";
+        }
+        if(e instanceof MicroServiceElement && ((MicroServiceElement) e).getMicroservice() == null && session.getAttribute("selectedmicroserviceid") != null){
+            ((MicroServiceElement)e).setMicroservice(msservice.findById((int)session.getAttribute("selectedmicroserviceid")));
+        }
+        else if(e instanceof MicroServiceElement){
+            ((MicroServiceElement) e).setMicroservice(msservice.findById(((MicroServiceElement) e).getMicroservice().getId()));
         }
         service.edit(e);
         return "redirect:/" + path + "view/" + e.getId() + "/";

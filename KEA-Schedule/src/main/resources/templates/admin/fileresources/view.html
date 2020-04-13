@@ -1,0 +1,47 @@
+<th:block th:include="/admin/header.html" th:tag="remove"></th:block>
+<div class="block">
+    <h1>View File Resource</h1>
+    <th:block th:if="${selectedmicroserviceid != 0}">
+        <a href="../../" class="button right">Back</a>
+    </th:block>
+</div>
+<table>
+    <tr>
+        <th colspan="4">
+            MicroService
+        </th>
+    </tr>
+    <tr>
+        <td colspan="4" th:text="${fileresource.microservice.name}"></td>
+    </tr>
+    <tr>
+        <th>ID</th>
+        <th>FILENAME</th>
+        <th>TYPE</th>
+        <th>EXTENSION</th>
+    </tr>
+    <tr>
+        <td th:text="${fileresource.id}"></td>
+        <td th:text="${fileresource.filename}"></td>
+        <td th:text="${fileresource.type}"></td>
+        <td th:text="${fileresource.extension}"></td>
+    </tr>
+    <tr>
+        <th colspan="4">
+            DATA
+        </th>
+    </tr>
+    <tr>
+        <td colspan="4">
+            <th:block th:if="${fileresource.type}=='image'">
+                <a th:href="'/serviceresource/' + ${selectedmicroservice.name}+'/'+${fileresource.filename}">
+                    <img th:src="'/serviceresource/' + ${selectedmicroservice.name}+'/'+${fileresource.filename}">
+                </a>
+            </th:block>
+            <th:block th:unless="${fileresource.type}=='image'">
+                <a th:href="'/serviceresource/' + ${selectedmicroservice.name}+'/'+${fileresource.filename}" th:text="${fileresource.filename}"></a>
+            </th:block>
+        </td>
+    </tr>
+</table>
+<th:block th:include="/admin/footer.html" th:tag="remove"></th:block>

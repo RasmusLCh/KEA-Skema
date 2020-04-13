@@ -9,6 +9,7 @@
     <input type="hidden" th:field="*{id}">
     <label>MicroService:</label>
     <p th:text="${selectedmicroservice.name}" class="disabledinput"></p>
+    <input type="text" name="microservice.id" id="microservice.id" th:value="${selectedmicroserviceid}" style="display:none;">
     <label>Type:</label>
     <select th:field="*{type}">
         <option value="JS" th:selected="${pageinjection.type=='JS'}">JS</option>

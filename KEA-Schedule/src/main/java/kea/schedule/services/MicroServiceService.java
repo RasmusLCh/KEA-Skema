@@ -66,6 +66,11 @@ public class MicroServiceService implements CRUDServiceInterface<MicroService> {
     }
 
     @Override
+    public List<MicroService> findAll(int msid) {
+        return null;
+    }
+
+    @Override
     public MicroService create(MicroService microService) {
         MicroService newms = msrepo.save(microService);
         actionservice.doAction("MicroServiceService.create", newms);

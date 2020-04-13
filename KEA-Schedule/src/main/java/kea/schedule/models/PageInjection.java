@@ -26,7 +26,7 @@ public class PageInjection implements ModelInterface, MicroServiceElement {
     @Min(0)
     @Max(1000)
     private int priority = 50;
-    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.REMOVE})
+    @ManyToOne(cascade= {CascadeType.DETACH})
     private MicroService microservice;
 
     public PageInjection(){

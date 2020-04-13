@@ -1,6 +1,7 @@
 package kea.schedule.services;
 
 import kea.schedule.models.Group;
+import kea.schedule.models.MicroService;
 import kea.schedule.repositories.GroupRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -64,5 +65,10 @@ public class GroupService implements CRUDServiceInterface<Group> {
 
     public List<Group> findAll(){
         return grouprepo.findAll();
+    }
+
+    @Override
+    public List<Group> findAll(int msid) {
+        return null;
     }
 }

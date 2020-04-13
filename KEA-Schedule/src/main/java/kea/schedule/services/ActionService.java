@@ -2,6 +2,7 @@ package kea.schedule.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kea.schedule.models.Action;
+import kea.schedule.models.MicroService;
 import kea.schedule.models.ModelInterface;
 import kea.schedule.repositories.ActionRepo;
 import net.minidev.json.JSONObject;
@@ -90,5 +91,10 @@ public class ActionService implements CRUDServiceInterface<Action>{
     @Override
     public List<Action> findAll() {
         return actionrepo.findAll();
+    }
+
+    @Override
+    public List<Action> findAll(int msid) {
+        return actionrepo.findAllByMicroserviceId(msid);
     }
 }

@@ -42,7 +42,6 @@ public class User implements ModelInterface{
     @JsonSerialize(converter = ListGroupSerializer.class)
     @JsonDeserialize(converter = ListGroupDeserializer.class)
     private List<Group> groups;
-
     public User(){
 
     }

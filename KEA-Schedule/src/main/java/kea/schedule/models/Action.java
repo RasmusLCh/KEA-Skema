@@ -14,7 +14,7 @@ public class Action implements ModelInterface, MicroServiceElement {
     private String callbackurl = null;
     @Column(name = "priority")
     private int priority = 50;
-    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.REMOVE})
+    @ManyToOne(cascade= {CascadeType.DETACH})
     private MicroService microservice;
 
     public Action(){

@@ -6,6 +6,7 @@
     </th:block>
 </div>
 <form method="post" action="../../edit" th:object="${action}">
+    <input type="text" name="microservice.id" id="microservice.id" th:value="${selectedmicroserviceid}" style="display:none;">
     <input type="hidden" th:field="*{id}">
     <label>MicroService:</label>
     <p th:text="${selectedmicroservice.name}" class="disabledinput"></p>

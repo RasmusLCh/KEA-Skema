@@ -41,6 +41,9 @@ public class User implements ModelInterface{
     @JsonSerialize(converter = ListGroupSerializer.class)
     @JsonDeserialize(converter = ListGroupDeserializer.class)
     private List<Group> groups;
+    @ManyToMany
+    private List<MicroServiceOption> options;
+
 
     public User(){
 
@@ -97,6 +100,14 @@ public class User implements ModelInterface{
 
     public void setGroups(List<Group> groups) {
         this.groups = groups;
+    }
+
+    public List<MicroServiceOption> getOptions() {
+        return options;
+    }
+
+    public void setOptions(List<MicroServiceOption> options) {
+        this.options = options;
     }
 
     @Override

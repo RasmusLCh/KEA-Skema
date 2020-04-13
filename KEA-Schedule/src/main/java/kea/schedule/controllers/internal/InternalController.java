@@ -110,7 +110,7 @@ public class InternalController {
         System.out.println("serviceaddmicroserviceoption");
         if(hsr.getLocalPort() == serviceport){
             MicroService ms = msss.findByName(servicename);
-            if(ms != null && microserviceoption.getVariableName() != null && !microserviceoption.getVariableName().equals("")){
+            if(ms != null && microserviceoption.getName() != null && !microserviceoption.getName().equals("")){
                 microserviceoption.setMicroservice(ms);
                 msss.serviceaddmicroserviceoption(microserviceoption);
                 System.out.println("Menu link added!");

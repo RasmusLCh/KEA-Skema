@@ -1,5 +1,6 @@
 package kea.schedule.services;
 
+import kea.schedule.models.MicroService;
 import kea.schedule.models.PageInjection;
 import kea.schedule.repositories.PageInjectionRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,5 +78,10 @@ public class PageInjectionService implements CRUDServiceInterface<PageInjection>
     @Override
     public List<PageInjection> findAll() {
         return pageinectionrepo.findAll();
+    }
+
+    @Override
+    public List<PageInjection> findAll(int msid) {
+        return pageinectionrepo.findAllByMicroserviceId(msid);
     }
 }

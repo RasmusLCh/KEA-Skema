@@ -1,5 +1,6 @@
 package kea.schedule.services;
 
+import kea.schedule.models.MicroService;
 import kea.schedule.models.TopMenuLink;
 import kea.schedule.repositories.TopMenuLinkRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +61,11 @@ public class TopMenuLinkService implements CRUDServiceInterface<TopMenuLink> {
     @Override
     public List<TopMenuLink> findAll() {
         return repo.findAll();
+    }
+
+    @Override
+    public List<TopMenuLink> findAll(int msid) {
+        return repo.findAllByMicroserviceId(msid);
     }
 
     /**

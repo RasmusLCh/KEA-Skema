@@ -1,6 +1,8 @@
 package kea.schedule.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * MicroServiceOption's makes it possible to turn on or off special features of the microservice. The microservice options is selectable by the user, and is shown as a checkbox. The value of the checkbox is saved in the according microserviceoption variable.
@@ -12,16 +14,22 @@ public class MicroServiceOption implements MicroServiceElement, ModelInterface {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @Column(unique = true)
-    private String variableName;
+    private String name;
     @Column
-    private boolean variableValue;
+    private boolean active;
     @Column
     private String description;
-    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.REMOVE})
+    @ManyToOne(cascade= {CascadeType.DETACH})
     private MicroService microservice;
-
+    @Column
     private int priority = 50;
+
+
     public MicroServiceOption(){}
+
+    public MicroServiceOption(int id){
+        setId(id);
+    }
 
     public int getId() {
         return id;
@@ -31,20 +39,24 @@ public class MicroServiceOption implements MicroServiceElement, ModelInterface {
         this.id = id;
     }
 
-    public String getVariableName() {
-        return variableName;
+    public String getName() {
+        return name;
     }
 
-    public void setVariableName(String variableName) {
-        this.variableName = variableName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public boolean getVariableValue() {
-        return variableValue;
+    public boolean getActive() {
+        return active;
     }
 
-    public void setVariableValue(boolean variableValue) {
-        this.variableValue = variableValue;
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public boolean isActive(){
+        return getActive();
     }
 
     public String getDescription() {
@@ -53,10 +65,6 @@ public class MicroServiceOption implements MicroServiceElement, ModelInterface {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public boolean isVariablevalue() {
-        return variableValue;
     }
 
     public MicroService getMicroservice() {

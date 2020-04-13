@@ -1,0 +1,57 @@
+package kea.schedule.scheduleservice.services;
+
+import kea.schedule.scheduleservice.models.SubjectPriority;
+import kea.schedule.scheduleservice.repositories.SubjectPriorityRepo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class SubjectPriorityService implements CRUDServiceInterface<SubjectPriority>{
+    private SubjectPriorityRepo repo;
+    private ActionService actionservice;
+    @Autowired
+    public SubjectPriorityService(SubjectPriorityRepo repo, ActionService actionservice){
+        this.repo = repo;
+        this.actionservice = actionservice;
+    }
+
+    @Override
+    public SubjectPriority create(SubjectPriority subjectPriority) {
+        SubjectPriority sp = repo.save(subjectPriority);
+        actionservice.doAction("SubjectPriorityService.create", sp);
+        return sp;
+    }
+
+    @Override
+    public void edit(SubjectPriority subjectPriority) {
+        repo.save(subjectPriority);
+        actionservice.doAction("SubjectPriorityService.edit", subjectPriority);
+    }
+
+    @Override
+    public void delete(int id) {
+        repo.deleteById(id);
+        actionservice.doAction("SubjectPriorityService.delete", new SubjectPriority(id));
+
+    }
+
+    public SubjectPriority findBySubject(String subject){
+        SubjectPriority sp = repo.findBySubject(subject);
+        if(sp == null){
+            sp = new SubjectPriority(0, "", 50);
+        }
+        return sp;
+    }
+
+    @Override
+    public SubjectPriority findById(int id) {
+        return repo.findById(id).get();
+    }
+
+    @Override
+    public List<SubjectPriority> findAll() {
+        return repo.findAll();
+    }
+}

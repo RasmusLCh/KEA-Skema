@@ -11,21 +11,25 @@ import java.util.Optional;
 @Service
 public class GroupService implements CRUDServiceInterface<Group> {
     private GroupRepo grouprepo;
+    private ActionService actionservice;
 
     @Autowired
-    public GroupService(GroupRepo grouprepo){
+    public GroupService(GroupRepo grouprepo, ActionService actionservice){
         this.grouprepo = grouprepo;
+        this.actionservice = actionservice;
     }
 
     @Override
     public Group create(Group group) {
         Group newgrp = grouprepo.save(group);
+        actionservice.doAction("GroupService.create", newgrp);
         return newgrp;
     }
 
     @Override
     public void edit(Group group) {
         grouprepo.save(group);
+        actionservice.doAction("GroupService.edit", group);
     }
 
     @Override
@@ -38,6 +42,8 @@ public class GroupService implements CRUDServiceInterface<Group> {
 
          */
         grouprepo.deleteById(id);
+        actionservice.doAction("GroupService.edit", new Group(id));
+
     }
 
     @Override

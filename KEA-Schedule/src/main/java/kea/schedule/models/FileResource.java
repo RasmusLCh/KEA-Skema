@@ -1,26 +1,40 @@
 package kea.schedule.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity(name= "FileResource")
+@Table(name= "fileresources")
+/*
 @Table(name= "fileresources",
         uniqueConstraints={
                 @UniqueConstraint(columnNames = {"filename", "microserviceid"})
         })
+
+ */
 public class FileResource implements MicroServiceElement, ModelInterface {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @Column(name="filename", columnDefinition="VARCHAR(255)")
-    private String filename = null;
-    @Column(name = "type")
-    private String type = null;
-    @Column(name = "extension")
-    private String extension= null;
+    @Size(min=1,max=255)
+    @NotNull
+    private String filename = "";
+    @Column(name = "type", columnDefinition="VARCHAR(50)")
+    @Size(min=1,max=50)
+    @NotNull
+    private String type = "";
+    @Column(name = "extension", columnDefinition="VARCHAR(20)")
+    @Size(min=1,max=20)
+    @NotNull
+    private String extension= "";
     @Column(name="data", columnDefinition="BLOB")
+    @JsonIgnore
     private byte[] data = null;
-    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.REMOVE})
-    @JoinColumn(name="microserviceid")
+    @ManyToOne(cascade= {CascadeType.DETACH})
     private MicroService microservice;
 
     public FileResource(){

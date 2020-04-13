@@ -11,26 +11,30 @@ import java.util.Optional;
 @Service
 public class UserService implements CRUDServiceInterface<User> {
     private UserRepo userrepo;
-
+    private ActionService actionservice;
     @Autowired
-    public UserService(UserRepo userrepo){
+    public UserService(UserRepo userrepo, ActionService actionservice){
         this.userrepo = userrepo;
+        this.actionservice = actionservice;
     }
 
     @Override
     public User create(User user) {
         User newuser = userrepo.save(user);
+        actionservice.doAction("UserService.create", newuser);
         return newuser;
     }
 
     @Override
     public void edit(User user) {
         userrepo.save(user);
+        actionservice.doAction("UserService.edit", user);
     }
 
     @Override
     public void delete(int id) {
         userrepo.deleteById(id);
+        actionservice.doAction("UserService.delete", new User(id));
     }
 
     @Override

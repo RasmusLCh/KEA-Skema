@@ -1,5 +1,6 @@
 package kea.schedule.services;
 
+import kea.schedule.models.MicroService;
 import kea.schedule.models.ModelInterface;
 
 import java.util.List;
@@ -20,4 +21,5 @@ public interface CRUDServiceInterface<E extends ModelInterface> {
     void delete(int id);
     E findById(int id);
     List<E> findAll();
+    List<E> findAll(int microserviceid);
 }

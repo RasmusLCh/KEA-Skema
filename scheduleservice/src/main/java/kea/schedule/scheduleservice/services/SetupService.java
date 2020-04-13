@@ -1,10 +1,6 @@
 package kea.schedule.scheduleservice.services;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import kea.schedule.scheduleservice.models.Group;
-import net.minidev.json.parser.JSONParser;
-import org.apache.catalina.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -151,16 +147,16 @@ public class SetupService {
 
         //Add topmenulink eng
         json = new JSONObject();
-        json.appendField("path", "https://localhost/servicepages/KEA-Schedule-Teacher/upload.eng");
-        json.appendField("text", "Upload schedule");
+        json.appendField("path", "https://localhost/servicepages/KEA-Schedule-Teacher/manage.eng");
+        json.appendField("text", "Manage schedule");
         json.appendField("language", "eng");
         json.appendField("description", "");
         entity = new HttpEntity<JSONObject>(json, headers);
         restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceaddtopmenulink/KEA-Schedule-Teacher", HttpMethod.POST, entity, String.class);
         //Add topmenulink dk
         json = new JSONObject();
-        json.appendField("path", "https://localhost/servicepages/KEA-Schedule-Teacher/upload.dk");
-        json.appendField("text", "Upload skema");
+        json.appendField("path", "https://localhost/servicepages/KEA-Schedule-Teacher/manage.dk");
+        json.appendField("text", "Administrer skema");
         json.appendField("language", "dk");
         json.appendField("description", "");
         entity = new HttpEntity<JSONObject>(json, headers);
