@@ -40,7 +40,18 @@ public class InternalController {
     @PostMapping("install")
     public String post_install(HttpServletRequest hsr){
         if(hsr.getLocalPort() == serviceport){
-            setupservice.setup();
+            setupservice.install();
+            return "index";
+        }
+        return "forbidden";
+    }
+
+    @PostMapping("setup")
+    public String post_setup(HttpServletRequest hsr){
+        if(hsr.getLocalPort() == serviceport){
+            setupservice.setupAdminMS();
+            setupservice.setupStudentMS();
+            setupservice.setupTeacherMS();
             return "index";
         }
         return "forbidden";

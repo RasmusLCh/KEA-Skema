@@ -1,0 +1,20 @@
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>NAME</th>
+            <th class="invisible"></th>
+            <th class="invisible"></th>
+            <th class="invisible"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="course:${courses}">
+            <td th:text="${course.id}"></td>
+            <td th:text="${course.name}"></td>
+            <td class="invisible"><a th:href="'view/' + ${course.id} + '/'" class="button">VIEW</a></td>
+            <td class="invisible"><a th:href="'edit/' + ${course.id} + '/'" class="button">EDIT</a></td>
+            <td class="invisible"><a th:href="'delete/' + ${course.id} + '/'" class="button">DELETE</a></td>
+        </tr>
+    </tbody>
+</table>

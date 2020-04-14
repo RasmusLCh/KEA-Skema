@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/servicepages/KEA-Schedule-Student/")
-public class StudentController {
+public class ScheduleController {
     @Value("${ms.port.student:7511}")
     int studentport;
 

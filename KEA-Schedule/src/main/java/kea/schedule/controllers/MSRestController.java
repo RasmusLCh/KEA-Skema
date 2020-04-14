@@ -39,10 +39,80 @@ public class MSRestController {
         this.langservice = langservice;
     }
 
-    //https://stackoverflow.com/questions/14726082/spring-mvc-rest-service-redirect-forward-proxy
     @RequestMapping(value = "{servicename}/{page}")
     public String request_servicerest_page(@RequestBody(required = false) String body,
                                            @PathVariable String servicename,
+                                           @PathVariable String page,
+                                           HttpMethod method,
+                                           HttpServletRequest request,
+                                           HttpSession session,
+                                           Model model) throws URISyntaxException, IOException {
+        return request_servicerest_folder1_page(body, servicename, null, page, method, request, session, model);
+    }
+
+    @RequestMapping(value = "{servicename}/{folder1}/{page}")
+    public String request_servicerest_folder1_page(@RequestBody(required = false) String body,
+                                           @PathVariable String servicename,
+                                           @PathVariable String folder1,
+                                           @PathVariable String page,
+                                           HttpMethod method,
+                                           HttpServletRequest request,
+                                           HttpSession session,
+                                           Model model) throws URISyntaxException, IOException {
+        return request_servicerest_folder1_folder2_page(body, servicename, folder1, null, page, method, request, session, model);
+    }
+
+    @RequestMapping(value = "{servicename}/{folder1}/{folder2}/{page}")
+    public String request_servicerest_folder1_folder2_page(@RequestBody(required = false) String body,
+                                                   @PathVariable String servicename,
+                                                   @PathVariable String folder1,
+                                                   @PathVariable String folder2,
+                                                   @PathVariable String page,
+                                                   HttpMethod method,
+                                                   HttpServletRequest request,
+                                                   HttpSession session,
+                                                   Model model) throws URISyntaxException, IOException {
+        return request_servicerest_folder1_folder2_folder3_page(body, servicename, folder1, folder2, null, page, method, request, session, model);
+    }
+
+    @RequestMapping(value = "{servicename}/{folder1}/{folder2}/{folder3}/{page}")
+    public String request_servicerest_folder1_folder2_folder3_page(@RequestBody(required = false) String body,
+                                                   @PathVariable String servicename,
+                                                   @PathVariable String folder1,
+                                                   @PathVariable String folder2,
+                                                   @PathVariable String folder3,
+                                                   @PathVariable String page,
+                                                   HttpMethod method,
+                                                   HttpServletRequest request,
+                                                   HttpSession session,
+                                                   Model model) throws URISyntaxException, IOException {
+        return request_servicerest_folder1_folder2_folder3_folder4_page(body, servicename, folder1, folder2, folder3, null, page, method, request, session, model);
+    }
+
+    @RequestMapping(value = "{servicename}/{folder1}/{folder2}/{folder3}/{folder4}/{page}")
+    public String request_servicerest_folder1_folder2_folder3_folder4_page(@RequestBody(required = false) String body,
+                                                   @PathVariable String servicename,
+                                                   @PathVariable String folder1,
+                                                   @PathVariable String folder2,
+                                                   @PathVariable String folder3,
+                                                   @PathVariable String folder4,
+                                                   @PathVariable String page,
+                                                   HttpMethod method,
+                                                   HttpServletRequest request,
+                                                   HttpSession session,
+                                                   Model model) throws URISyntaxException, IOException {
+        return request_servicerest_folder1_folder2_folder3_folder4_folder5_page(body, servicename, folder1, folder2, folder3, folder4, null, page, method, request, session, model);
+    }
+
+    //https://stackoverflow.com/questions/14726082/spring-mvc-rest-service-redirect-forward-proxy
+    @RequestMapping(value = "{servicename}/{folder1}/{folder2}/{folder3}/{folder4}/{folder5}/{page}")
+    public String request_servicerest_folder1_folder2_folder3_folder4_folder5_page(@RequestBody(required = false) String body,
+                                           @PathVariable String servicename,
+                                           @PathVariable String folder1,
+                                           @PathVariable String folder2,
+                                           @PathVariable String folder3,
+                                           @PathVariable String folder4,
+                                           @PathVariable String folder5,
                                            @PathVariable String page,
                                            HttpMethod method,
                                            HttpServletRequest request,
@@ -60,7 +130,14 @@ public class MSRestController {
             query = "userid=" + user.getId();
         }
         RestTemplate restTemplate = new RestTemplate();
-        URI uri = new URI("http", null, "localhost", ms.getPort(), "/servicerest/" + servicename + "/" + page, query, null);
+        //URI uri = new URI("http", null, "localhost", ms.getPort(), "/servicerest/" + servicename + "/" + page, query, null);
+        URI uri;
+        folder1 = folder1 == null? "" : folder1 + "/";
+        folder2 = folder2 == null? "" : folder2 + "/";
+        folder3 = folder3 == null? "" : folder3 + "/";
+        folder4 = folder4 == null? "" : folder4 + "/";
+        folder5 = folder5 == null? "" : folder5 + "/";
+        uri = new URI("http", null, "localhost", ms.getPort(), "/servicerest/" + servicename + "/" + folder1 + folder2 + folder3 + folder4 + folder5 + page, query, null);
 
         //POST Multipart, we take each part out and all parts are added to a new request!
         //Current issue1: For some bizar reason, the content_type changes from nothing (for those who hasnt gotten a content-type) to content-type application/octet-stream, overall this doesnt seem to have any effect though..

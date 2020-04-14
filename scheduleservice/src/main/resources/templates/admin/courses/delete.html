@@ -1,0 +1,23 @@
+<div class="block">
+    <h1>Delete Course</h1>
+    <a href="../../" class="button right">Back</a>
+</div>
+<p>You are about to delete the course</p>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>NAME</th>
+    </tr>
+    <tr>
+        <td th:text="${course.id}"></td>
+        <td th:text="${course.name}"></td>
+
+    </tr>
+</table>
+
+<p>Please confirm.</p>
+
+<form method="post" action="../../delete/">
+    <input type="hidden" name="id" th:value="${course.id}">
+    <input type="submit" value="Delete" class="btn-primary form-control">
+</form>

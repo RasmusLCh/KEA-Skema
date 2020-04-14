@@ -12,6 +12,8 @@ public class Course implements ModelInterface{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @Column
+    private String name;
     @ManyToMany
     private List<Group> teachers;
     @ManyToMany
@@ -51,6 +53,14 @@ public class Course implements ModelInterface{
 
     public void setLectures(List<Lecture> lectures) {
         this.lectures = lectures;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

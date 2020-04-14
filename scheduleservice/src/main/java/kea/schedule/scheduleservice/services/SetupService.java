@@ -27,7 +27,7 @@ public class SetupService {
         this.groupservice = groupservice;
     }
 
-    public void setup() {
+    public void install() {
         System.out.println("Synchronize users.... this might take a while");
         synchronizeUsers();
         System.out.println("Synchronize groups");
@@ -114,7 +114,7 @@ public class SetupService {
     }
 
 
-    private void setupTeacherMS() {
+    public void setupTeacherMS() {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -130,25 +130,9 @@ public class SetupService {
 
         //Add topmenulink eng
         json = new JSONObject();
-        json.appendField("path", "https://localhost/servicepages/KEA-Schedule-Teacher/index.eng");
-        json.appendField("text", "Schedule");
-        json.appendField("language", "eng");
-        json.appendField("description", "");
-        entity = new HttpEntity<JSONObject>(json, headers);
-        restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceaddtopmenulink/KEA-Schedule-Teacher", HttpMethod.POST, entity, String.class);
-        //Add topmenulink dk
-        json = new JSONObject();
-        json.appendField("path", "https://localhost/servicepages/KEA-Schedule-Teacher/index.dk");
-        json.appendField("text", "Skema");
-        json.appendField("language", "dk");
-        json.appendField("description", "");
-        entity = new HttpEntity<JSONObject>(json, headers);
-        restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceaddtopmenulink/KEA-Schedule-Teacher", HttpMethod.POST, entity, String.class);
-
-        //Add topmenulink eng
-        json = new JSONObject();
         json.appendField("path", "https://localhost/servicepages/KEA-Schedule-Teacher/manage.eng");
-        json.appendField("text", "Manage schedule");
+        json.appendField("text", "Manage courses");
+        json.appendField("priority", "90");
         json.appendField("language", "eng");
         json.appendField("description", "");
         entity = new HttpEntity<JSONObject>(json, headers);
@@ -156,14 +140,15 @@ public class SetupService {
         //Add topmenulink dk
         json = new JSONObject();
         json.appendField("path", "https://localhost/servicepages/KEA-Schedule-Teacher/manage.dk");
-        json.appendField("text", "Administrer skema");
+        json.appendField("text", "Administrer kurser");
+        json.appendField("priority", "90");
         json.appendField("language", "dk");
         json.appendField("description", "");
         entity = new HttpEntity<JSONObject>(json, headers);
         restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceaddtopmenulink/KEA-Schedule-Teacher", HttpMethod.POST, entity, String.class);
     }
 
-    private void setupStudentMS() {
+    public void setupStudentMS() {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -181,6 +166,7 @@ public class SetupService {
         json = new JSONObject();
         json.appendField("path", "https://localhost/servicepages/KEA-Schedule-Student/index.eng");
         json.appendField("text", "Schedule");
+        json.appendField("priority", "10");
         json.appendField("language", "eng");
         json.appendField("description", "");
         entity = new HttpEntity<JSONObject>(json, headers);
@@ -189,13 +175,14 @@ public class SetupService {
         json = new JSONObject();
         json.appendField("path", "https://localhost/servicepages/KEA-Schedule-Student/index.dk");
         json.appendField("text", "Skema");
+        json.appendField("priority", "10");
         json.appendField("language", "dk");
         json.appendField("description", "");
         entity = new HttpEntity<JSONObject>(json, headers);
         restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceaddtopmenulink/KEA-Schedule-Student", HttpMethod.POST, entity, String.class);
     }
 
-    private void setupAdminMS() {
+    public void setupAdminMS() {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -212,7 +199,8 @@ public class SetupService {
         //Add topmenulink eng
         json = new JSONObject();
         json.appendField("path", "https://localhost/servicepages/KEA-Schedule-Admin/index.eng");
-        json.appendField("text", "Schedule admin");
+        json.appendField("text", "Course admin");
+        json.appendField("priority", "100");
         json.appendField("language", "eng");
         json.appendField("description", "");
         entity = new HttpEntity<JSONObject>(json, headers);
@@ -220,7 +208,8 @@ public class SetupService {
         //Add topmenulink dk
         json = new JSONObject();
         json.appendField("path", "https://localhost/servicepages/KEA-Schedule-Admin/index.dk");
-        json.appendField("text", "Skema admin");
+        json.appendField("text", "Kursus admin");
+        json.appendField("priority", "100");
         json.appendField("language", "dk");
         json.appendField("description", "");
         entity = new HttpEntity<JSONObject>(json, headers);

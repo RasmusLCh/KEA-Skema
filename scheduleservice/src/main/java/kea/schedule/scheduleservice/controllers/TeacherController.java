@@ -21,10 +21,10 @@ public class TeacherController {
         return "forbidden";
     }
 
-    @GetMapping({"upload.eng"})
+    @GetMapping({"manage.eng"})
     public String get_upload(HttpServletRequest hsr){
         if(hsr.getLocalPort() == teacherport){
-            return "teacher/upload";
+            return "teacher/manage";
         }
         return "forbidden";
     }

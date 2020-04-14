@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface TopMenuLinkRepo extends JpaRepository<TopMenuLink, Integer> {
 //    List<TopMenuLink> findAllByLanguageOrderByPriority(String language);
-    List<TopMenuLink> findAllByLanguageAndMicroserviceEnabledIsTrue(String language);
-    List<TopMenuLink> findAllByMicroserviceId(int msid);
+    List<TopMenuLink> findAllByLanguageAndMicroserviceEnabledIsTrueOrderByPriority(String language);
+    List<TopMenuLink> findAllByMicroserviceIdOrderByPriority(int msid);
 }

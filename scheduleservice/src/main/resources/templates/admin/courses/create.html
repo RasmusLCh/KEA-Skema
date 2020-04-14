@@ -1,0 +1,12 @@
+<div class="block">
+    <h1>Create Course</h1>
+    <th:block th:if="${selectedmicroserviceid != 0}">
+        <a href="../" class="button right">Back</a>
+    </th:block>
+</div>
+<form method="post" action="" th:object="${course}">
+    <label>Name:</label>
+    <input type="text" th:field="*{name}">
+    <p class="errortext" th:if="${#fields.hasErrors('name')}">The max length of the page is 200 characters.</p>
+    <input type="submit" value="Create">
+</form>
