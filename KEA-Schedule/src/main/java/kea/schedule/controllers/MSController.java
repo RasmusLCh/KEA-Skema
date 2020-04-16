@@ -1,12 +1,10 @@
 package kea.schedule.controllers;
 
 import kea.schedule.models.MicroService;
+import kea.schedule.models.PageInjection;
 import kea.schedule.models.TopMenuLink;
 import kea.schedule.models.User;
-import kea.schedule.services.AuthenticationService;
-import kea.schedule.services.LangService;
-import kea.schedule.services.MicroServiceService;
-import kea.schedule.services.TopMenuLinkService;
+import kea.schedule.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.*;
@@ -21,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.xml.ws.Response;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -33,17 +32,19 @@ public class MSController {
     private MicroServiceService mss;
     private TopMenuLinkService topmenuservice;
     private AuthenticationService authservice;
+    private PageInjectionService pageinjectionservice;
     private ResourceLoader rl;
     private LangService langservice;
 
 
     @Autowired
-    public MSController(MicroServiceService mss, TopMenuLinkService topmenuservice, AuthenticationService authservice, ResourceLoader rl, LangService langservice){
+    public MSController(MicroServiceService mss, TopMenuLinkService topmenuservice, AuthenticationService authservice, ResourceLoader rl, LangService langservice, PageInjectionService pageinjectionservice){
         this.mss = mss;
         this.topmenuservice = topmenuservice;
         this.authservice = authservice;
         this.rl = rl;
         this.langservice = langservice;
+        this.pageinjectionservice = pageinjectionservice;
     }
 
     @RequestMapping(value = "{servicename}/{folder1}/{folder2}/{folder3}/{folder4}/{folder5}/{page}")
@@ -83,6 +84,7 @@ public class MSController {
         //POST Multipart, we take each part out and all parts are added to a new request!
         //Current issue1: For some bizar reason, the content_type changes from nothing (for those who hasnt gotten a content-type) to content-type application/octet-stream, overall this doesnt seem to have any effect though..
         //Current issue2: Only post works with multipart
+        ResponseEntity<String> result = null;
         if(request.getMethod().equalsIgnoreCase("post") && request.getContentType().startsWith("multipart/form-data;")) {
             try {
                 MultiValueMap<String, Object> newrequestbody = new LinkedMultiValueMap<>();
@@ -122,7 +124,8 @@ public class MSController {
                 HttpHeaders newrequestheader = new HttpHeaders();
                 newrequestheader.setContentType(MediaType.MULTIPART_FORM_DATA);
                 HttpEntity<MultiValueMap<String, Object>> uploade = new HttpEntity<>(newrequestbody, newrequestheader);
-                Object o = (restTemplate.postForEntity(uri, uploade, String.class)).getBody();
+                result = (restTemplate.postForEntity(uri, uploade, String.class));
+                Object o = result.getBody();
                 if(o != null){
                     model.addAttribute("data", o.toString());
                 }
@@ -140,8 +143,9 @@ public class MSController {
             HttpEntity<String> httpEntity = new HttpEntity<>(body, headers);
 
             try {
-                Object o = (restTemplate.exchange(uri, method, httpEntity, String.class)).getBody();
-
+                result = (restTemplate.exchange(uri, method, httpEntity, String.class));
+                String o = result.getBody();
+                System.out.println("HttpStatusCode: " + result.getStatusCode());
                 if (o != null) {
                     model.addAttribute("data", o.toString());
                 }
@@ -154,6 +158,27 @@ public class MSController {
                         .body(e.getResponseBodyAsString()).toString();
 
                  */
+            }
+        }
+        if(result != null){
+            //Redirect 302 || 303
+            if(result.getStatusCode() == HttpStatus.FOUND || result.getStatusCode() == HttpStatus.SEE_OTHER){
+                HttpHeaders headers = result.getHeaders();
+                for(String key: headers.keySet()){
+                    System.out.println("result header: " + key + " " + headers.get(key));
+                }
+                if(headers.containsKey("Location")){
+                    String redirectlocation = headers.get("Location").get(0);
+                    System.out.println("Redirect location: " + redirectlocation);
+                    String portmatch = ":" + ms.getPort() + "/";
+                    redirectlocation = redirectlocation.substring(redirectlocation.indexOf(portmatch) + portmatch.length());
+                    System.out.println("Redirect location: " + redirectlocation);
+                    System.out.println("Request uri: " + request.getRequestURI());
+                    System.out.println("Request url: " + request.getRequestURL());
+                    String address = request.getRequestURL().substring(0, request.getRequestURL().indexOf(request.getRequestURI()));
+                    System.out.println("Address" + address);
+                    return "redirect:"+address+"/"+redirectlocation;
+                }
             }
         }
         return "servicedata";
@@ -387,5 +412,27 @@ public class MSController {
     @ModelAttribute("authenticated")
     public boolean getAuthenticated(){
         return authservice.isAuthenticated();
+    }
+
+    @ModelAttribute("pageinjections_js")
+    private List<PageInjection> getJSPageInjection(HttpServletRequest hsr){
+        System.out.println("pathinfo: " + hsr.getPathInfo()+ " " + hsr.getRequestURI());
+        List<PageInjection> pi = pageinjectionservice.getJSPageInjection(hsr.getRequestURI());
+        System.out.println("Page JS injections found " + pi.size());
+        for(PageInjection p : pi){
+            System.out.println(p.getPage() + ", " + p.getType() + ": " + p.getData());
+        }
+        return pi;
+    }
+
+    @ModelAttribute("pageinjections_css")
+    private List<PageInjection> getCSSPageInjection(HttpServletRequest hsr){
+        System.out.println("pathinfo: " + hsr.getPathInfo()+ " " + hsr.getRequestURI());
+        List<PageInjection> pi = pageinjectionservice.getCSSPageInjection(hsr.getRequestURI());
+        System.out.println("Page CSS injections found " + pi.size());
+        for(PageInjection p : pi){
+            System.out.println(p.getPage() + ", " + p.getType() + ": " + p.getData());
+        }
+        return pi;
     }
 }

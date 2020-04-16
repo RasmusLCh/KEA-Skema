@@ -1,8 +1,247 @@
+<style>
+    /* General CSS: Start */
+    body{
+        margin: 0px;
+        padding: 0px;
+        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-size: 16px;
+        line-height: 1.6;
+        color: #233249;
+        text-rendering: optimizeLegibility;
+        box-sizing: border-box;
+    }
+
+    h1{
+        display: inline-block;
+        padding: 0px;
+        margin: 0px;
+    }
+
+    p.hint{
+        color: darkgray;
+    }
+
+    p.disabledinput{
+        display: block;
+        -ms-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        width: 100%;
+        padding: 8px;
+        border: 1px solid black;
+        background: lightgray;
+    }
+
+    .bglightgray{
+        background: lightgray;
+    }
+
+    .block{
+        display: block;
+        width: 100%;
+        margin-bottom: 7px;
+    }
+
+    .right{
+        float: right;
+    }
+
+    th, td {
+        border: 1px solid black;
+        padding: 5px;
+    }
+
+    th{
+        color: white;
+        background-color: #233249;
+    }
+
+    th.invisible{
+        border: none;
+        background-color: white;
+        color: black;
+        width: 100px;
+    }
+
+    td.invisible{
+        border: none;
+        width: 100px;
+    }
+
+    table{
+        border-collapse: collapse;
+        border: 0px;
+        width: 100%;
+    }
+    td{
+        padding: 10px;
+        vertical-align: top;
+    }
+    td.noborder{
+        border: 0px;
+    }
+    hr{
+        border: 1px dotted black;
+    }
+    div.content-admin{
+        margin: 0px auto;
+        width: 1400px;
+        margin-top: 15px;
+        padding: 0px;
+    }
+
+    div.header_nav-admin{
+        background-color: orangered;
+        padding: 10px;
+        text-align: center;
+        font-weight: bolder;
+    }
+
+    img{
+        vertical-align: middle;
+    }
+
+    .kea_orange{
+        background-color: #ea5045;
+    }
+
+    /*+++ Header menu bar: Start */
+
+    div.headermenu{
+        border-bottom: 1px solid silver;
+        background: #233249;
+        padding: 0px;
+        margin: 0px;
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        justify-content: center;
+        border: 0px;
+    }
+
+    div.headermenu_nav{
+        display: flex;
+        align-items: center;
+        border: 0px;
+        margin: 0px;
+        padding: 0px;
+    }
+
+
+    img.headermenu_logo-lg{
+        height: 45px;
+        padding: 0px;
+        margin: 0px;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    div.headermenu a,
+    div.headermenu a:visited,
+    div.headermenu a:link{
+        color: white;
+        vertical-align: center;
+        font-weight: bold;
+        text-decoration: none;
+        font-family: "Helvetica Neue Condensed",sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    div.headermenu a:hover{
+        color: #ea5045
+    }
+    #headermenu_right{
+        display: flex;
+        align-items: center;
+        border: 0px;
+        margin: 0px;
+        margin-left: auto;
+        padding: 0px;
+    }
+
+    #menu_language_wrapper{
+        background-color: white;
+        display: flex;
+        align-items: center;
+        border: 0px;
+        margin: 0px;
+        margin-left: auto;
+        padding: 0px;
+    }
+
+    #menu_language{
+        background-color: white;
+        color: #ea5045; !important;
+        margin-left: auto;
+        text-transform: uppercase;
+    }
+
+    #menu_settings_wrapper{
+        background-color: #ea5045;
+        display: flex;
+        align-items: center;
+        border: 0px;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    #menu_settings{
+        background-color: #ea5045;
+        color: black;
+    }
+    /*+++ Header menu bar: End */
+
+    label{
+        display: block;
+        font-weight: bold;
+        padding-top: 10px;
+        padding-bottom: 2px;
+    }
+
+    form input[type=text], input[type=password], input[type=submit], textarea, select{
+        /* box fix, makes it so the 100% width is the same for all elements */
+        -ms-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        display: block;
+        width: 100%;
+        padding: 8px;
+    }
+
+    textarea{
+        height: 300px;
+    }
+
+    input[type='submit']{
+        margin-top: 10px;
+        margin-bottom: 10px;
+        background-color: #233249;
+        color: white;
+        padding: 10px;
+    }
+
+    a.button{
+        color: white;
+        background-color: #233249;
+        border-radius: 25px;
+        padding: 5px;
+        padding-left: 30px;
+        padding-right: 30px;
+        text-decoration: none;
+    }
+
+    a.button:hover{
+        color: #ea5045;
+    }
+</style>
 <div class="block">
     <h1>Create Course</h1>
-    <th:block th:if="${selectedmicroserviceid != 0}">
-        <a href="../" class="button right">Back</a>
-    </th:block>
+        <a href="../index" class="button right">Back</a>
 </div>
 <form method="post" action="" th:object="${course}">
     <label>Name:</label>

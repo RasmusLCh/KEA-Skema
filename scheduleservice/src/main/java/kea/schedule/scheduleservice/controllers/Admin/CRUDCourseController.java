@@ -16,6 +16,6 @@ public class CRUDCourseController extends CRUDAbstractController<Course, CourseS
 
     @Autowired
     public CRUDCourseController(CourseService courseservice, @Value("${ms.port.service:7510}") int port){
-        super("admin/courses/", "course", courseservice, port);
+        super("admin/courses/", "course", "servicepages/KEA-Schedule-Admin/courses/", courseservice, port);
     }
 }

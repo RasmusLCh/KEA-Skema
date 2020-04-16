@@ -1,8 +1,5 @@
 package kea.schedule.scheduleservice.models;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -65,6 +62,6 @@ public class Course implements ModelInterface{
 
     @Override
     public int getId() {
-        return 0;
+        return this.id;
     }
 }

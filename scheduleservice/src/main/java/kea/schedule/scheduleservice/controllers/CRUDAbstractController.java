@@ -30,13 +30,16 @@ public abstract class CRUDAbstractController<E extends ModelInterface, S extends
     //The service that the controller is making use of.
     protected S service;
     protected int port;
+    //Should link to the REQUESTMapping, but NOT start with a leading /
+    protected String webaddr;
 
     public CRUDAbstractController(){}
 
-    public CRUDAbstractController(String path, String modelname, S service, int port){
+    public CRUDAbstractController(String path, String modelname, String webaddr, S service, int port){
         this.path = path;
         this.service = service;
         this.modelname = modelname;
+        this.webaddr = webaddr;
         this.port = port;
     }
 
@@ -61,7 +64,7 @@ public abstract class CRUDAbstractController<E extends ModelInterface, S extends
             return path + "create";
         }
         E newe = service.create(e);
-        return "redirect:/"+path+"view/" + newe.getId() + "/";
+        return "redirect:/"+webaddr+"view/" + newe.getId() + "/";
     }
 
     @GetMapping("/edit/{id}")
@@ -79,7 +82,7 @@ public abstract class CRUDAbstractController<E extends ModelInterface, S extends
             return path + "edit";
         }
         service.edit(e);
-        return "redirect:/" + path + "view/" + e.getId() + "/";
+        return "redirect:/" + webaddr + "view/" + e.getId() + "/";
     }
 
     @GetMapping("/delete/{id}")
@@ -92,7 +95,7 @@ public abstract class CRUDAbstractController<E extends ModelInterface, S extends
     public String post_delete(@RequestParam(value="id") int id, HttpSession session)
     {
         service.delete(id);
-        return "redirect:/" + path;
+        return "redirect:/" + webaddr + "index";
     }
     @GetMapping("/view/{id}")
     public String get_view(@PathVariable int id, Model model, HttpSession session)
