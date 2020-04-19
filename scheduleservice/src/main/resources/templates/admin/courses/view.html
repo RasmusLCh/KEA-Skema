@@ -1,3 +1,4 @@
+<th:block th:include="/global/header.html" th:tag="remove"></th:block>
 <div class="block">
     <h1>View Course</h1>
     <a href="../../index" class="button right">Back</a>
@@ -10,6 +11,22 @@
     <tr>
         <td th:text="${course.id}"></td>
         <td th:text="${course.name}"></td>
-
+    </tr>
+    <tr>
+        <th colspan="2">Teacher groups</th>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <th:block th:each="grp, iter: ${course.getTeachers()}" th:remove="tag"><th:block th:text="${grp.name}" th:if="${iter.index == 0}"></th:block><th:block th:text="${', ' + grp.name}" th:if="${iter.index > 0}"></th:block></th:block>
+        </td>
+    </tr>
+    <tr>
+        <th colspan="2">Student groups</th>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <th:block th:each="grp, iter: ${course.getStudents()}" th:remove="tag"><th:block th:text="${grp.name}" th:if="${iter.index == 0}"></th:block><th:block th:text="${', ' + grp.name}" th:if="${iter.index > 0}"></th:block></th:block>
+        </td>
     </tr>
 </table>
+<th:block th:include="/global/footer.html" th:tag="remove"></th:block>

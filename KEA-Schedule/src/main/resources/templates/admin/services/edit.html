@@ -23,16 +23,11 @@
     <label>Enabled:</label>
     <input type="checkbox" th:field="*{enabled}">
     <p class="errortext" th:if="${#fields.hasErrors('enabled')}"></p>
+    <select size="10" name="accessgroups" class="form-control" multiple>
+        <th:block th:each="group : ${accessgroups}">
+            <option th:value="${group.getId()}" th:text="${group.getName()}"></option>
+        </th:block>
+    </select>
     <input type="submit" value="Edit">
-    <p>Access Groups:
-        <select size="10" name="accessgroups" class="form-control" multiple>
-            <option th:each="group : ${accessgroups}"
-                    th:value="${group.getId()}"
-                    th:selected="${microservice.inAccessgroups(group)}"
-                    th:text="${group.getName()}">
-            </option>
-        </select>
-    </p>
-
 </form>
 <th:block th:include="/admin/footer.html" th:tag="remove"></th:block>

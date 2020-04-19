@@ -1,6 +1,5 @@
 package kea.schedule.services;
 
-import kea.schedule.models.MicroService;
 import kea.schedule.models.User;
 import kea.schedule.repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +62,4 @@ public class UserService implements CRUDServiceInterface<User> {
     public List<User> findAll(int msid) {
         return null;
     }
-
-
 }

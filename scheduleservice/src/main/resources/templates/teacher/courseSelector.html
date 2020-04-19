@@ -1,0 +1,14 @@
+<label>Course:</label>
+<form method="post" action="">
+    <select name="selectedcourseid" onchange="javascript: form.submit()">
+        <option value="0" th:selected="${selectedcourseid == 0} ? 'SELECTED' : ''">Select Course</option>
+        <th:block th:each="course: ${courses}" th:if="${course != null}">
+            <th:block th:if="${selectedcourseid == course.id}">
+                <option th:value="${course?.id}" th:text="${course?.name}" SELECTED></option>
+            </th:block>
+            <th:block th:unless="${selectedcourseid == course.id}">
+                <option th:value="${course?.id}" th:text="${course?.name}"></option>
+            </th:block>
+        </th:block>
+    </select>
+</form>

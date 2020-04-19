@@ -1,10 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1>teacher index</h1>
-</body>
-</html>
+<th:block th:include="/global/header.html" th:tag="remove"></th:block>
+<h1>Manage course</h1>
+<th:block th:include="/teacher/courseSelector.html" th:tag="remove"></th:block>
+<th:block th:if="${selectedcourseid != 0}">
+    <h2>Lectures</h2>
+    <ul>
+        <li><a href="./lectures/create/">Create lectures</a></li>
+        <li><a href="./lectures/index">Manage lectures</a></li>
+    </ul>
+    <h2>Upload lecture plan</h2>
+    <input type="file"><input type="Upload">
+    <p>Note: Please make sure that the CSV file is adherent to the CSV structured defined in <a href="">Q&A</a>.</p>
+</th:block>
+<h2>Help</h2>
+For getting started or needing help please go to <a href="">Q&A</a>.
+
+<th:block th:include="/global/footer.html" th:tag="remove"></th:block>

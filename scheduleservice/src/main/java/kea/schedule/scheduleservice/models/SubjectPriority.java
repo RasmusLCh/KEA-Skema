@@ -46,6 +46,6 @@ public class SubjectPriority  implements ModelInterface{
 
     @Override
     public int getId() {
-        return 0;
+        return this.id;
     }
 }

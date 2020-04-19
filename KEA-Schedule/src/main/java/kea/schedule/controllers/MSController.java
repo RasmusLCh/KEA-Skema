@@ -67,10 +67,11 @@ public class MSController {
         }
         model.addAttribute("data", "");
         String query = "userid=0";
-        if(session != null && session.getAttribute("user") != null){
-            User user = (User)session.getAttribute("user");
+        if(session != null && session.getAttribute("curuser") != null){
+            User user = (User)session.getAttribute("curuser");
             query = "userid=" + user.getId();
         }
+        System.out.println("Query is =" + query);
 
         RestTemplate restTemplate = new RestTemplate();
         URI uri;

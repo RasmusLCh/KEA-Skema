@@ -1,0 +1,27 @@
+<th:block th:include="/global/header.html" th:tag="remove"></th:block>
+<div class="block">
+    <h1>Delete SubjectPriority</h1>
+    <a href="../../index" class="button right">Back</a>
+</div>
+<p>You are about to delete the subjectpriority</p>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>SUBJECT</th>
+        <th>PRIORITY</th>
+    </tr>
+    <tr>
+        <td th:text="${subjectpriority.id}"></td>
+        <td th:text="${subjectpriority.subject}"></td>
+        <td th:text="${subjectpriority.priority}"></td>
+
+    </tr>
+</table>
+
+<p>Please confirm.</p>
+
+<form method="post" action="../../delete/">
+    <input type="hidden" name="id" th:value="${subjectpriority.id}">
+    <input type="submit" value="Delete" class="btn-primary form-control">
+</form>
+<th:block th:include="/global/footer.html" th:tag="remove"></th:block>

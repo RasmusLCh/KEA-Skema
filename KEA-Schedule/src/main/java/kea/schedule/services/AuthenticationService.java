@@ -1,5 +1,6 @@
 package kea.schedule.services;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import kea.schedule.models.*;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -160,10 +161,11 @@ return true;
             }
         }
         if(returnvalue){
-            JSONObject json = new JSONObject();
-            json.appendField("result", returnvalue);
-            json.appendField("user", user);
-            actionservice.doAction("AuthenticationService.Authenticate", json);
+            ObjectMapper mapper = new ObjectMapper();
+            JSONObject data = new JSONObject();
+            data.appendField("user", mapper.convertValue(user, JSONObject.class));
+            data.appendField("result", returnvalue);
+            actionservice.doAction("AuthenticationService.Authenticate", data);
         }
         return returnvalue;
     }

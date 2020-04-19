@@ -17,6 +17,8 @@ public class Lecture implements ModelInterface {
     private List<User> teacher;
     @OneToMany
     private List<LectureSubject> lecturesubjects;
+    @ManyToOne
+    private Course course;
 
     public Lecture(){}
 
@@ -68,8 +70,16 @@ public class Lecture implements ModelInterface {
         this.lecturesubjects = lecturesubjects;
     }
 
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
     @Override
     public int getId() {
-        return 0;
+        return this.id;
     }
 }

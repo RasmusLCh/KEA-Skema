@@ -7,10 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Abstract implementation of a CRUD controller.
@@ -44,7 +41,7 @@ public abstract class CRUDAbstractController<E extends ModelInterface, S extends
     }
 
     @GetMapping({"index", ""})
-    public String get_root_index(Model model, HttpSession session)
+    public String get_root_index(Model model)
     {
         System.out.println("Root");
         model.addAttribute(modelname + "s", service.findAll());
@@ -52,13 +49,13 @@ public abstract class CRUDAbstractController<E extends ModelInterface, S extends
     }
 
     @GetMapping("create")
-    public String get_create(Model model, HttpSession session, E modelojb) {
+    public String get_create(Model model, E modelojb) {
         model.addAttribute(modelname, modelojb);
         return path + "create";
     }
 
     @PostMapping("create")
-    public String post_create(@ModelAttribute @Valid E e, BindingResult result, HttpSession session, Model model){
+    public String post_create(@ModelAttribute @Valid E e, BindingResult result, Model model){
         model.addAttribute(modelname, e);
         if (result.hasErrors()) {
             return path + "create";
@@ -68,14 +65,14 @@ public abstract class CRUDAbstractController<E extends ModelInterface, S extends
     }
 
     @GetMapping("/edit/{id}")
-    public String get_edit(@PathVariable int id, Model model, HttpSession session)
+    public String get_edit(@PathVariable int id, Model model)
     {
         model.addAttribute(modelname, service.findById(id));
         return path+"edit";
     }
 
     @PostMapping("/edit")
-    public String post_edit(@ModelAttribute @Valid E e, BindingResult result, HttpSession session, Model model)
+    public String post_edit(@ModelAttribute @Valid E e, BindingResult result, Model model)
     {
         model.addAttribute(modelname, e);
         if (result.hasErrors()) {
@@ -86,19 +83,19 @@ public abstract class CRUDAbstractController<E extends ModelInterface, S extends
     }
 
     @GetMapping("/delete/{id}")
-    public String get_delete(@PathVariable int id, Model model, HttpSession session)
+    public String get_delete(@PathVariable int id, Model model)
     {
         model.addAttribute(modelname, service.findById(id));
         return path + "delete";
     }
     @PostMapping("/delete")
-    public String post_delete(@RequestParam(value="id") int id, HttpSession session)
+    public String post_delete(@RequestParam(value="id") int id)
     {
         service.delete(id);
         return "redirect:/" + webaddr + "index";
     }
     @GetMapping("/view/{id}")
-    public String get_view(@PathVariable int id, Model model, HttpSession session)
+    public String get_view(@PathVariable int id, Model model)
     {
         model.addAttribute(modelname, service.findById(id));
         return path + "view";

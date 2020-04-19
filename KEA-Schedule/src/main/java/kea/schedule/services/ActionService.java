@@ -24,8 +24,8 @@ public class ActionService implements CRUDServiceInterface<Action>{
     }
 
     public void doAction(String actionname, ModelInterface model){
-        ObjectMapper bla = new ObjectMapper();
-        JSONObject data = bla.convertValue(model, JSONObject.class);
+        ObjectMapper mapper = new ObjectMapper();
+        JSONObject data = mapper.convertValue(model, JSONObject.class);
         doAction(actionname, data);
     }
 

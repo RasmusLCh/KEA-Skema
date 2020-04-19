@@ -3,7 +3,6 @@
     <h1>Create Microservice</h1>
     <a href="../" class="button right">Back</a>
 </div>
-<label>MicroService:</label>
 <form method="post" action="" th:object="${microservice}">
     <label>Name:</label>
     <input type="text" th:field="*{name}">
@@ -23,14 +22,14 @@
     <label>Enabled:</label>
     <input type="checkbox" th:field="*{enabled}">
     <p class="errortext" th:if="${#fields.hasErrors('enabled')}"></p>
-    <input type="submit" value="Edit">
-    <p>Access Groups:
-        <select size="10" name="accessgroups" class="form-control" multiple>
-            <th:block th:each="group : ${accessgroups}">
-                <option th:value="${group.getId()}" th:text="${group.getName()}"></option>
-            </th:block>
-        </select>
-    </p>
+    <label>Access Groups:</label>
+    <select size="10" name="accessgroups" class="form-control" multiple>
+        <th:block th:each="group : ${accessgroups}">
+            <option th:value="${group.getId()}" th:text="${group.getName()}"></option>
+        </th:block>
+    </select>
+    <input type="submit" value="Create">
+
 
 </form>
 <th:block th:include="/admin/footer.html" th:tag="remove"></th:block>

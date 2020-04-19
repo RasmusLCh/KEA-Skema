@@ -1,0 +1,15 @@
+<th:block th:include="/admin/header.html" th:tag="remove"></th:block>
+<div class="block">
+    <h1>Edit SubjectPriority</h1>
+    <a href="../../index" class="button right">Back</a>
+</div>
+<form method="post" action="../../edit" th:object="${subjectpriority}">
+    <label>Subject:</label>
+    <input type="text" th:field="*{subject}">
+    <p class="errortext" th:if="${#fields.hasErrors('subject')}">The max length of the page is 255 characters.</p>
+    <label>Priority:</label>
+    <input type="text" th:field="*{priority}">
+    <p class="errortext" th:if="${#fields.hasErrors('priority')}">The priority must defined from 0 to 1000.</p>
+    <input type="submit" value="Edit">
+</form>
+<th:block th:include="/admin/footer.html" th:tag="remove"></th:block>

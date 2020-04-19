@@ -15,7 +15,7 @@ public class Course implements ModelInterface{
     private List<Group> teachers;
     @ManyToMany
     private List<Group> students;
-    @ManyToMany
+    @OneToMany
     private List<Lecture> lectures;
 
     public Course(){}

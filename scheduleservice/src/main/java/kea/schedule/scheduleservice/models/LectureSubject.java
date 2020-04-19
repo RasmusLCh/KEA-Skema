@@ -15,6 +15,8 @@ public class LectureSubject  implements ModelInterface{
     private List<LectureItem> items;
     @ManyToOne
     private SubjectPriority priority;
+    @ManyToOne
+    private Lecture lecture;
 
     public LectureSubject(){}
 
@@ -42,8 +44,24 @@ public class LectureSubject  implements ModelInterface{
         this.items = items;
     }
 
+    public SubjectPriority getPriority() {
+        return priority;
+    }
+
+    public void setPriority(SubjectPriority priority) {
+        this.priority = priority;
+    }
+
+    public Lecture getLecture() {
+        return lecture;
+    }
+
+    public void setLecture(Lecture lecture) {
+        this.lecture = lecture;
+    }
+
     @Override
     public int getId() {
-        return 0;
+        return this.id;
     }
 }

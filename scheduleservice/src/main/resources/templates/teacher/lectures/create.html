@@ -1,0 +1,14 @@
+<th:block th:include="/global/header.html" th:tag="remove"></th:block>
+<div class="block">
+    <h1 class="schedule">Create lecture</h1>
+    <a href="../index" class="button right">Back</a>
+</div>
+<form class="schedule" method="post" action="" th:object="${lecture}">
+    <label>Start date and time:</label>
+    <label>End date and time:</label>
+    <label>Room:</label>
+    <label>Teachers:</label>
+    <label>Lecture Subjects:</label>
+    <input type="submit" value="Create">
+</form>
+<th:block th:include="/global/footer.html" th:tag="remove"></th:block>

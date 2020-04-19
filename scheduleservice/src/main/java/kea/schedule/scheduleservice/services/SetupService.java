@@ -189,10 +189,10 @@ public class SetupService {
         HttpEntity<?> entity;
         JSONObject json;
         json = new JSONObject();
-        json.appendField("name", "KEA-Schedule-Admin");
+        json.appendField("name", "KEA-Schedule-admin");
         json.appendField("port", 7510);
         json.appendField("enabled", false);
-        json.appendField("description", "Admin module");
+        json.appendField("description", "admin module");
         entity = new HttpEntity<JSONObject>(json, headers);
         restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceregistration", HttpMethod.POST, entity, String.class);
 
@@ -204,7 +204,7 @@ public class SetupService {
         json.appendField("language", "eng");
         json.appendField("description", "");
         entity = new HttpEntity<JSONObject>(json, headers);
-        restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceaddtopmenulink/KEA-Schedule-Admin", HttpMethod.POST, entity, String.class);
+        restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceaddtopmenulink/KEA-Schedule-admin", HttpMethod.POST, entity, String.class);
         //Add topmenulink dk
         json = new JSONObject();
         json.appendField("path", "https://localhost/servicepages/KEA-Schedule-Admin/index.dk");
@@ -213,41 +213,41 @@ public class SetupService {
         json.appendField("language", "dk");
         json.appendField("description", "");
         entity = new HttpEntity<JSONObject>(json, headers);
-        restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceaddtopmenulink/KEA-Schedule-Admin", HttpMethod.POST, entity, String.class);
+        restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceaddtopmenulink/KEA-Schedule-admin", HttpMethod.POST, entity, String.class);
 
         //Action: GroupService
         json = new JSONObject();
         json.appendField("callbackurl", "http://localhost:" + serviceport + "/actions/group/create/");
         json.appendField("actionname", "GroupService.create");
         entity = new HttpEntity<JSONObject>(json, headers);
-        restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceaddaction/KEA-Schedule-Admin", HttpMethod.POST, entity, String.class);
+        restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceaddaction/KEA-Schedule-admin", HttpMethod.POST, entity, String.class);
         json = new JSONObject();
         json.appendField("callbackurl", "http://localhost:" + serviceport + "/actions/group/edit/");
         json.appendField("actionname", "GroupService.edit");
         entity = new HttpEntity<JSONObject>(json, headers);
-        restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceaddaction/KEA-Schedule-Admin", HttpMethod.POST, entity, String.class);
+        restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceaddaction/KEA-Schedule-admin", HttpMethod.POST, entity, String.class);
         json = new JSONObject();
         json.appendField("callbackurl", "http://localhost:" + serviceport + "/actions/group/delete/");
         json.appendField("actionname", "GroupService.delete");
         entity = new HttpEntity<JSONObject>(json, headers);
-        restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceaddaction/KEA-Schedule-Admin", HttpMethod.POST, entity, String.class);
+        restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceaddaction/KEA-Schedule-admin", HttpMethod.POST, entity, String.class);
 
         //Action: GroupService
         json = new JSONObject();
         json.appendField("callbackurl", "http://localhost:" + serviceport + "/actions/user/create/");
         json.appendField("actionname", "UserService.create");
         entity = new HttpEntity<JSONObject>(json, headers);
-        restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceaddaction/KEA-Schedule-Admin", HttpMethod.POST, entity, String.class);
+        restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceaddaction/KEA-Schedule-admin", HttpMethod.POST, entity, String.class);
         json = new JSONObject();
         json.appendField("callbackurl", "http://localhost:" + serviceport + "/actions/user/edit/");
         json.appendField("actionname", "UserService.edit");
         entity = new HttpEntity<JSONObject>(json, headers);
-        restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceaddaction/KEA-Schedule-Admin", HttpMethod.POST, entity, String.class);
+        restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceaddaction/KEA-Schedule-admin", HttpMethod.POST, entity, String.class);
         json = new JSONObject();
         json.appendField("callbackurl", "http://localhost:" + serviceport + "/actions/user/delete/");
         json.appendField("actionname", "UserService.delete");
         entity = new HttpEntity<JSONObject>(json, headers);
-        restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceaddaction/KEA-Schedule-Admin", HttpMethod.POST, entity, String.class);
+        restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceaddaction/KEA-Schedule-admin", HttpMethod.POST, entity, String.class);
     }
 
 

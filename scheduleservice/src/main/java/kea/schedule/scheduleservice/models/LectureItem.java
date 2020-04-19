@@ -9,6 +9,8 @@ public class LectureItem  implements ModelInterface {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String description;
+    @ManyToOne
+    private LectureSubject lecturesubject;
 
     public LectureItem(){}
 
@@ -28,8 +30,16 @@ public class LectureItem  implements ModelInterface {
         this.description = description;
     }
 
+    public LectureSubject getLecturesubject() {
+        return lecturesubject;
+    }
+
+    public void setLecturesubject(LectureSubject lecturesubject) {
+        this.lecturesubject = lecturesubject;
+    }
+
     @Override
     public int getId() {
-        return 0;
+        return this.id;
     }
 }

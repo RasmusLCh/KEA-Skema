@@ -1,0 +1,25 @@
+<th:block th:include="/admin/header.html" th:tag="remove"></th:block>
+<h1>Manage SubjectPriority</h1>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>SUBJECT</th>
+            <th>PRIORITY</th>
+            <th class="invisible"></th>
+            <th class="invisible"></th>
+            <th class="invisible"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="subjectpriority:${subjectprioritys}">
+            <td th:text="${subjectpriority.id}"></td>
+            <td th:text="${subjectpriority.subject}"></td>
+            <td th:text="${subjectpriority.priority}"></td>
+            <td class="invisible"><a th:href="'view/' + ${subjectpriority.id} + '/'" class="button">VIEW</a></td>
+            <td class="invisible"><a th:href="'edit/' + ${subjectpriority.id} + '/'" class="button">EDIT</a></td>
+            <td class="invisible"><a th:href="'delete/' + ${subjectpriority.id} + '/'" class="button">DELETE</a></td>
+        </tr>
+    </tbody>
+</table>
+<th:block th:include="/admin/footer.html" th:tag="remove"></th:block>

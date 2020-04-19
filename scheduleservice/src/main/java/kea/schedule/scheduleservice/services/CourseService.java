@@ -1,20 +1,26 @@
 package kea.schedule.scheduleservice.services;
 
+import kea.schedule.scheduleservice.components.MSSession;
 import kea.schedule.scheduleservice.models.Course;
 import kea.schedule.scheduleservice.repositories.CourseRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Service
 public class CourseService implements CRUDServiceInterface<Course>{
     private CourseRepo repo;
     private ActionService actionservice;
+    private MSSession session;
+
     @Autowired
-    public CourseService(CourseRepo repo, ActionService actionservice){
+    public CourseService(CourseRepo repo, ActionService actionservice, MSSession session){
         this.repo = repo;
         this.actionservice = actionservice;
+        this.session = session;
     }
 
     @Override
@@ -44,5 +50,25 @@ public class CourseService implements CRUDServiceInterface<Course>{
     @Override
     public List<Course> findAll() {
         return repo.findAll();
+    }
+
+    public void setSelectedcourse(int couseid, Model model){
+        session.setAttribute("selectedcourseid", new Integer(couseid));
+        model.addAttribute("selectedcourseid", getSelectedCourseId());
+        model.addAttribute("selectedcourse", getSelectedCourse());
+    }
+
+    public int getSelectedCourseId(){
+        if(session.getAttribute("selectedcourseid") != null){
+            return ((Integer)session.getAttribute("selectedcourseid")).intValue();
+        }
+        return 0;
+    }
+
+    public Course getSelectedCourse(){
+        if(session.getAttribute("selectedcourseid") != null){
+            return findById(((Integer)session.getAttribute("selectedcourseid")).intValue());
+        }
+        return null;
     }
 }
