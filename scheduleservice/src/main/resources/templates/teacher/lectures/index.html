@@ -1,25 +1,35 @@
-<th:block th:include="/admin/header.html" th:tag="remove"></th:block>
-<h1>Manage SubjectPriority</h1>
+<th:block th:include="/global/header.html" th:tag="remove"></th:block>
+<h1>Manage Lectures</h1>
+<th:block th:include="/teacher/courseSelector.html" th:tag="remove"></th:block>
+<br/>
+<th:block th:if="${selectedcourseid != 0}">
 <table>
     <thead>
         <tr>
             <th>ID</th>
-            <th>SUBJECT</th>
-            <th>PRIORITY</th>
+            <th>START</th>
+            <th>END</th>
+            <th>ROOM</th>
+            <th>TEACHER(S)</th>
+            <th>SUBJECTS</th>
             <th class="invisible"></th>
             <th class="invisible"></th>
             <th class="invisible"></th>
         </tr>
     </thead>
     <tbody>
-        <tr th:each="subjectpriority:${subjectprioritys}">
-            <td th:text="${subjectpriority.id}"></td>
-            <td th:text="${subjectpriority.subject}"></td>
-            <td th:text="${subjectpriority.priority}"></td>
+        <tr th:each="lecture:${lectures}">
+            <td th:text="${lecture.id}"></td>
+            <td th:text="${lecture.startdatetime}"></td>
+            <td th:text="${lecture.enddatetime}"></td>
+            <td th:text="${lecture.room}"></td>
+            <td th:text="${lecture.end}"></td>
+            <td th:text="${lecture.end}"></td>
             <td class="invisible"><a th:href="'view/' + ${subjectpriority.id} + '/'" class="button">VIEW</a></td>
             <td class="invisible"><a th:href="'edit/' + ${subjectpriority.id} + '/'" class="button">EDIT</a></td>
             <td class="invisible"><a th:href="'delete/' + ${subjectpriority.id} + '/'" class="button">DELETE</a></td>
         </tr>
     </tbody>
 </table>
-<th:block th:include="/admin/footer.html" th:tag="remove"></th:block>
+</th:block>
+<th:block th:include="/global/footer.html" th:tag="remove"></th:block>

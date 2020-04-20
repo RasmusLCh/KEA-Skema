@@ -50,11 +50,14 @@ public class MSSession implements Filter {
      * Sets an attribute
      * */
     public Object setAttribute(String str, Object obj){
-        System.out.println("moo");
         if(userid == 0 || sessionentity == null){
             throw new RuntimeException("userid == 0!");
         }
         return sessionentity.getAttributes().put(str, obj);
+    }
+
+    public int getUserId(){
+        return userid;
     }
 
     /**

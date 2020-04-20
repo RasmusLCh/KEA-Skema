@@ -45,4 +45,8 @@ public class LectureService implements CRUDServiceInterface<Lecture>{
     public List<Lecture> findAll() {
         return repo.findAll();
     }
+
+    public List<Lecture> findAllByCourseId(int courseid) {
+        return repo.findAll();
+    }
 }

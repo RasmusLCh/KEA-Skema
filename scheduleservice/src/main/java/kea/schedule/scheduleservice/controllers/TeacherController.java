@@ -56,8 +56,8 @@ public class TeacherController {
     }
 
     @ModelAttribute("courses")
-    public List<Course> modelattribute_courses(){
+    public List<Course> modelattribute_courses(MSSession session){
         //Should only return the courses the teacher has access too.
-        return courseservice.findAll();
+        return courseservice.findAllByAccess();
     }
 }

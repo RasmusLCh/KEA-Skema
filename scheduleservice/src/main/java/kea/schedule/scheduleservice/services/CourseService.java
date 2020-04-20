@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -15,12 +15,17 @@ public class CourseService implements CRUDServiceInterface<Course>{
     private CourseRepo repo;
     private ActionService actionservice;
     private MSSession session;
+    private AuthenticationService authservice;
+    private UserService userservice;
+
 
     @Autowired
-    public CourseService(CourseRepo repo, ActionService actionservice, MSSession session){
+    public CourseService(CourseRepo repo, ActionService actionservice, MSSession session, AuthenticationService authservice, UserService userservice){
         this.repo = repo;
         this.actionservice = actionservice;
         this.session = session;
+        this.authservice = authservice;
+        this.userservice = userservice;
     }
 
     @Override
@@ -50,6 +55,20 @@ public class CourseService implements CRUDServiceInterface<Course>{
     @Override
     public List<Course> findAll() {
         return repo.findAll();
+    }
+
+    /**
+     * Returns all courses the current user has access too
+     * */
+    public List<Course> findAllByAccess(){
+        List<Course> courses = repo.findAll();
+        List<Course> acourses = new ArrayList<>();
+        for(Course course: courses){
+            if(authservice.hasAccess(course.getTeachers())){
+                acourses.add(course);
+            }
+        }
+        return acourses;
     }
 
     public void setSelectedcourse(int couseid, Model model){
