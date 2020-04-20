@@ -1,5 +1,9 @@
 <th:block th:include="/global/header.html" th:tag="remove"></th:block>
-<h1>Manage Lectures</h1>
+<div class="block">
+    <h1>Manage Lectures</h1>
+    <a href="../index" class="button right">Back</a>
+    <a href="create" class="button right">Create</a>
+</div>
 <th:block th:include="/teacher/courseSelector.html" th:tag="remove"></th:block>
 <br/>
 <th:block th:if="${selectedcourseid != 0}">
@@ -9,26 +13,38 @@
             <th>ID</th>
             <th>START</th>
             <th>END</th>
-            <th>ROOM</th>
+            <th>LOCATION</th>
             <th>TEACHER(S)</th>
             <th>SUBJECTS</th>
-            <th class="invisible"></th>
-            <th class="invisible"></th>
             <th class="invisible"></th>
         </tr>
     </thead>
     <tbody>
-        <tr th:each="lecture:${lectures}">
-            <td th:text="${lecture.id}"></td>
-            <td th:text="${lecture.startdatetime}"></td>
-            <td th:text="${lecture.enddatetime}"></td>
-            <td th:text="${lecture.room}"></td>
-            <td th:text="${lecture.end}"></td>
-            <td th:text="${lecture.end}"></td>
-            <td class="invisible"><a th:href="'view/' + ${subjectpriority.id} + '/'" class="button">VIEW</a></td>
-            <td class="invisible"><a th:href="'edit/' + ${subjectpriority.id} + '/'" class="button">EDIT</a></td>
-            <td class="invisible"><a th:href="'delete/' + ${subjectpriority.id} + '/'" class="button">DELETE</a></td>
+    <th:block th:each="lecture:${lectures}">
+        <tr>
+            <td rowspan="4" th:text="${lecture.id}"></td>
+            <td rowspan="4" th:text="${#temporals.format(lecture.startdatetime, 'yyyy-MM-dd HH:mm')}"></td>
+            <td rowspan="4" th:text="${#temporals.format(lecture.enddatetime, 'yyyy-MM-dd HH:mm')}"></td>
+            <td rowspan="4" th:text="${lecture.location}"></td>
+            <td rowspan="4">
+                <th:block th:each="teacher, iter: ${lecture.getTeachers()}" th:remove="tag"><th:block th:text="${teacher.displayname}" th:if="${iter.index == 0}"></th:block><th:block th:text="${', ' + teacher.displayname}" th:if="${iter.index > 0}"></th:block></th:block>
+            </td>
+            <td rowspan="4">
+                <th:block th:each="subject, iter: ${lecture.getLecturesubjects()}" th:remove="tag"><th:block th:text="${subject.name}" th:if="${iter.index == 0}"></th:block><th:block th:text="${', ' + subject.name}" th:if="${iter.index > 0}"></th:block></th:block>
+            </td>
+            <td class="invisible"><a th:href="'../subjects/index" class="button">Manage&nbsp;Subjects</a></td>
         </tr>
+
+        <tr>
+            <td class="invisible"><a th:href="'view/' + ${lecture.id} + '/'" class="button">VIEW</a></td>
+        </tr>
+        <tr>
+            <td class="invisible"><a th:href="'edit/' + ${lecture.id} + '/'" class="button">EDIT</a></td>
+        </tr>
+        <tr>
+            <td class="invisible"><a th:href="'delete/' + ${lecture.id} + '/'" class="button">DELETE</a></td>
+        </tr>
+    </th:block>
     </tbody>
 </table>
 </th:block>

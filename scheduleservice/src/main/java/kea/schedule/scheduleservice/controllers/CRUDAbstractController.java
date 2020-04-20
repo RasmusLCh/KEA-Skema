@@ -58,6 +58,8 @@ public abstract class CRUDAbstractController<E extends ModelInterface, S extends
     public String post_create(@ModelAttribute @Valid E e, BindingResult result, Model model){
         model.addAttribute(modelname, e);
         if (result.hasErrors()) {
+            System.out.println("error" + result.toString());
+
             return path + "create";
         }
         E newe = service.create(e);

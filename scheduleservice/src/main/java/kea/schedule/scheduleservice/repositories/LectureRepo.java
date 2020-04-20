@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface LectureRepo extends JpaRepository<Lecture, Integer> {
-    List<Lecture> findAllByCourseId(int courseid);
+    List<Lecture> findAllByCourseIdOrderByStartdatetime(int courseid);
 }

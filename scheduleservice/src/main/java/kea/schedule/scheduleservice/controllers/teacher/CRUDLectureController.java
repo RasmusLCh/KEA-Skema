@@ -10,10 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -38,6 +37,18 @@ public class CRUDLectureController extends CRUDAbstractController<Lecture, Lectu
         System.out.println("Root");
         model.addAttribute(modelname + "s", service.findAllByCourseId(courseservice.getSelectedCourseId()));
         return path + "index";
+    }
+
+    @PostMapping({"index", ""})
+    public String post_root_index(@RequestParam(name="selectedcourseid", required=true) int selectedcourseid, Model model, HttpServletRequest hsr)
+    {
+        if(hsr.getLocalPort() == teacherport){
+            courseservice.setSelectedcourse(selectedcourseid, model);
+
+            System.out.println(model.getAttribute("selectedcourseid"));
+            return "redirect:/"+webaddr+"index";
+        }
+        return "redirect:forbidden";
     }
 
     public CRUDLectureController(CourseService courseservice){

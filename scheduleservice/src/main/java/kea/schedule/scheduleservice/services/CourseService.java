@@ -86,6 +86,7 @@ public class CourseService implements CRUDServiceInterface<Course>{
 
     public Course getSelectedCourse(){
         if(session.getAttribute("selectedcourseid") != null){
+            System.out.println("Selected courseid is " + session.getAttribute("selectedcourseid"));
             return findById(((Integer)session.getAttribute("selectedcourseid")).intValue());
         }
         return null;

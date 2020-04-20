@@ -1,7 +1,10 @@
 package kea.schedule.scheduleservice.models;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name= "Lecture")
@@ -10,15 +13,20 @@ public class Lecture implements ModelInterface {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    //@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime startdatetime;
+    //@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime enddatetime;
-    private String room="?";
+    @Column
+    private String location="";
     @OneToMany
-    private List<User> teacher;
+    private List<User> teachers = new ArrayList();
     @OneToMany
-    private List<LectureSubject> lecturesubjects;
+    private List<LectureSubject> lecturesubjects = new ArrayList();
     @ManyToOne
-    private Course course;
+    private Course course = null;
 
     public Lecture(){}
 
@@ -46,20 +54,20 @@ public class Lecture implements ModelInterface {
         this.enddatetime = enddatetime;
     }
 
-    public String getRoom() {
-        return room;
+    public String getLocation() {
+        return location;
     }
 
-    public void setRoom(String room) {
-        this.room = room;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
-    public List<User> getTeacher() {
-        return teacher;
+    public List<User> getTeachers() {
+        return teachers;
     }
 
-    public void setTeacher(List<User> teacher) {
-        this.teacher = teacher;
+    public void setTeachers(List<User> teachers) {
+        this.teachers = teachers;
     }
 
     public List<LectureSubject> getLecturesubjects() {

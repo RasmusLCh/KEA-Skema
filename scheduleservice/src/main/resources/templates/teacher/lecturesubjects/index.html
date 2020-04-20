@@ -1,0 +1,29 @@
+<th:block th:include="/global/header.html" th:tag="remove"></th:block>
+<div class="block">
+    <h1>Manage Lectures Subject</h1>
+    <a href="../index" class="button right">Back</a>
+    <a href="create" class="button right">Create</a>
+</div>
+<th:block th:include="/teacher/courseSelector.html" th:tag="remove"></th:block>
+<br/>
+<th:block th:if="${selectedcourseid != 0}">
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>START</th>
+            <th>END</th>
+            <th>LOCATION</th>
+            <th>TEACHER(S)</th>
+            <th>SUBJECTS</th>
+            <th class="invisible"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="invisible"><a th:href="'delete/' + ${lecture.id} + '/'" class="button">DELETE</a></td>
+        </tr>
+    </tbody>
+</table>
+</th:block>
+<th:block th:include="/global/footer.html" th:tag="remove"></th:block>

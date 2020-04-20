@@ -62,8 +62,6 @@ public class AuthenticationService {
         return false;
     }
 
-
-
     private boolean inGroup(Group sgrp, Group accessrequired, int maxrecur){
         if(maxrecur == 0){
             throw new RuntimeException("Maximum group reucursion reached! This indicate a circulair group structure.");
