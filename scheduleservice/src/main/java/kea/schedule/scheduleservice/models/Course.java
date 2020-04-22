@@ -15,7 +15,7 @@ public class Course implements ModelInterface{
     private List<Group> teachers;
     @ManyToMany
     private List<Group> students;
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "course", orphanRemoval = true)
     private List<Lecture> lectures;
 
     public Course(){}

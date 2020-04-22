@@ -2,12 +2,14 @@ package kea.schedule.scheduleservice.services;
 
 import kea.schedule.scheduleservice.components.MSSession;
 import kea.schedule.scheduleservice.models.Lecture;
+import kea.schedule.scheduleservice.models.LectureItem;
 import kea.schedule.scheduleservice.repositories.LectureRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LectureService implements CRUDServiceInterface<Lecture>{
@@ -43,7 +45,11 @@ public class LectureService implements CRUDServiceInterface<Lecture>{
 
     @Override
     public Lecture findById(int id) {
-        return repo.findById(id).get();
+        Optional opt = repo.findById(id);
+        if(opt.isPresent()){
+            return (Lecture)opt.get();
+        }
+        return null;
     }
 
     @Override
@@ -55,7 +61,7 @@ public class LectureService implements CRUDServiceInterface<Lecture>{
         return repo.findAllByCourseIdOrderByStartdatetime(courseid);
     }
 
-    public void setSelectedcourse(int lectureid, Model model){
+    public void setSelectedLecture(int lectureid, Model model){
         session.setAttribute("selectedlectureid", new Integer(lectureid));
         model.addAttribute("selectedlectureid", getSelectedLectureId());
         model.addAttribute("selectedlecture", getSelectedLecture());
@@ -69,9 +75,9 @@ public class LectureService implements CRUDServiceInterface<Lecture>{
     }
 
     public Lecture getSelectedLecture(){
-        if(session.getAttribute("selectedlectureid") != null){
-            System.out.println("Selected courseid is " + session.getAttribute("selectedlectureid"));
-            return findById(((Integer)session.getAttribute("selectedlecture")).intValue());
+        if(session.getAttribute("selectedlectureid") != null && ((Integer)session.getAttribute("selectedlectureid")).intValue() > 0){
+            System.out.println("Selected lecture is " + session.getAttribute("selectedlectureid"));
+            return findById(((Integer)session.getAttribute("selectedlectureid")).intValue());
         }
         return null;
     }

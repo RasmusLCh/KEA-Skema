@@ -50,7 +50,7 @@ public class InternalController {
     public String post_setup(HttpServletRequest hsr){
         if(hsr.getLocalPort() == serviceport){
             setupservice.setupAdminMS();
-            setupservice.setupStudentMS();
+            setupservice.setupScheduleMS();
             setupservice.setupTeacherMS();
             return "index";
         }

@@ -23,9 +23,9 @@ public class Lecture implements ModelInterface {
     private String location="";
     @OneToMany
     private List<User> teachers = new ArrayList();
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "lecture", orphanRemoval = true)
     private List<LectureSubject> lecturesubjects = new ArrayList();
-    @ManyToOne
+    @ManyToOne(cascade= {CascadeType.DETACH})
     private Course course = null;
 
     public Lecture(){}

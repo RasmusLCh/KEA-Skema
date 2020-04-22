@@ -1,34 +1,42 @@
 <th:block th:include="/global/header.html" th:tag="remove"></th:block>
 <div class="block">
-    <h1>View Lecture</h1>
+    <h1>View lecture subject</h1>
     <a href="../../index" class="button right">Back</a>
 </div>
 <table>
     <tr>
-        <th>ID</th>
-        <th>START</th>
-        <th>END</th>
-        <th>LOCATION</th>
+        <th colspan="3">Course</th>
     </tr>
     <tr>
-        <td th:text="${lecture.id}"></td>
-        <td th:text="${lecture.startdatetime}"></td>
-        <td th:text="${lecture.enddatetime}"></td>
-        <td th:text="${lecture.location}"></td>
-    </tr>
-    <tr>
-        <th colspan="4">TEACHER(S)</th>
-    </tr>
-    <tr th:each="teacher : ${lecture.teachers}">
-        <td colspan="4" th:text="${teacher.displayname}">
+        <td colspan="3" th:text="${lecturesubject.lecture.course.name}">
 
         </td>
     </tr>
     <tr>
-        <th colspan="4">SUBJECTS</th>
+        <th colspan="3">Lecture</th>
     </tr>
-    <tr th:each="subject : ${lecture.lecturesubjects}">
-        <td colspan="4" th:text="${subject.name}"></td>
+    <tr>
+        <td colspan="3" th:text="${#temporals.format(lecturesubject.lecture.startdatetime, 'yyyy-MM-dd HH:mm')} + ' - ' + ${#temporals.format(lecturesubject.lecture.enddatetime, 'yyyy-MM-dd HH:mm')}">
+
+        </td>
+    </tr>
+    <tr>
+        <th>ID</th>
+        <th>SUBJECT</th>
+        <th>PRIORITY</th>
+    </tr>
+    <tr>
+        <td th:text="${lecturesubject.id}"></td>
+        <td th:text="${lecturesubject.subject}"></td>
+        <td th:text="${lecturesubject.priority}"></td>
+    </tr>
+    <tr>
+        <th colspan="3">ITEMS</th>
+    </tr>
+    <tr th:each="item : ${lecturesubject.lectureitems}" th:if="${item != null}">
+        <td colspan="3" th:text="${item.description}">
+
+        </td>
     </tr>
 </table>
 <th:block th:include="/global/footer.html" th:tag="remove"></th:block>

@@ -1,0 +1,2 @@
+<label>Lecture:</label>
+<p th:text="${#temporals.format(selectedlecture.startdatetime, 'yyyy-MM-dd HH:mm')} + ' - ' + ${#temporals.format(selectedlecture.enddatetime, 'yyyy-MM-dd HH:mm')}"></p>

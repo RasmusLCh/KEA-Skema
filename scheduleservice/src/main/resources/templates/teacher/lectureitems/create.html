@@ -1,15 +1,16 @@
 <th:block th:include="/global/header.html" th:tag="remove"></th:block>
 <div class="block">
-    <h1 class="schedule">Create lecture subject</h1>
+    <h1 class="schedule">Create lecture item</h1>
     <a href="../index" class="button right">Back</a>
 </div>
 <th:block th:include="/teacher/courseDisplay.html" th:tag="remove"></th:block>
 <th:block th:include="/teacher/LectureDisplay.html" th:tag="remove"></th:block>
-<form class="schedule" method="post" action="" th:object="${lecturesubject}">
-    <input type="text" name="lecture.id" id="lecture.id" th:value="${selectedlectureid}" style="display:none;">
-    <label>Subject;:</label>
-    <input type="text" th:field="*{subject}">
-    <p class="errortext" th:if="${#fields.hasErrors('subject')}">The location format is not valid.</p>
+<th:block th:include="/teacher/LectureSubjectDisplay.html" th:tag="remove"></th:block>
+<form class="schedule" method="post" action="" th:object="${lectureitem}">
+    <input type="text" name="lecturesubject.id" id="lecturesubject.id" th:value="${selectedlecturesubjectid}" style="display:none;">
+    <label>Description</label>
+    <input type="text" th:field="*{description}">
+    <p class="errortext" th:if="${#fields.hasErrors('description')}">The description format is not valid.</p>
     <label>Priority:</label>
     <input type="text" th:field="*{priority}">
     <p class="errortext" th:if="${#fields.hasErrors('priority')}">The location format is not valid.</p>

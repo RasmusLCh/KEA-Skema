@@ -3,16 +3,15 @@
     <h1>Edit lecture subject</h1>
     <a href="../../index" class="button right">Back</a>
 </div>
-<label>Course:</label>
-<p th:text="${lecturesubject.lecture.course.name}" class="disabledinput"></p>
-<label>Lecture:</label>
-<p th:text="${#temporals.format(lecturesubject.lecture.startdatetime, 'yyyy-MM-dd HH:mm')} + ' - ' + ${#temporals.format(lecturesubject.lecture.enddatetime, 'yyyy-MM-dd HH:mm')}"></p>
-<form method="post" action="../../edit" th:object="${lecturesubject}">
-    <input type="text" th:field="*{lecture}" style="display:none;">
+<th:block th:include="/teacher/courseDisplay.html" th:tag="remove"></th:block>
+<th:block th:include="/teacher/LectureDisplay.html" th:tag="remove"></th:block>
+<th:block th:include="/teacher/LectureSubjectDisplay.html" th:tag="remove"></th:block>
+<form method="post" action="../../edit" th:object="${lectureitem}">
+    <input type="text" th:field="*{lecturesubject}" style="display:none;">
     <input type="text" th:field="*{id}" style="display:none;">
-    <label>Subject:</label>
-    <input type="text" th:field="*{subject}">
-    <p class="errortext" th:if="${#fields.hasErrors('subject')}">The location format is not valid.</p>
+    <label>Description</label>
+    <input type="text" th:field="*{description}">
+    <p class="errortext" th:if="${#fields.hasErrors('description')}">The description format is not valid.</p>
     <label>Priority:</label>
     <input type="text" th:field="*{priority}">
     <p class="errortext" th:if="${#fields.hasErrors('priority')}">The location format is not valid.</p>

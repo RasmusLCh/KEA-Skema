@@ -1,11 +1,13 @@
 package kea.schedule.scheduleservice.services;
 
+import kea.schedule.scheduleservice.models.LectureSubject;
 import kea.schedule.scheduleservice.models.SubjectPriority;
 import kea.schedule.scheduleservice.repositories.SubjectPriorityRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SubjectPriorityService implements CRUDServiceInterface<SubjectPriority>{
@@ -47,7 +49,11 @@ public class SubjectPriorityService implements CRUDServiceInterface<SubjectPrior
 
     @Override
     public SubjectPriority findById(int id) {
-        return repo.findById(id).get();
+        Optional opt = repo.findById(id);
+        if(opt.isPresent()){
+            return (SubjectPriority)opt.get();
+        }
+        return null;
     }
 
     @Override

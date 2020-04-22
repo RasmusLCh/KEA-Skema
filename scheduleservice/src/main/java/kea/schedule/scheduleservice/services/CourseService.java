@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CourseService implements CRUDServiceInterface<Course>{
@@ -49,7 +51,11 @@ public class CourseService implements CRUDServiceInterface<Course>{
 
     @Override
     public Course findById(int id) {
-        return repo.findById(id).get();
+        Optional opt = repo.findById(id);
+        if(opt.isPresent()){
+            return (Course)opt.get();
+        }
+        return null;
     }
 
     @Override
@@ -85,10 +91,21 @@ public class CourseService implements CRUDServiceInterface<Course>{
     }
 
     public Course getSelectedCourse(){
-        if(session.getAttribute("selectedcourseid") != null){
+        if(session.getAttribute("selectedcourseid") != null && ((Integer)session.getAttribute("selectedcourseid")).intValue() > 0){
             System.out.println("Selected courseid is " + session.getAttribute("selectedcourseid"));
             return findById(((Integer)session.getAttribute("selectedcourseid")).intValue());
         }
         return null;
+    }
+
+    public List<Course> getUserCourses(){
+        int userid = session.getUserId();
+        //Get the list, then only save distinct values
+        List<Course> courses = repo.findAllByTeachersUsersIdOrStudentsUsersId(userid, userid);
+        for(Course course : courses){
+            System.out.println(course.getName());
+        }
+        System.out.println("Courses = " + courses.size());
+        return courses.stream().distinct().collect(Collectors.toList());
     }
 }

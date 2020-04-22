@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LectureItemService implements CRUDServiceInterface<LectureItem> {
@@ -39,11 +40,19 @@ public class LectureItemService implements CRUDServiceInterface<LectureItem> {
 
     @Override
     public LectureItem findById(int id) {
-        return repo.findById(id).get();
+        Optional opt = repo.findById(id);
+        if(opt.isPresent()){
+            return (LectureItem)opt.get();
+        }
+        return null;
     }
 
     @Override
     public List<LectureItem> findAll() {
         return repo.findAll();
+    }
+
+    public List<LectureItem> findAllByLectureSubjectId(int lecturesubjectid){
+        return repo.findAllByLecturesubjectId(lecturesubjectid);
     }
 }

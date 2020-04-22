@@ -1,4 +1,4 @@
-package kea.schedule.scheduleservice.controllers;
+package kea.schedule.scheduleservice.controllers.teacher;
 
 import kea.schedule.scheduleservice.components.MSSession;
 import kea.schedule.scheduleservice.models.Course;

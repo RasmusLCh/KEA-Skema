@@ -10,10 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -49,6 +51,19 @@ public class CRUDLectureController extends CRUDAbstractController<Lecture, Lectu
             return "redirect:/"+webaddr+"index";
         }
         return "redirect:forbidden";
+    }
+
+    @PostMapping("/edit")
+    public String post_edit(@ModelAttribute @Valid Lecture e, BindingResult result, Model model)
+    {
+        model.addAttribute(modelname, e);
+        if (result.hasErrors()) {
+            return path + "edit";
+        }
+        Lecture l = service.findById(e.getId());
+        e.setLecturesubjects(l.getLecturesubjects());
+        service.edit(e);
+        return "redirect:/" + webaddr + "view/" + e.getId() + "/";
     }
 
     public CRUDLectureController(CourseService courseservice){

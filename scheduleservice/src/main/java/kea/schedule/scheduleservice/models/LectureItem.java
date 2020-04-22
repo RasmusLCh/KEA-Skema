@@ -9,7 +9,8 @@ public class LectureItem  implements ModelInterface {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String description;
-    @ManyToOne
+    private int priority = 50;
+    @ManyToOne(cascade= {CascadeType.DETACH})
     private LectureSubject lecturesubject;
 
     public LectureItem(){}
@@ -36,6 +37,14 @@ public class LectureItem  implements ModelInterface {
 
     public void setLecturesubject(LectureSubject lecturesubject) {
         this.lecturesubject = lecturesubject;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 
     @Override

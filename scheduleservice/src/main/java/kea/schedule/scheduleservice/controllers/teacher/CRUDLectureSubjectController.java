@@ -12,10 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -29,12 +30,13 @@ public class CRUDLectureSubjectController extends CRUDAbstractController<Lecture
 
     @Autowired
     public CRUDLectureSubjectController(LectureSubjectService lecturesubjectservice, LectureService lectureservice, CourseService courseservice, @Value("${ms.port.service:7510}") int port) {
-        super("teacher/subjects/", "lecturesubject", "servicepages/KEA-Schedule-Teacher/subjects/", lecturesubjectservice, port);
+        super("teacher/lecturesubjects/", "lecturesubject", "servicepages/KEA-Schedule-Teacher/subjects/", lecturesubjectservice, port);
         this.lectureservice = lectureservice;
         this.courseservice = courseservice;
     }
 
     @GetMapping({"index", ""})
+    @Override
     public String get_root_index(Model model)
     {
         System.out.println("Root");
@@ -42,27 +44,50 @@ public class CRUDLectureSubjectController extends CRUDAbstractController<Lecture
         return path + "index";
     }
 
-    @GetMapping({"manage"})
-    public String get_root_index(@RequestParam(value = "lectureid", required = false, defaultValue = "0") int lectureid, Model model) {
-        System.out.println("Manage " + lectureid);
-        if (lectureid != 0) {
-            lectureservice.setSelectedcourse(lectureid, model);
-        }
-        return "redirect:/"+webaddr+"index";
+    @PostMapping({"index", ""})
+    public String post_root_index(@RequestParam(value = "selectedlectureid", required = true, defaultValue = "0") int lectureid, Model model)
+    {
+        lectureservice.setSelectedLecture(lectureid, model);
+        System.out.println("Root");
+        model.addAttribute(modelname + "s", service.findAllByLectureId(lectureservice.getSelectedLectureId()));
+        return path + "index";
     }
 
-    @ModelAttribute("selectedlecturid")
+    @PostMapping("/edit")
+    public String post_edit(@ModelAttribute @Valid LectureSubject e, BindingResult result, Model model)
+    {
+        model.addAttribute(modelname, e);
+        if (result.hasErrors()) {
+            return path + "edit";
+        }
+        LectureSubject l = service.findById(e.getId());
+        e.setLectureitems(l.getLectureitems());
+        service.edit(e);
+        return "redirect:/" + webaddr + "view/" + e.getId() + "/";
+    }
+
+    @ModelAttribute("selectedcourseid")
+    public int selected_courseid(HttpSession session){
+        return courseservice.getSelectedCourseId();
+    }
+
+    @ModelAttribute("selectedcourse")
+    public Course selected_course(HttpSession session){
+        return courseservice.getSelectedCourse();
+    }
+
+    @ModelAttribute("selectedlectureid")
     public int selected_lectureid(HttpSession session) {
         return lectureservice.getSelectedLectureId();
     }
 
     @ModelAttribute("selectedlecture")
-    public Lecture selected_course(HttpSession session) {
+    public Lecture selected_lecture(HttpSession session) {
         return lectureservice.getSelectedLecture();
     }
 
     @ModelAttribute("lectures")
-    public List<Lecture> modelattribute_courses(MSSession session) {
+    public List<Lecture> modelattribute_lectures(MSSession session) {
         //Should only return the courses the teacher has access too.
         return lectureservice.findAllByCourseId(courseservice.getSelectedCourseId());
     }

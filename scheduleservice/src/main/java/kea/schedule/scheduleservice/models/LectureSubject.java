@@ -1,7 +1,6 @@
 package kea.schedule.scheduleservice.models;
 
 import javax.persistence.*;
-import javax.security.auth.Subject;
 import java.util.List;
 
 @Entity(name= "LectureSubject")
@@ -10,12 +9,13 @@ public class LectureSubject  implements ModelInterface{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @Column
     private String subject;
-    @OneToMany
-    private List<LectureItem> items;
-    @ManyToOne
-    private SubjectPriority priority;
-    @ManyToOne
+    @Column
+    private int priority = 50;
+    @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "lecturesubject", orphanRemoval = true)
+    private List<LectureItem> lectureitems;
+    @ManyToOne(cascade= {CascadeType.DETACH})
     private Lecture lecture;
 
     public LectureSubject(){}
@@ -36,19 +36,19 @@ public class LectureSubject  implements ModelInterface{
         this.subject = subject;
     }
 
-    public List<LectureItem> getItems() {
-        return items;
+    public List<LectureItem> getLectureitems() {
+        return lectureitems;
     }
 
-    public void setItems(List<LectureItem> items) {
-        this.items = items;
+    public void setLectureitems(List<LectureItem> lectureitems) {
+        this.lectureitems = lectureitems;
     }
 
-    public SubjectPriority getPriority() {
+    public int getPriority() {
         return priority;
     }
 
-    public void setPriority(SubjectPriority priority) {
+    public void setPriority(int priority) {
         this.priority = priority;
     }
 

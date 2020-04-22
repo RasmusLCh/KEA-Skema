@@ -1,29 +1,56 @@
 <th:block th:include="/global/header.html" th:tag="remove"></th:block>
 <div class="block">
-    <h1>Manage Lectures Subject</h1>
-    <a href="../index" class="button right">Back</a>
+    <h1>Manage lecture subjects</h1>
+    <a href="../lectures/index" class="button right">Lectures</a>
     <a href="create" class="button right">Create</a>
 </div>
-<th:block th:include="/teacher/courseSelector.html" th:tag="remove"></th:block>
-<br/>
-<th:block th:if="${selectedcourseid != 0}">
-<table>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>START</th>
-            <th>END</th>
-            <th>LOCATION</th>
-            <th>TEACHER(S)</th>
-            <th>SUBJECTS</th>
-            <th class="invisible"></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td class="invisible"><a th:href="'delete/' + ${lecture.id} + '/'" class="button">DELETE</a></td>
-        </tr>
-    </tbody>
-</table>
+<th:block th:include="/teacher/courseDisplay.html" th:tag="remove"></th:block>
+<th:block th:include="/teacher/LectureSelector.html" th:tag="remove"></th:block>
+<th:block th:if="${selectedcourseid != 0 and selectedlectureid != 0}">
+    <br/>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>SUBJECT</th>
+                <th>ITEMS</th>
+                <th>PRIORITY</th>
+                <th class="invisible"></th>
+            </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="lecturesubject : ${lecturesubjects}">
+            <tr>
+                <td rowspan="4" th:text="${lecturesubject.id}"></td>
+                <td rowspan="4" th:text="${lecturesubject.subject}"></td>
+                <td rowspan="4" >
+                    <th:block th:each="item : ${lecturesubject.lectureitems}">
+                        <p th:text="${item.description}"></p>
+                    </th:block>
+                </td>
+                <td rowspan="4" th:text="${lecturesubject.priority}"></td>
+                <td class="invisible">
+                    <form method="post" action="../items/index" >
+                        <input type="hidden" name="selectedlecturesubjectid" th:value="${lecturesubject.id}">
+                        <input type="submit" value="Manage&nbsp;Items" class="button">
+                    </form>
+
+                </td>
+            </tr>
+            <tr>
+                <td class="invisible"><a th:href="'view/' + ${lecturesubject.id} + '/'" class="button">VIEW</a></td>
+            </tr>
+                <tr>
+                <td class="invisible"><a th:href="'edit/' + ${lecturesubject.id} + '/'" class="button">EDIT</a></td>
+                </tr>
+                <tr>
+                <td class="invisible"><a th:href="'delete/' + ${lecturesubject.id} + '/'" class="button">DELETE</a></td>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
+</th:block>
+<th:block th:if="${selectedcourseid == 0 or selectedlectureid == 0}">
+    <p>Both a course and lecture must be selected, before you can manage lecture subjects for a specific lecture. If you need to change the course, go back to Manage lecture.</p>
 </th:block>
 <th:block th:include="/global/footer.html" th:tag="remove"></th:block>

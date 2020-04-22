@@ -36,8 +36,8 @@ public class SetupService {
         setupAdminMS();
         System.out.println("Setup teacher ms");
         setupTeacherMS();
-        System.out.println("Setup student ms");
-        setupStudentMS();
+        System.out.println("Setup schedule ms");
+        setupScheduleMS();
     }
 
     private void synchronizeUsers() {
@@ -130,7 +130,7 @@ public class SetupService {
 
         //Add topmenulink eng
         json = new JSONObject();
-        json.appendField("path", "https://localhost/servicepages/KEA-Schedule-Teacher/manage.eng");
+        json.appendField("path", "https://localhost/servicepages/KEA-Schedule-Teacher/index.eng");
         json.appendField("text", "Manage courses");
         json.appendField("priority", "90");
         json.appendField("language", "eng");
@@ -139,7 +139,7 @@ public class SetupService {
         restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceaddtopmenulink/KEA-Schedule-Teacher", HttpMethod.POST, entity, String.class);
         //Add topmenulink dk
         json = new JSONObject();
-        json.appendField("path", "https://localhost/servicepages/KEA-Schedule-Teacher/manage.dk");
+        json.appendField("path", "https://localhost/servicepages/KEA-Schedule-Teacher/index.dk");
         json.appendField("text", "Administrer kurser");
         json.appendField("priority", "90");
         json.appendField("language", "dk");
@@ -148,38 +148,38 @@ public class SetupService {
         restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceaddtopmenulink/KEA-Schedule-Teacher", HttpMethod.POST, entity, String.class);
     }
 
-    public void setupStudentMS() {
+    public void setupScheduleMS() {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<?> entity;
         JSONObject json;
         json = new JSONObject();
-        json.appendField("name", "KEA-Schedule-Student");
+        json.appendField("name", "KEA-Schedule");
         json.appendField("port", 7511);
         json.appendField("enabled", false);
-        json.appendField("description", "Teacher module");
+        json.appendField("description", "Display the schedule for teachers and students");
         entity = new HttpEntity<JSONObject>(json, headers);
         restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceregistration", HttpMethod.POST, entity, String.class);
 
         //Add topmenulink eng
         json = new JSONObject();
-        json.appendField("path", "https://localhost/servicepages/KEA-Schedule-Student/index.eng");
+        json.appendField("path", "https://localhost/servicepages/KEA-Schedule/index.eng");
         json.appendField("text", "Schedule");
         json.appendField("priority", "10");
         json.appendField("language", "eng");
         json.appendField("description", "");
         entity = new HttpEntity<JSONObject>(json, headers);
-        restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceaddtopmenulink/KEA-Schedule-Student", HttpMethod.POST, entity, String.class);
+        restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceaddtopmenulink/KEA-Schedule", HttpMethod.POST, entity, String.class);
         //Add topmenulink dk
         json = new JSONObject();
-        json.appendField("path", "https://localhost/servicepages/KEA-Schedule-Student/index.dk");
+        json.appendField("path", "https://localhost/servicepages/KEA-Schedule/index.dk");
         json.appendField("text", "Skema");
         json.appendField("priority", "10");
         json.appendField("language", "dk");
         json.appendField("description", "");
         entity = new HttpEntity<JSONObject>(json, headers);
-        restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceaddtopmenulink/KEA-Schedule-Student", HttpMethod.POST, entity, String.class);
+        restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceaddtopmenulink/KEA-Schedule", HttpMethod.POST, entity, String.class);
     }
 
     public void setupAdminMS() {

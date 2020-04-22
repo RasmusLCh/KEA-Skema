@@ -7,6 +7,7 @@
 <p th:text="${lecture.course.name}" class="disabledinput"></p>
 <form method="post" action="../../edit" th:object="${lecture}">
     <input type="text" name="course.id" id="course.id" th:value="${selectedcourseid}" style="display:none;">
+    <input type="text" th:field="*{id}" style="display:none;">
     <label>Start date and time:</label>
     <input type="datetime-local" th:field="*{startdatetime}" placeholder="Must be written in the format yyyy-MM-dd HH:mm f.x. 2020-01-10 10:15">
     <p class="errortext" th:if="${#fields.hasErrors('startdatetime')}">The datetime format is not valid.</p>

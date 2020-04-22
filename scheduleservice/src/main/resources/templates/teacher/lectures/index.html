@@ -15,7 +15,7 @@
             <th>END</th>
             <th>LOCATION</th>
             <th>TEACHER(S)</th>
-            <th>SUBJECTS</th>
+            <th>SUBJECTS / ITEMS</th>
             <th class="invisible"></th>
         </tr>
     </thead>
@@ -30,9 +30,25 @@
                 <th:block th:each="teacher, iter: ${lecture.getTeachers()}" th:remove="tag"><th:block th:text="${teacher.displayname}" th:if="${iter.index == 0}"></th:block><th:block th:text="${', ' + teacher.displayname}" th:if="${iter.index > 0}"></th:block></th:block>
             </td>
             <td rowspan="4">
-                <th:block th:each="subject, iter: ${lecture.getLecturesubjects()}" th:remove="tag"><th:block th:text="${subject.name}" th:if="${iter.index == 0}"></th:block><th:block th:text="${', ' + subject.name}" th:if="${iter.index > 0}"></th:block></th:block>
+                <table>
+                    <th:block th:each="subject, iter: ${lecture.getLecturesubjects()}" th:remove="tag">
+                        <tr>
+                           <th th:text="${subject.subject}"></th>
+                        </tr>
+                        <tr th:each="item : ${subject.lectureitems}">
+                            <td th:text="${item.description}"></td>
+                        </tr>
+
+                    </th:block>
+                </table>
+
             </td>
-            <td class="invisible"><a th:href="'../subjects/index" class="button">Manage&nbsp;Subjects</a></td>
+            <td class="invisible">
+                <form method="post" action="../subjects/index" >
+                    <input type="hidden" name="selectedlectureid" th:value="${lecture.id}">
+                    <input type="submit" value="Manage&nbsp;Subjects" class="button">
+                </form>
+                <!--<a th:href="'../subjects/index'" class="button">Manage&nbsp;Subjects</a></td>-->
         </tr>
 
         <tr>
@@ -47,5 +63,8 @@
     </th:block>
     </tbody>
 </table>
+</th:block>
+<th:block th:unless="${selectedcourseid != 0}">
+    <p>Please select a course to be able to manage lectures under it.</p>
 </th:block>
 <th:block th:include="/global/footer.html" th:tag="remove"></th:block>

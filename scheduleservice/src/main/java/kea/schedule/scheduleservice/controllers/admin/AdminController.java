@@ -1,4 +1,4 @@
-package kea.schedule.scheduleservice.controllers;
+package kea.schedule.scheduleservice.controllers.admin;
 
 import kea.schedule.scheduleservice.services.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
