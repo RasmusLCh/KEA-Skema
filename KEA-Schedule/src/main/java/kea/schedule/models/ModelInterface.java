@@ -7,4 +7,5 @@ package kea.schedule.models;
 public interface ModelInterface {
 
     int getId();
+    boolean equals(Object obj);
 }

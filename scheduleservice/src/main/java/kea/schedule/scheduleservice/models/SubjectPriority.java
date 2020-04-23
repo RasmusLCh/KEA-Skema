@@ -48,4 +48,12 @@ public class SubjectPriority  implements ModelInterface{
     public int getId() {
         return this.id;
     }
+
+    @Override
+    public boolean equals(Object obj){
+        if(obj instanceof SubjectPriority){
+            return ((SubjectPriority)obj).getId() == this.id;
+        }
+        return false;
+    }
 }

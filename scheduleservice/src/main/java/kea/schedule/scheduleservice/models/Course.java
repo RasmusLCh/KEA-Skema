@@ -1,5 +1,12 @@
 package kea.schedule.scheduleservice.models;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import kea.schedule.scheduleservice.converters.deserialize.LectureSubjectDeserializer;
+import kea.schedule.scheduleservice.converters.deserialize.ListGroupDeserializer;
+import kea.schedule.scheduleservice.converters.serialize.LectureSubjectSerializer;
+import kea.schedule.scheduleservice.converters.serialize.ListGroupSerializer;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -12,8 +19,12 @@ public class Course implements ModelInterface{
     @Column
     private String name;
     @ManyToMany
+    @JsonSerialize(converter = ListGroupSerializer.class)
+    @JsonDeserialize(converter = ListGroupDeserializer.class)
     private List<Group> teachers;
     @ManyToMany
+    @JsonSerialize(converter = ListGroupSerializer.class)
+    @JsonDeserialize(converter = ListGroupDeserializer.class)
     private List<Group> students;
     @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "course", orphanRemoval = true)
     private List<Lecture> lectures;
@@ -63,5 +74,13 @@ public class Course implements ModelInterface{
     @Override
     public int getId() {
         return this.id;
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        if(obj instanceof Course){
+            return ((Course)obj).getId() == this.id;
+        }
+        return false;
     }
 }

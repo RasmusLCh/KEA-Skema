@@ -1,5 +1,12 @@
 package kea.schedule.scheduleservice.models;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import kea.schedule.scheduleservice.converters.deserialize.LectureSubjectDeserializer;
+import kea.schedule.scheduleservice.converters.deserialize.ListGroupDeserializer;
+import kea.schedule.scheduleservice.converters.serialize.LectureSubjectSerializer;
+import kea.schedule.scheduleservice.converters.serialize.ListGroupSerializer;
+
 import javax.persistence.*;
 
 @Entity(name= "LectureItem")
@@ -11,6 +18,8 @@ public class LectureItem  implements ModelInterface {
     private String description;
     private int priority = 50;
     @ManyToOne(cascade= {CascadeType.DETACH})
+    @JsonSerialize(converter = LectureSubjectSerializer.class)
+    @JsonDeserialize(converter = LectureSubjectDeserializer.class)
     private LectureSubject lecturesubject;
 
     public LectureItem(){}
@@ -50,5 +59,13 @@ public class LectureItem  implements ModelInterface {
     @Override
     public int getId() {
         return this.id;
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        if(obj instanceof LectureItem){
+            return ((LectureItem)obj).getId() == this.id;
+        }
+        return false;
     }
 }

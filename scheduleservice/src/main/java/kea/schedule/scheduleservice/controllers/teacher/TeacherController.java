@@ -1,6 +1,5 @@
 package kea.schedule.scheduleservice.controllers.teacher;
 
-import kea.schedule.scheduleservice.components.MSSession;
 import kea.schedule.scheduleservice.models.Course;
 import kea.schedule.scheduleservice.services.CourseService;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -46,17 +44,17 @@ public class TeacherController {
     }
 
     @ModelAttribute("selectedcourseid")
-    public int selected_courseid(HttpSession session){
+    public int selected_courseid(){
         return courseservice.getSelectedCourseId();
     }
 
     @ModelAttribute("selectedcourse")
-    public Course selected_course(HttpSession session){
+    public Course selected_course(){
         return courseservice.getSelectedCourse();
     }
 
     @ModelAttribute("courses")
-    public List<Course> modelattribute_courses(MSSession session){
+    public List<Course> modelattribute_courses(){
         //Should only return the courses the teacher has access too.
         return courseservice.findAllByAccess();
     }

@@ -1,5 +1,14 @@
 package kea.schedule.scheduleservice.models;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import kea.schedule.scheduleservice.converters.deserialize.LectureDeserializer;
+import kea.schedule.scheduleservice.converters.deserialize.LectureItemDeserializer;
+import kea.schedule.scheduleservice.converters.deserialize.LectureSubjectDeserializer;
+import kea.schedule.scheduleservice.converters.serialize.LectureItemSerializer;
+import kea.schedule.scheduleservice.converters.serialize.LectureSerializer;
+import kea.schedule.scheduleservice.converters.serialize.LectureSubjectSerializer;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -16,6 +25,8 @@ public class LectureSubject  implements ModelInterface{
     @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "lecturesubject", orphanRemoval = true)
     private List<LectureItem> lectureitems;
     @ManyToOne(cascade= {CascadeType.DETACH})
+    @JsonSerialize(converter = LectureSerializer.class)
+    @JsonDeserialize(converter = LectureDeserializer.class)
     private Lecture lecture;
 
     public LectureSubject(){}
@@ -63,5 +74,13 @@ public class LectureSubject  implements ModelInterface{
     @Override
     public int getId() {
         return this.id;
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        if(obj instanceof LectureSubject){
+            return ((LectureSubject)obj).getId() == this.id;
+        }
+        return false;
     }
 }

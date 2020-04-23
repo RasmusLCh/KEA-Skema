@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpSession;
-
 @Controller
 @RequestMapping("/servicepages/KEA-Schedule-Admin/courses/")
 public class CRUDCourseController extends CRUDAbstractController<Course, CourseService> {

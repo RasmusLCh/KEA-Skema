@@ -27,6 +27,14 @@ public class Action implements ModelInterface {
         return id;
     }
 
+    @Override
+    public boolean equals(Object obj){
+        if(obj instanceof Action){
+            return ((Action)obj).getId() == this.id;
+        }
+        return false;
+    }
+
     public void setId(int id) {
         this.id = id;
     }

@@ -15,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -67,27 +66,27 @@ public class CRUDLectureSubjectController extends CRUDAbstractController<Lecture
     }
 
     @ModelAttribute("selectedcourseid")
-    public int selected_courseid(HttpSession session){
+    public int selected_courseid(){
         return courseservice.getSelectedCourseId();
     }
 
     @ModelAttribute("selectedcourse")
-    public Course selected_course(HttpSession session){
+    public Course selected_course(){
         return courseservice.getSelectedCourse();
     }
 
     @ModelAttribute("selectedlectureid")
-    public int selected_lectureid(HttpSession session) {
+    public int selected_lectureid() {
         return lectureservice.getSelectedLectureId();
     }
 
     @ModelAttribute("selectedlecture")
-    public Lecture selected_lecture(HttpSession session) {
+    public Lecture selected_lecture() {
         return lectureservice.getSelectedLecture();
     }
 
     @ModelAttribute("lectures")
-    public List<Lecture> modelattribute_lectures(MSSession session) {
+    public List<Lecture> modelattribute_lectures() {
         //Should only return the courses the teacher has access too.
         return lectureservice.findAllByCourseId(courseservice.getSelectedCourseId());
     }

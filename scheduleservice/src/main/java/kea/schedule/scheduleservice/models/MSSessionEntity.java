@@ -57,4 +57,12 @@ public class MSSessionEntity implements ModelInterface {
     public int getId() {
         return this.id;
     }
+
+    @Override
+    public boolean equals(Object obj){
+        if(obj instanceof MSSessionEntity){
+            return ((MSSessionEntity)obj).getId() == this.id;
+        }
+        return false;
+    }
 }

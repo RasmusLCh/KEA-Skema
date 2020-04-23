@@ -9,4 +9,5 @@ import net.minidev.json.JSONObject;
 public interface ModelInterface {
 
     int getId();
+    boolean equals(Object obj);
 }

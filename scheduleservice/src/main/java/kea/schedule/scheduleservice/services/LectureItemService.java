@@ -28,7 +28,9 @@ public class LectureItemService implements CRUDServiceInterface<LectureItem> {
 
     @Override
     public void edit(LectureItem lectureItem) {
+        System.out.println("Edit 1");
         repo.save(lectureItem);
+        System.out.println("Edit 2");
         actionservice.doAction("LectureItemService.edit", lectureItem);
     }
 
