@@ -37,7 +37,15 @@ public class ScheduleController {
             else{
                 System.out.println("No userid");
             }
-            return "schedule/index";
+            return "schedule/weekly";
+        }
+        return "forbidden";
+    }
+
+    @GetMapping({"weekly.eng"})
+    public String get_weekly(HttpServletRequest hsr){
+        if(hsr.getLocalPort() == studentport) {
+            return "schedule/weekly";
         }
         return "forbidden";
     }

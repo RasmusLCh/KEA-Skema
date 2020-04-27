@@ -7,9 +7,13 @@
         <li><a href="./lectures/create/">Create lectures</a></li>
         <li><a href="./lectures/index">Manage lectures</a></li>
     </ul>
-    <h2>Upload lecture plan</h2>
-    <input type="file"><input type="Upload">
+    <h2>Upload course plan</h2>
+    <form method="post" enctype="multipart/form-data" action="uploadcoursecsv">
+        <input type="file" name="courseplancsv"><input type="submit" value="Upload">
+    </form>
+
     <p>Note: Please make sure that the CSV file is adherent to the CSV structured defined in <a href="">Q&A</a>.</p>
+    <p>Note: By uploading a course plan, you remove all lectures that are currently saved to the course.</p>
 </th:block>
 <h2>Help</h2>
 For getting started or needing help please go to <a href="">Q&A</a>.

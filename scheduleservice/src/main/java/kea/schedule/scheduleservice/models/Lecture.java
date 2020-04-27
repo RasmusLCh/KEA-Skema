@@ -3,9 +3,7 @@ package kea.schedule.scheduleservice.models;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import kea.schedule.scheduleservice.converters.deserialize.CourseDeserializer;
-import kea.schedule.scheduleservice.converters.deserialize.LectureSubjectDeserializer;
 import kea.schedule.scheduleservice.converters.serialize.CourseSerializer;
-import kea.schedule.scheduleservice.converters.serialize.LectureSubjectSerializer;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -27,10 +25,11 @@ public class Lecture implements ModelInterface {
     private LocalDateTime enddatetime;
     @Column
     private String location="";
-    @OneToMany
+    @ManyToMany
     private List<User> teachers = new ArrayList();
-    @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "lecture", orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "lecture", orphanRemoval = true)
     private List<LectureSubject> lecturesubjects = new ArrayList();
+
     @ManyToOne(cascade= {CascadeType.DETACH})
     @JsonSerialize(converter = CourseSerializer.class)
     @JsonDeserialize(converter = CourseDeserializer.class)
@@ -83,7 +82,8 @@ public class Lecture implements ModelInterface {
     }
 
     public void setLecturesubjects(List<LectureSubject> lecturesubjects) {
-        this.lecturesubjects = lecturesubjects;
+        this.lecturesubjects.clear();
+        this.lecturesubjects.addAll(lecturesubjects);
     }
 
     public Course getCourse() {

@@ -28,6 +28,11 @@ public class LectureItem  implements ModelInterface {
         setId(id);
     }
 
+    public LectureItem(String description, int priority){
+        setDescription(description);
+        setPriority(priority);
+    }
+
     public void setId(int id) {
         this.id = id;
     }

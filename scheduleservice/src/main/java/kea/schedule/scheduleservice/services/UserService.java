@@ -50,6 +50,10 @@ public class UserService implements CRUDServiceInterface<User> {
         return null;
     }
 
+    public User findByDisplayname(String displayname){
+        return userrepo.findByDisplayname(displayname);
+    }
+
     public User findByIdentifier(String identifier){
         return userrepo.findByIdentifier(identifier);
     }

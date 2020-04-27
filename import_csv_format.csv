@@ -1,0 +1,13 @@
+Dato;Start;Slut;Teacher(s);Room;LectureSubject1;LectureSubject2;LectureSubject3;LectureSubject4
+2020-02-10;10:15;12:15;Hans Hansen;16:00:01;LectureItem1;LectureItem1;LectureItem1;
+;;;Birger Børger;;LectureItem2;LectureItem2;LectureItem2;
+;;;;;LectureItem3;LectureItem3;LectureItem3;
+;;;;;LectureItem4;LectureItem4;LectureItem4;
+2020-02-17;10:15;12:15;Hans Hansen;16:00:01;LectureItem1;LectureItem1;LectureItem1;
+;;;;;LectureItem2;LectureItem2;LectureItem2;
+;;;;;LectureItem3;LectureItem3;LectureItem3;
+;;;;;LectureItem4;LectureItem4;LectureItem4;
+2020-02-24;10:15;12:15;Hans Hansen;16:00:01;LectureItem1;LectureItem1;;LectureItem1
+;;;;;LectureItem2;LectureItem2;;LectureItem2
+;;;;;LectureItem3;LectureItem3;;LectureItem3
+;;;;;LectureItem4;LectureItem4;;LectureItem4

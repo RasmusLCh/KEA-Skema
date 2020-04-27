@@ -26,6 +26,7 @@ public class LectureService implements CRUDServiceInterface<Lecture>{
 
     @Override
     public Lecture create(Lecture lecture) {
+        actionservice.doAction("EARLY LectureService.create", lecture);
         Lecture l = repo.save(lecture);
         actionservice.doAction("LectureService.create", l);
         return l;

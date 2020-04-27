@@ -26,7 +26,7 @@ public class Course implements ModelInterface{
     @JsonSerialize(converter = ListGroupSerializer.class)
     @JsonDeserialize(converter = ListGroupDeserializer.class)
     private List<Group> students;
-    @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "course", orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "course", orphanRemoval = true)
     private List<Lecture> lectures;
 
     public Course(){}
@@ -60,7 +60,8 @@ public class Course implements ModelInterface{
     }
 
     public void setLectures(List<Lecture> lectures) {
-        this.lectures = lectures;
+        this.lectures.clear();
+        this.lectures.addAll(lectures);
     }
 
     public String getName() {

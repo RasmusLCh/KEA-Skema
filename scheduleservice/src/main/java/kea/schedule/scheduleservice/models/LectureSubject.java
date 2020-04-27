@@ -10,6 +10,7 @@ import kea.schedule.scheduleservice.converters.serialize.LectureSerializer;
 import kea.schedule.scheduleservice.converters.serialize.LectureSubjectSerializer;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name= "LectureSubject")
@@ -22,14 +23,20 @@ public class LectureSubject  implements ModelInterface{
     private String subject;
     @Column
     private int priority = 50;
-    @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "lecturesubject", orphanRemoval = true)
-    private List<LectureItem> lectureitems;
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "lecturesubject", orphanRemoval = true)
+    private List<LectureItem> lectureitems = new ArrayList<>();
     @ManyToOne(cascade= {CascadeType.DETACH})
     @JsonSerialize(converter = LectureSerializer.class)
     @JsonDeserialize(converter = LectureDeserializer.class)
+    @JoinColumn(name = "parentid")
     private Lecture lecture;
 
     public LectureSubject(){}
+
+    public LectureSubject(String subject, int priority){
+        setSubject(subject);
+        setPriority(priority);
+    }
 
     public LectureSubject(int id){
         setId(id);
@@ -52,7 +59,12 @@ public class LectureSubject  implements ModelInterface{
     }
 
     public void setLectureitems(List<LectureItem> lectureitems) {
-        this.lectureitems = lectureitems;
+        this.lectureitems.clear();
+        this.lectureitems.addAll(lectureitems);
+    }
+
+    public void addLectureitem(LectureItem lectureitems) {
+        this.lectureitems.add(lectureitems);
     }
 
     public int getPriority() {

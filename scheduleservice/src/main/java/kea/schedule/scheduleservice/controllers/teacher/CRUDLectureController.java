@@ -65,12 +65,9 @@ public class CRUDLectureController extends CRUDAbstractController<Lecture, Lectu
         l.setStartdatetime(e.getStartdatetime());
         l.setEnddatetime(e.getEnddatetime());
         l.setTeachers(e.getTeachers());
+        System.out.println("Lecture is id = " + l.getId());
         service.edit(l);
         return "redirect:/" + webaddr + "view/" + l.getId() + "/";
-    }
-
-    public CRUDLectureController(CourseService courseservice){
-        this.courseservice = courseservice;
     }
 
     @ModelAttribute("selectedcourseid")
