@@ -15,11 +15,11 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/admin/groups/")
-public class CRUDGroupController  extends MSCRUDAbstractController<Group, GroupService> {
+public class CRUDGroupController  extends CRUDAbstractController<Group, GroupService> {
     private UserService userservice;
     @Autowired
     public CRUDGroupController(GroupService groupservice, UserService userservice,MicroServiceService msservice){
-        super("groups/", "group", groupservice, msservice);
+        super("groups/", "group", groupservice);
         this.userservice = userservice;
         //service = groupservice - Service is a protected variable in MSCRUDAbstractController
     }

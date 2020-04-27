@@ -16,12 +16,12 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/admin/users/")
-public class CRUDUserController extends MSCRUDAbstractController<User, UserService>{
+public class CRUDUserController extends CRUDAbstractController<User, UserService>{
     private GroupService groupservice;
 
     @Autowired
     public CRUDUserController(UserService userservice, MicroServiceService msservice, GroupService groupservice){
-        super("users/", "user", userservice, msservice);
+        super("users/", "user", userservice);
         this.groupservice = groupservice;
     }
 
