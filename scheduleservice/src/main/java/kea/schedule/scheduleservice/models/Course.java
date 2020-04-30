@@ -21,12 +21,15 @@ public class Course implements ModelInterface{
     @ManyToMany
     @JsonSerialize(converter = ListGroupSerializer.class)
     @JsonDeserialize(converter = ListGroupDeserializer.class)
+    @OrderBy("name ASC")
     private List<Group> teachers;
     @ManyToMany
     @JsonSerialize(converter = ListGroupSerializer.class)
     @JsonDeserialize(converter = ListGroupDeserializer.class)
+    @OrderBy("name ASC")
     private List<Group> students;
-    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "course", orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "course", orphanRemoval = true)
+    @OrderBy("startdatetime ASC")
     private List<Lecture> lectures;
 
     public Course(){}

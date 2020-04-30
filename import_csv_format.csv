@@ -11,3 +11,19 @@ Dato;Start;Slut;Teacher(s);Room;LectureSubject1;LectureSubject2;LectureSubject3;
 ;;;;;LectureItem2;LectureItem2;;LectureItem2
 ;;;;;LectureItem3;LectureItem3;;LectureItem3
 ;;;;;LectureItem4;LectureItem4;;LectureItem4
+2020-05-04;10:15;12:15;Hans Hansen;Lokaletion1;LectureItem1;;LectureItem1;
+;;;;;LectureItem2;;LectureItem2;
+;;;;;LectureItem3;;LectureItem3;
+;;;;;LectureItem4;;LectureItem4;
+2020-05-11;10:15;12:15;Hans Hansen;Lokaletion1;;LectureItem1;LectureItem1;
+;;;;;;LectureItem2;LectureItem2;
+;;;;;;LectureItem3;LectureItem3;
+;;;;;;LectureItem4;LectureItem4;
+2020-05-18;10:15;12:15;;Lokaletion2;LectureItem1;;;
+;;;;;LectureItem2;;;
+;;;;;LectureItem3;;;
+;;;;;LectureItem4;;;
+2020-05-25;10:15;12:15;;Lokaletion3;LectureItem1;;;
+;;;;;LectureItem2;;;
+;;;;;LectureItem3;;;
+;;;;;LectureItem4;;;

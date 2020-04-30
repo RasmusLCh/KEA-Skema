@@ -81,9 +81,10 @@ public class TeacherController {
         LectureSubject[] lecturesubjects = null;
         List<LectureItem> lectureitems;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        //Remove all data in the course
-        courseservice.getSelectedCourse().getLectures().clear();
-        courseservice.edit(courseservice.getSelectedCourse());
+        //Remove all lectures from the course
+        for(Lecture slecture: courseservice.getSelectedCourse().getLectures()){
+            lectureservice.delete(slecture.getId());
+        }
         while (it.hasNext()) {
 
             String[] row = it.next();

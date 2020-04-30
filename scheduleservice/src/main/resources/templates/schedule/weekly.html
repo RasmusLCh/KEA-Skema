@@ -1,2 +1,70 @@
 <th:block th:include="/global/header.html" th:tag="remove"></th:block>
+<style>
+    h3.schedule_coursename{
+        display: inline-block;
+        margin: 0px;
+        padding: 0px;
+    }
+    div.schedule_teachers{
+        float: right;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    p.schedule_location{
+
+    }
+
+    h4.schedule_subject{
+        display: block;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    p.schedule_item{
+
+    }
+</style>
+
+<th:block th:each="scheduleweekly : ${schedulesweekly}" th:if="${schedulesweekly != null}">
+    <table class="weekly">
+        <tr>
+            <th class="weeknumberactive" th:text="${'Uge ' + scheduleweekly.weeknumber}"></th>
+            <th class="past">Mandag</th>
+            <th class="past">Tirsdag</th>
+            <th class="past">Onsdag</th>
+            <th class="past">Torsdag</th>
+            <th class="present">Fredag</th>
+        </tr>
+        <tr th:each="scheduletime, iter : ${scheduleweekly.scheduletimes.times}">
+            <td th:text="${#temporals.format(scheduletime, 'HH:mm')}"></td>
+            <th:block th:each="scheduledaily : ${scheduleweekly.scheduledailies}">
+                <td th:rowspan="${scheduledaily.scheduleblocks.get(iter.count - 1).size}" th:if="${scheduledaily.scheduleblocks.get(iter.count - 1).size > 0}">
+                    <th:block th:each="lecture : ${scheduledaily.scheduleblocks.get(iter.count - 1)?.lectures}">
+                        <h3 th:text="${lecture.course.name}" class="schedule_coursename"></h3>
+                        <div th:each="teacher : ${lecture.teachers}" class="schedule_teachers">
+                            <p th:text="${teacher.displayname}"></p>
+                        </div>
+                        <p class="schedule_location" th:text="${lecture.location}"></p>
+                        <th:block th:each="subject : ${lecture.lecturesubjects}">
+                            <h4 class="schedule_subject" th:text="${subject.subject}"></h4>
+                            <th:block th:each="item : ${subject.lectureitems}">
+                                <p class="schedule_item" th:text="${item.description}"></p>
+                            </th:block>
+                        </th:block>
+                        <div>
+
+                        </div>
+                    </th:block>
+                    <th:block th:unless="${scheduledaily.scheduleblocks.get(iter.count - 1)?.message == null}">
+                        <p th:text="${scheduledaily.scheduleblocks.get(iter.count - 1)?.message}"></p>
+                    </th:block>
+                </td>
+            </th:block>
+        </tr>
+    </table>
+</th:block>
+<th:block th:if="${schedulesweekly == null}">
+    <p>Der er ikke et skema registreret til dit navn</p>
+</th:block>
 <th:block th:include="/global/footer.html" th:tag="remove"></th:block>

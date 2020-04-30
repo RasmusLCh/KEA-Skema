@@ -51,10 +51,10 @@ public class LectureItemService implements CRUDServiceInterface<LectureItem> {
 
     @Override
     public List<LectureItem> findAll() {
-        return repo.findAll();
+        return repo.findAllByOrderByPriorityDesc();
     }
 
     public List<LectureItem> findAllByLectureSubjectId(int lecturesubjectid){
-        return repo.findAllByLecturesubjectId(lecturesubjectid);
+        return repo.findAllByLecturesubjectIdOrderByPriorityDesc(lecturesubjectid);
     }
 }

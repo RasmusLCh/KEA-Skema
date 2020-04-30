@@ -1,16 +1,19 @@
 package kea.schedule.scheduleservice.controllers.schedule;
 
 import kea.schedule.scheduleservice.components.MSSession;
-import kea.schedule.scheduleservice.models.Course;
-import kea.schedule.scheduleservice.services.CourseService;
+import kea.schedule.scheduleservice.models.ScheduleBlock;
+import kea.schedule.scheduleservice.models.ScheduleDaily;
+import kea.schedule.scheduleservice.models.ScheduleWeekly;
+import kea.schedule.scheduleservice.services.ScheduleService;
 import kea.schedule.scheduleservice.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -20,23 +23,25 @@ public class ScheduleController {
     int studentport;
     UserService userservice;
     MSSession session;
-    CourseService courseservice;
-    public ScheduleController(MSSession session, UserService userservice, CourseService courseservice){
+    ScheduleService scheduleservice;
+    public ScheduleController(MSSession session, UserService userservice, ScheduleService scheduleservice){
         this.session = session;
         this.userservice = userservice;
-        this.courseservice = courseservice;
+        this.scheduleservice = scheduleservice;
     }
 
     @GetMapping({"", "/", "index", "index.eng"})
-    public String get_root(HttpServletRequest hsr){
+    public String get_root(HttpServletRequest hsr, Model model){
         if(hsr.getLocalPort() == studentport){
-            if(userservice.getCurrentUserId() != 0){
-                session.setAttribute("schcourses", userservice.getCurrentUserId());
-                System.out.println("Num courses: " + courseservice.getUserCourses().size());
+
+            List<ScheduleWeekly> schedulesweekly = scheduleservice.getSchedulesWeekly(LocalDateTime.now(), LocalDateTime.now().plusWeeks(10));
+            for(ScheduleWeekly sw : schedulesweekly){
+                System.out.println(sw.getScheduledailies().size());
+                for(ScheduleDaily sd : sw.getScheduledailies()){
+                    System.out.println(sd.getScheduleblocks().size());
+                }
             }
-            else{
-                System.out.println("No userid");
-            }
+            model.addAttribute("schedulesweekly", schedulesweekly);
             return "schedule/weekly";
         }
         return "forbidden";

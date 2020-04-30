@@ -21,9 +21,10 @@ public class LectureSubject  implements ModelInterface{
     private int id;
     @Column
     private String subject;
-    @Column
+    @Column(name="priority")
     private int priority = 50;
-    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "lecturesubject", orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "lecturesubject", orphanRemoval = true)
+    @OrderBy("priority DESC")
     private List<LectureItem> lectureitems = new ArrayList<>();
     @ManyToOne(cascade= {CascadeType.DETACH})
     @JsonSerialize(converter = LectureSerializer.class)

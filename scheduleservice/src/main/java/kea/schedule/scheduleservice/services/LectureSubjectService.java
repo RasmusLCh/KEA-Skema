@@ -54,11 +54,11 @@ public class LectureSubjectService  implements CRUDServiceInterface<LectureSubje
 
     @Override
     public List<LectureSubject> findAll() {
-        return repo.findAll();
+        return repo.findAllByOrderByPriorityDesc();
     }
 
     public List<LectureSubject> findAllByLectureId(int lectureid){
-        return repo.findAllByLectureId(lectureid);
+        return repo.findAllByLectureIdOrderByPriorityDesc(lectureid);
     }
 
     public void setSelectedLectureSubject(int lecturesubjectid, Model model){

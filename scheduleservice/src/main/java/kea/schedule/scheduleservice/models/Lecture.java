@@ -27,7 +27,8 @@ public class Lecture implements ModelInterface {
     private String location="";
     @ManyToMany
     private List<User> teachers = new ArrayList();
-    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "lecture", orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "lecture", orphanRemoval = true)
+    @OrderBy("priority DESC")
     private List<LectureSubject> lecturesubjects = new ArrayList();
 
     @ManyToOne(cascade= {CascadeType.DETACH})

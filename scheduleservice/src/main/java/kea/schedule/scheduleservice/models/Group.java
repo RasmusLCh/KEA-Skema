@@ -33,12 +33,14 @@ public class Group implements ModelInterface{
     @ManyToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     @JsonSerialize(converter = ListGroupSerializer.class)
     @JsonDeserialize(converter = ListGroupDeserializer.class)
+    @OrderBy("name ASC")
     private List<Group> groups = new ArrayList();
     @ManyToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     //We want this to be unidirectional, so we can add/remove from users also.
     @JoinTable(name = "group_user", joinColumns = @JoinColumn(name="group_id", referencedColumnName="id", table="pre_groups"), inverseJoinColumns = @JoinColumn(name="user_id", referencedColumnName="id", table="users"))
     @JsonSerialize(converter = ListUserSerializer.class)
     @JsonDeserialize(converter = ListUserDeserializer.class)
+    @OrderBy("displayname ASC")
     private List<User> users = new ArrayList();
 
     public Group(){

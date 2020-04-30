@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository
 public interface LectureItemRepo extends JpaRepository<LectureItem, Integer> {
-    List<LectureItem> findAllByLecturesubjectId(int lecturesubjectid);
+    List<LectureItem> findAllByLecturesubjectIdOrderByPriorityDesc(int lecturesubjectid);
+    List<LectureItem> findAllByOrderByPriorityDesc();
 }

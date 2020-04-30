@@ -28,7 +28,7 @@
         <th colspan="4">SUBJECTS</th>
     </tr>
     <tr th:each="subject : ${lecture.lecturesubjects}">
-        <td colspan="4" th:text="${subject.name}"></td>
+        <td colspan="4" th:text="${subject.subject}"></td>
     </tr>
 </table>
 <th:block th:include="/global/footer.html" th:tag="remove"></th:block>
