@@ -1,8 +1,6 @@
 package kea.schedule.scheduleservice.controllers.schedule;
 
 import kea.schedule.scheduleservice.components.MSSession;
-import kea.schedule.scheduleservice.models.ScheduleBlock;
-import kea.schedule.scheduleservice.models.ScheduleDaily;
 import kea.schedule.scheduleservice.models.ScheduleWeekly;
 import kea.schedule.scheduleservice.services.ScheduleService;
 import kea.schedule.scheduleservice.services.UserService;
@@ -10,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,24 +33,56 @@ public class ScheduleController {
     public String get_root(HttpServletRequest hsr, Model model){
         if(hsr.getLocalPort() == studentport){
 
-            List<ScheduleWeekly> schedulesweekly = scheduleservice.getSchedulesWeekly(LocalDateTime.now(), LocalDateTime.now().plusWeeks(10));
-            for(ScheduleWeekly sw : schedulesweekly){
-                System.out.println(sw.getScheduledailies().size());
-                for(ScheduleDaily sd : sw.getScheduledailies()){
-                    System.out.println(sd.getScheduleblocks().size());
-                }
-            }
+            List<ScheduleWeekly> schedulesweekly = scheduleservice.getSchedulesWeekly(scheduleservice.getPeriodStart(), scheduleservice.getPeriodEnd());
             model.addAttribute("schedulesweekly", schedulesweekly);
-            return "schedule/weekly";
+            return "/schedule/weekly_eng";
+        }
+        return "redirect:/weekly_eng";
+    }
+
+    @GetMapping({"weekly.eng"})
+    public String get_weekly(HttpServletRequest hsr, Model model){
+        if(hsr.getLocalPort() == studentport) {
+            List<ScheduleWeekly> schedulesweekly = scheduleservice.getSchedulesWeekly(scheduleservice.getPeriodStart(), scheduleservice.getPeriodEnd());
+            model.addAttribute("schedulesweekly", schedulesweekly);
+            return "/schedule/weekly_eng";
         }
         return "forbidden";
     }
 
-    @GetMapping({"weekly.eng"})
-    public String get_weekly(HttpServletRequest hsr){
+    @GetMapping({"index.dk"})
+    public String get_root_dk(HttpServletRequest hsr, Model model){
+        if(hsr.getLocalPort() == studentport){
+
+            List<ScheduleWeekly> schedulesweekly = scheduleservice.getSchedulesWeekly(scheduleservice.getPeriodStart(), scheduleservice.getPeriodEnd());
+            model.addAttribute("schedulesweekly", schedulesweekly);
+            return "/schedule/weekly_dk";
+        }
+        return "redirect:/weekly_dk";
+    }
+
+    @GetMapping({"weekly.dk"})
+    public String get_weekly_dk(HttpServletRequest hsr, Model model){
         if(hsr.getLocalPort() == studentport) {
-            return "schedule/weekly";
+            List<ScheduleWeekly> schedulesweekly = scheduleservice.getSchedulesWeekly(scheduleservice.getPeriodStart(), scheduleservice.getPeriodEnd());
+            model.addAttribute("schedulesweekly", schedulesweekly);
+            return "/schedule/weekly_dk";
         }
         return "forbidden";
+    }
+
+    @ModelAttribute("currentWeek")
+    public int getCurrentWeek(){
+        return scheduleservice.getCurrentWeek();
+    }
+
+    @ModelAttribute("currentWeekDay")
+    public int getCurrentWeekDay(){
+        return scheduleservice.getCurrentWeekDay();
+    }
+
+    @ModelAttribute("userid")
+    public int getUserId(){
+        return session.getUserId();
     }
 }

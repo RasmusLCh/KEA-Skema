@@ -1,9 +1,13 @@
 <th:block th:include="'header_'+${language}+'.html'" th:tag="remove"></th:block>
 <h2>Settings</h2>
-<div th:each="service: ${microservices}">
+This page enables you, to enable or disable features in the system available to you.
+<div th:each="service: ${microservices}" th:if="${service.microserviceoptions != null && service.microserviceoptions.size() > 0}">
     <h3 th:text="${service.name}"></h3>
     <p th:utext="${service.description}"></p>
-
+    <th:block th:each="msoption : ${service.microserviceoptions}">
+        <input type="checkbox" th:checked="${msoption.active}"><p th:text="${msoption.name}"></p>
+        <p th:text="${msoption.description}"></p>
+    </th:block>
     write out options....
 
 </div>

@@ -21,6 +21,7 @@ public class LectureItemService implements CRUDServiceInterface<LectureItem> {
 
     @Override
     public LectureItem create(LectureItem lectureItem) {
+        lectureItem = convertToLink(lectureItem);
         LectureItem li = repo.save(lectureItem);
         actionservice.doAction("LectureItemService.create", li);
         return li;
@@ -28,6 +29,7 @@ public class LectureItemService implements CRUDServiceInterface<LectureItem> {
 
     @Override
     public void edit(LectureItem lectureItem) {
+        lectureItem = convertToLink(lectureItem);
         System.out.println("Edit 1");
         repo.save(lectureItem);
         System.out.println("Edit 2");
@@ -56,5 +58,19 @@ public class LectureItemService implements CRUDServiceInterface<LectureItem> {
 
     public List<LectureItem> findAllByLectureSubjectId(int lecturesubjectid){
         return repo.findAllByLecturesubjectIdOrderByPriorityDesc(lecturesubjectid);
+    }
+
+    public LectureItem convertToLink(LectureItem lectureitem){
+        String description = lectureitem.getDescription();
+        if(description != null && description.length() > 0 && description.startsWith("[")){
+            int hrefend = description.lastIndexOf(']');
+            if(hrefend > 0) {
+                String link = description.substring(1, hrefend);
+                String text = description.substring(hrefend + 1, description.length());
+                lectureitem.setDescription("<a href='" + link + "' target='_blank'>" + text + "</a>");
+                System.out.println("\tLINKED CONVERTED " + lectureitem.getDescription());
+            }
+        }
+        return lectureitem;
     }
 }

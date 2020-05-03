@@ -1,13 +1,21 @@
 package kea.schedule.scheduleservice.services;
 
 import kea.schedule.scheduleservice.models.Group;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import net.minidev.json.JSONObject;
 import kea.schedule.scheduleservice.models.User;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,10 +29,13 @@ public class SetupService {
 
     private UserService userservice;
     private GroupService groupservice;
+    private ResourceLoader rl;
 
-    public SetupService(UserService userservice, GroupService groupservice){
+    @Autowired
+    public SetupService(UserService userservice, GroupService groupservice, ResourceLoader rl){
         this.userservice = userservice;
         this.groupservice = groupservice;
+        this.rl = rl;
     }
 
     public void install() {
@@ -180,6 +191,52 @@ public class SetupService {
         json.appendField("description", "");
         entity = new HttpEntity<JSONObject>(json, headers);
         restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceaddtopmenulink/KEA-Schedule", HttpMethod.POST, entity, String.class);
+
+        //Lets upload our print picture
+        File file = null;
+        try {
+            Resource res = rl.getResource("classpath:static/print.png");
+            file = res.getFile();
+            if(file == null) throw new IOException("File is null");
+            byte[] filecontent = Files.readAllBytes(file.toPath());
+            MultiValueMap<String, String> fileMap = new LinkedMultiValueMap<>();
+            fileMap.add(HttpHeaders.CONTENT_DISPOSITION, "form-data; name=\"multipartfile\"; filename=\"print.png\"");
+            fileMap.add(HttpHeaders.CONTENT_TYPE, Files.probeContentType(file.toPath()));
+            HttpEntity<byte[]> fileentity = new HttpEntity<>(filecontent, fileMap);
+
+            MultiValueMap<String, Object> uploadbody = new LinkedMultiValueMap<>();
+            uploadbody.add("multipartfile", fileentity);
+            HttpHeaders uploadheaders = new HttpHeaders();
+            uploadheaders.setContentType(MediaType.MULTIPART_FORM_DATA);
+            HttpEntity<MultiValueMap<String, Object>> uploade = new HttpEntity<>(uploadbody, uploadheaders);
+            restTemplate.postForEntity("http://localhost:7500/serviceaddfileresource/KEA-Schedule", uploade, String.class);
+        } catch (IOException e) {
+            System.out.println("print.jpg not loaded, failed to upload!");
+            e.printStackTrace();
+        }
+
+        //Lets upload our print picture
+        file = null;
+        try {
+            Resource res = rl.getResource("classpath:static/download.png");
+            file = res.getFile();
+            if(file == null) throw new IOException("File is null");
+            byte[] filecontent = Files.readAllBytes(file.toPath());
+            MultiValueMap<String, String> fileMap = new LinkedMultiValueMap<>();
+            fileMap.add(HttpHeaders.CONTENT_DISPOSITION, "form-data; name=\"multipartfile\"; filename=\"download.png\"");
+            fileMap.add(HttpHeaders.CONTENT_TYPE, Files.probeContentType(file.toPath()));
+            HttpEntity<byte[]> fileentity = new HttpEntity<>(filecontent, fileMap);
+
+            MultiValueMap<String, Object> uploadbody = new LinkedMultiValueMap<>();
+            uploadbody.add("multipartfile", fileentity);
+            HttpHeaders uploadheaders = new HttpHeaders();
+            uploadheaders.setContentType(MediaType.MULTIPART_FORM_DATA);
+            HttpEntity<MultiValueMap<String, Object>> uploade = new HttpEntity<>(uploadbody, uploadheaders);
+            restTemplate.postForEntity("http://localhost:7500/serviceaddfileresource/KEA-Schedule", uploade, String.class);
+        } catch (IOException e) {
+            System.out.println("download.jpg not loaded, failed to upload!");
+            e.printStackTrace();
+        }
     }
 
     public void setupAdminMS() {

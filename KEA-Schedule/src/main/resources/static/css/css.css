@@ -194,17 +194,29 @@ div.headermenu a:hover{
 
 /* Header Submenu CSS: Start */
 div.headersubmenu{
+	text-align: center;
 	margin: 0px auto;
-	width: 1000px;
+	width: 600px;
 	border-left: 1px solid silver;
 	border-right: 1px solid silver;
 	border-bottom: 1px solid silver;
 	padding: 5px;
 	color: white;
+	border-top: 1px dotted black;
 	border-left: 1px solid #233249;
 	border-right: 1px solid #233249;
 	border-bottom: 1px solid #233249;
-	color: black;
+	color: white;
+	font-weight: bolder;
+	background-color: #233249;
+}
+
+form.login #bsubmit{
+	color: #233249;
+	font-weight: bolder;
+	background-color: white;
+	border: 1px solid black;
+	padding: 3px;
 }
 
 div.headersubmenu h2{
@@ -242,7 +254,7 @@ a.module,a.module:visited,a.module:link{
 /* Content CSS: Start*/
 div.content{
 	margin: 0px auto;
-	width: 1000px;
+	width: 1450px;
 	margin-top: 15px;
 	padding: 0px;
 }

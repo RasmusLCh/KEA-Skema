@@ -53,15 +53,14 @@ public class RootController {
     }
 
     @GetMapping("settings.eng")
-    public String get_sessing_eng(Model model){
+    public String get_settings_eng(Model model){
         model.addAttribute("microservices", msservice.findAll());
-        System.out.println("Services = " + msservice.findAll().size());
-
         return "settings_eng";
     }
 
     @GetMapping("settings.dk")
-    public String get_sessing_dk(Model model){
+    public String get_settings_dk(Model model){
+        model.addAttribute("microservices", msservice.findAll());
         return "settings_dk";
     }
 

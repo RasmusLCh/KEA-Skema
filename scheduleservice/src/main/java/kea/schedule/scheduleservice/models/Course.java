@@ -31,6 +31,8 @@ public class Course implements ModelInterface{
     @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "course", orphanRemoval = true)
     @OrderBy("startdatetime ASC")
     private List<Lecture> lectures;
+    @Column
+    boolean active = true;
 
     public Course(){}
 
@@ -73,6 +75,18 @@ public class Course implements ModelInterface{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public boolean getActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     @Override

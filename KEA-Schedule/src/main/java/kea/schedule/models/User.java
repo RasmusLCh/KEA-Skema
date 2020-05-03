@@ -41,9 +41,8 @@ public class User implements ModelInterface{
     @JsonSerialize(converter = ListGroupSerializer.class)
     @JsonDeserialize(converter = ListGroupDeserializer.class)
     private List<Group> groups;
-    @ManyToMany
-    private List<MicroServiceOption> options;
-
+    @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "user", orphanRemoval = true)
+    private List<UserMicroServiceOption> usermicroserviceoptions;
 
     public User(){
 
@@ -102,12 +101,12 @@ public class User implements ModelInterface{
         this.groups = groups;
     }
 
-    public List<MicroServiceOption> getOptions() {
-        return options;
+    public List<UserMicroServiceOption> getOptions() {
+        return usermicroserviceoptions;
     }
 
-    public void setOptions(List<MicroServiceOption> options) {
-        this.options = options;
+    public void setOptions(List<UserMicroServiceOption> options) {
+        this.usermicroserviceoptions = options;
     }
 
     @Override

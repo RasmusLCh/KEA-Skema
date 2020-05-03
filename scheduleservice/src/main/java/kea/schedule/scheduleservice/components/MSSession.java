@@ -41,7 +41,7 @@ public class MSSession implements Filter {
     public Object getAttribute(String str){
         System.out.println("moo");
         if(userid == 0 || sessionentity == null){
-            throw new RuntimeException("userid == 0!");
+            return null;
         }
         return sessionentity.getAttributes().get(str);
 

@@ -8,7 +8,6 @@
         <th>port</th>
         <th>version</th>
         <th>description</th>
-        <th>userRequired</th>
         <th>enabled</th>
         <th>dependencies</th>
         <th>Access</th>
@@ -22,7 +21,6 @@
         <td th:text="${service.port}"></td>
         <td th:text="${service.version}"></td>
         <td th:text="${service.description}"></td>
-        <td><input type="checkbox" name="" th:checked="${service.userRequired}" disabled></td>
         <td><input type="checkbox" name="" th:checked="${service.enabled}" disabled></td>
         <td th:text="${service.dependencyMicroserviceId}"></td>
         <td>

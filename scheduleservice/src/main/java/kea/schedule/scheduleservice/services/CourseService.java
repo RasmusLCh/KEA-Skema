@@ -101,7 +101,7 @@ public class CourseService implements CRUDServiceInterface<Course>{
     public List<Course> getUserCourses(){
         int userid = session.getUserId();
         //Get the list, then only save distinct values
-        List<Course> courses = repo.findAllByTeachersUsersIdOrStudentsUsersId(userid, userid);
+        List<Course> courses = repo.findDistinctByActiveIsTrueAndTeachersUsersIdOrActiveIsTrueAndStudentsUsersId(userid, userid);
         for(Course course : courses){
             System.out.println(course.getName());
         }

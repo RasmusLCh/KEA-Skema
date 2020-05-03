@@ -48,16 +48,16 @@
             </div>
         </th:block>
         <div id="menu_settings_wrapper">
-            <a th:href="'settings.' + ${language}" id="menu_settings" class="kea_orange">Indstillinger</a>
+            <a th:href="'/settings.' + ${language}" id="menu_settings" class="kea_orange">Indstillinger</a>
         </div>
     </div>
 </div>
 <th:block th:unless="${authenticated}">
     <div class="headersubmenu">
-        <form method="post" action="/login" >
-            Login > User: <input type="text" name="identifier">
-            Password: <input type="password" name="password">
-            <input type="submit" value="Login">
+        <form method="post" action="/login" class="login">
+            Login: Bruger <input type="text" name="identifier">
+            Kodeord <input type="password" name="password">
+            <input type="submit" value="Login" id="bsubmit">
         </form>
     </div>
 </th:block>

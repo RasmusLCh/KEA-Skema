@@ -1,5 +1,9 @@
 <th:block th:include="/global/header.html" th:tag="remove"></th:block>
 <h1>Manage course</h1>
+<th:block th:if="${userid == 0}" th:tag="remove">
+    <p>Please login to manage courses.</p>
+</th:block>
+<th:block th:if="${userid > 0}" th:tag="remove">
 <th:block th:include="/teacher/courseSelector.html" th:tag="remove"></th:block>
 <th:block th:if="${selectedcourseid != 0}">
     <h2>Lectures</h2>
@@ -17,5 +21,5 @@
 </th:block>
 <h2>Help</h2>
 For getting started or needing help please go to <a href="">Q&A</a>.
-
+</th:block>
 <th:block th:include="/global/footer.html" th:tag="remove"></th:block>

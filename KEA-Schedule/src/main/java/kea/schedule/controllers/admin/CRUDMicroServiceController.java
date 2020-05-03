@@ -75,7 +75,6 @@ public class CRUDMicroServiceController extends MSCRUDAbstractController<MicroSe
         ms.setPort(e.getPort());
         ms.setVersion(e.getVersion());
         ms.setDescription(e.getDescription());
-        ms.setUserRequired(e.getUserRequired());
         ms.setEnabled(e.getEnabled());
         ms.setDependencyMicroserviceId(e.getDependencyMicroserviceId());
         ms.setAccessgroups(e.getAccessgroups());

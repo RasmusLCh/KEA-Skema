@@ -16,9 +16,6 @@
     <label>Description:</label>
     <textarea th:field="*{description}"></textarea>
     <p class="errortext" th:if="${#fields.hasErrors('description')}">The max length of the description is XXXX characters.</p>
-    <label>Required:</label>
-    <input type="checkbox" th:field="*{userRequired}">
-    <p class="errortext" th:if="${#fields.hasErrors('userRequired')}"></p>
     <label>Enabled:</label>
     <input type="checkbox" th:field="*{enabled}">
     <p class="errortext" th:if="${#fields.hasErrors('enabled')}"></p>

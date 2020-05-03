@@ -6,11 +6,20 @@
         <li><a href="./courses/create/">Create course</a></li>
         <li><a href="./courses/index">Manage courses</a></li>
     </ul>
+    <h2>Course period</h2>
+    Courses in the schedule are shown in the period, courses not in the period are deactivated:
+    <form class="schdule_periode" method="post" action="">
+        From <input type="text" placeholder="Format is yyyy-MM-dd" name="periodstart" th:value="${periodstart}"> To <input type="text" placeholder="Format is yyyy-MM-dd" name="periodend" th:value="${periodend}"> <input type="submit" value="Save">
+    </form>
+    <th:block th:if="${period_error != null}">
+        <p class="error">Periodstart and Periodend must be in the format yyyy-MM-dd, for example 2020-12-24.<br/>Periodstart must be the same date or before Periodend.</p>
+    </th:block>
     <h2>Subject prioritizer</h2>
     <ul>
         <li><a href="./subjectpriorities/create/">Create subject priority</a></li>
         <li><a href="./subjectpriorities/index">Manage subject priorities</a></li>
     </ul>
+
     <h2>keaplan.kea.dk</h2>
     <p>
         Webpage was last scrabed d/M Y.<br/><br/>

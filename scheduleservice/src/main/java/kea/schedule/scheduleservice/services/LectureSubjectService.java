@@ -3,6 +3,7 @@ package kea.schedule.scheduleservice.services;
 import kea.schedule.scheduleservice.components.MSSession;
 import kea.schedule.scheduleservice.models.Lecture;
 import kea.schedule.scheduleservice.models.LectureSubject;
+import kea.schedule.scheduleservice.models.SubjectPriority;
 import kea.schedule.scheduleservice.repositories.LectureSubjectRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,16 +17,19 @@ public class LectureSubjectService  implements CRUDServiceInterface<LectureSubje
     private LectureSubjectRepo repo;
     private ActionService actionservice;
     private MSSession session;
+    private SubjectPriorityService subjectpriorityservice;
 
     @Autowired
-    public LectureSubjectService(LectureSubjectRepo repo, ActionService actionservice, MSSession session){
+    public LectureSubjectService(LectureSubjectRepo repo, ActionService actionservice, MSSession session, SubjectPriorityService subjectpriorityservice){
         this.repo = repo;
         this.actionservice = actionservice;
         this.session = session;
+        this.subjectpriorityservice = subjectpriorityservice;
     }
 
     @Override
     public LectureSubject create(LectureSubject lectureSubject) {
+        lectureSubject = validatePriority(lectureSubject);
         LectureSubject ls = repo.save(lectureSubject);
         actionservice.doAction("LectureSubjectService.create", lectureSubject);
         return ls;
@@ -33,6 +37,7 @@ public class LectureSubjectService  implements CRUDServiceInterface<LectureSubje
 
     @Override
     public void edit(LectureSubject lectureSubject) {
+        lectureSubject = validatePriority(lectureSubject);
         repo.save(lectureSubject);
         actionservice.doAction("LectureSubjectService.edit", lectureSubject);
     }
@@ -80,5 +85,13 @@ public class LectureSubjectService  implements CRUDServiceInterface<LectureSubje
             return findById(((Integer)session.getAttribute("selectedlecturesubjectid")).intValue());
         }
         return null;
+    }
+
+    public LectureSubject validatePriority(LectureSubject sb){
+        SubjectPriority sp = subjectpriorityservice.findBySubject(sb.getSubject());
+        if(sp != null){
+            sb.setPriority(sp.getPriority());
+        }
+        return sb;
     }
 }

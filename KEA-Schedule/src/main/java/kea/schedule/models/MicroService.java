@@ -17,9 +17,6 @@ public class MicroService implements ModelInterface {
     private float version = 0f;
     @Column
     private String description = "";
-    @Column(columnDefinition = "boolean default false")
-    //This refered to if the service should be required for users or not
-    private boolean userRequired = false;
     @Column(name="enabled", columnDefinition = "boolean default false")
     private boolean enabled = false;
     //If the microservice requires another microservice, an id for the microservice should be specified.
@@ -103,16 +100,6 @@ public class MicroService implements ModelInterface {
         this.description = description;
     }
 
-    public boolean isUserRequired() {
-        return userRequired;
-    }
-    public boolean getUserRequired() {
-        return userRequired;
-    }
-    public void setUserRequired(boolean userRequired) {
-        this.userRequired = userRequired;
-    }
-
     public int getDependencyMicroserviceId() {
         return dependencyMicroserviceId;
     }
@@ -131,5 +118,9 @@ public class MicroService implements ModelInterface {
 
     public boolean inAccessgroups(Group grp){
         return accessgroups.contains(grp);
+    }
+
+    public List<MicroServiceOption> getMicroserviceoptions() {
+        return microserviceoptions;
     }
 }

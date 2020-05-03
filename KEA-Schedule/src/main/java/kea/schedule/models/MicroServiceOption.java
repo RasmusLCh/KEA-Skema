@@ -23,7 +23,8 @@ public class MicroServiceOption implements MicroServiceElement, ModelInterface {
     private MicroService microservice;
     @Column
     private int priority = 50;
-
+    @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "microserviceoption", orphanRemoval = true)
+    List<UserMicroServiceOption> usermicroserviceoptions;
 
     public MicroServiceOption(){}
 

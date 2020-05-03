@@ -7,24 +7,26 @@
     <tr>
         <th>ID</th>
         <th>NAME</th>
+        <th>ACTIVE</th>
     </tr>
     <tr>
         <td th:text="${course.id}"></td>
         <td th:text="${course.name}"></td>
+        <td th:text="${course.active}"></td>
     </tr>
     <tr>
-        <th colspan="2">Teacher groups</th>
+        <th colspan="3">Teacher groups</th>
     </tr>
     <tr>
-        <td colspan="2">
+        <td colspan="3">
             <th:block th:each="grp, iter: ${course.getTeachers()}" th:remove="tag"><th:block th:text="${grp.name}" th:if="${iter.index == 0}"></th:block><th:block th:text="${', ' + grp.name}" th:if="${iter.index > 0}"></th:block></th:block>
         </td>
     </tr>
     <tr>
-        <th colspan="2">Student groups</th>
+        <th colspan="3">Student groups</th>
     </tr>
     <tr>
-        <td colspan="2">
+        <td colspan="3">
             <th:block th:each="grp, iter: ${course.getStudents()}" th:remove="tag"><th:block th:text="${grp.name}" th:if="${iter.index == 0}"></th:block><th:block th:text="${', ' + grp.name}" th:if="${iter.index > 0}"></th:block></th:block>
         </td>
     </tr>

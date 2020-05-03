@@ -9,6 +9,7 @@
         <tr>
             <th>ID</th>
             <th>NAME</th>
+            <th>ACTIVE</th>
             <th>TEACHERS GROUPS</th>
             <th>STUDENTS GROUPS</th>
             <th class="invisible"></th>
@@ -20,6 +21,7 @@
         <tr th:each="course:${courses}">
             <td th:text="${course.id}"></td>
             <td th:text="${course.name}"></td>
+            <td><input type="checkbox" th:checked="${course.active}" DISABLED></td>
             <td>
                 <th:block th:each="grp, iter: ${course.getTeachers()}" th:remove="tag"><th:block th:text="${grp.name}" th:if="${iter.index == 0}"></th:block><th:block th:text="${', ' + grp.name}" th:if="${iter.index > 0}"></th:block></th:block>
             </td>

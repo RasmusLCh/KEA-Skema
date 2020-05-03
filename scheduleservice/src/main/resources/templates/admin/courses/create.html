@@ -7,6 +7,8 @@
     <label>Name:</label>
     <input type="text" th:field="*{name}">
     <p class="errortext" th:if="${#fields.hasErrors('name')}">The max length of the page is 200 characters.</p>
+    <label>Active:</label>
+    <input type="checkbox" th:field="*{active}"> <span>Only active courses are shown in the schedule.</span>
     <label>Teacher groups:</label>
     <select th:field="*{teachers}" size="10" multiple>
         <th:block th:each="grp : ${groups}">
