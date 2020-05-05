@@ -56,4 +56,8 @@ public class MicroServiceOptionService implements CRUDServiceInterface<MicroServ
     public List<MicroServiceOption> findAll(int microserviceid) {
         return repo.findAllByMicroserviceId(microserviceid);
     }
+
+    public MicroServiceOption findByName(String name){
+        return repo.findByName(name);
+    }
 }

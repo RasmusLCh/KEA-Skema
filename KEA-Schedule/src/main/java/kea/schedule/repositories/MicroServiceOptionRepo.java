@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface MicroServiceOptionRepo extends JpaRepository<MicroServiceOption, Integer> {
     List<MicroServiceOption> findAllByMicroserviceId(int msid);
+    MicroServiceOption findByName(String name);
 }

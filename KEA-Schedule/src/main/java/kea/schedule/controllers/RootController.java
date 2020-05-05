@@ -1,9 +1,6 @@
 package kea.schedule.controllers;
 
-import kea.schedule.models.Group;
-import kea.schedule.models.PageInjection;
-import kea.schedule.models.TopMenuLink;
-import kea.schedule.models.User;
+import kea.schedule.models.*;
 import kea.schedule.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,7 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.*;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/")
@@ -24,16 +23,18 @@ public class RootController {
     private MicroServiceService msservice;
     private UserService userservice;
     private AuthenticationService authservice;
+    private UserMicroServiceOptionService usermicroserviceoptionservice;
 
 
     @Autowired
-    public RootController(PageInjectionService pageinjectionservice, TopMenuLinkService topmenuservice, LangService langservice, MicroServiceService msservice, AuthenticationService authservice, UserService userservice){
+    public RootController(PageInjectionService pageinjectionservice, TopMenuLinkService topmenuservice, LangService langservice, MicroServiceService msservice, AuthenticationService authservice, UserService userservice, UserMicroServiceOptionService usermicroserviceoptionservice){
         this.pageinjectionservice = pageinjectionservice;
         this.topmenuservice = topmenuservice;
         this.langservice = langservice;
         this.msservice = msservice;
         this.authservice = authservice;
         this.userservice = userservice;
+        this.usermicroserviceoptionservice = usermicroserviceoptionservice;
     }
 
     @GetMapping({"index", ""})
@@ -53,8 +54,17 @@ public class RootController {
     }
 
     @GetMapping("settings.eng")
-    public String get_settings_eng(Model model){
+    public String get_settings_eng(Model model, HttpSession session){
         model.addAttribute("microservices", msservice.findAll());
+        if(session.getAttribute("curuser") != null){
+            System.out.println("getUserMicroServiceOptions");
+            User curuser = (User)session.getAttribute("curuser");
+            model.addAttribute("usermicroserviceoptions", usermicroserviceoptionservice.getUserMicroServiceOptions(curuser));
+        }
+        else{
+            Map<String, UserMicroServiceOption> mopts = new HashMap();
+            model.addAttribute("usermicroserviceoptions", mopts);
+        }
         return "settings_eng";
     }
 

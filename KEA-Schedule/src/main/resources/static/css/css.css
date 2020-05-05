@@ -340,4 +340,16 @@ td.read{
 
 
 
+input[type=checkbox].microserserviceoption_active{
 
+}
+
+span.microserserviceoption_name{
+	display: inline-block;
+	font-size: medium;
+	margin-left: 5px;
+}
+
+span.microserserviceoption_description{
+	display: block;
+}

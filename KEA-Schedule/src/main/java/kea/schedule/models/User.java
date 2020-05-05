@@ -2,8 +2,10 @@ package kea.schedule.models;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import kea.schedule.converters.deserialize.ListGenericModelDeserializer;
 import kea.schedule.converters.deserialize.ListGroupDeserializer;
 import kea.schedule.converters.serialize.ListGroupSerializer;
+import kea.schedule.converters.serialize.ListModelInterfaceSerializer;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -42,6 +44,8 @@ public class User implements ModelInterface{
     @JsonDeserialize(converter = ListGroupDeserializer.class)
     private List<Group> groups;
     @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "user", orphanRemoval = true)
+    @JsonSerialize(converter = ListModelInterfaceSerializer.class)
+    @JsonDeserialize(converter = ListGenericModelDeserializer.class)
     private List<UserMicroServiceOption> usermicroserviceoptions;
 
     public User(){

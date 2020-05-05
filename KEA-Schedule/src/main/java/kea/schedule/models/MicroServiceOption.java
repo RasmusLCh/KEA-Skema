@@ -1,5 +1,12 @@
 package kea.schedule.models;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import kea.schedule.converters.deserialize.ListGenericModelDeserializer;
+import kea.schedule.converters.deserialize.MicroServiceDeserializer;
+import kea.schedule.converters.serialize.ListModelInterfaceSerializer;
+import kea.schedule.converters.serialize.MicroServiceSerializer;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +27,14 @@ public class MicroServiceOption implements MicroServiceElement, ModelInterface {
     @Column
     private String description;
     @ManyToOne(cascade= {CascadeType.DETACH})
+    @JsonSerialize(converter = MicroServiceSerializer.class)
+    @JsonDeserialize(converter = MicroServiceDeserializer.class)
     private MicroService microservice;
     @Column
     private int priority = 50;
     @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "microserviceoption", orphanRemoval = true)
+    @JsonSerialize(converter = ListModelInterfaceSerializer.class)
+    @JsonDeserialize(converter = ListGenericModelDeserializer.class)
     List<UserMicroServiceOption> usermicroserviceoptions;
 
     public MicroServiceOption(){}
