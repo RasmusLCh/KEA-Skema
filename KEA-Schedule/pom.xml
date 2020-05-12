@@ -8,11 +8,11 @@
         <version>2.2.4.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>kea</groupId>
-    <artifactId>schedule</artifactId>
+    <groupId>microservice</groupId>
+    <artifactId>infrastructure</artifactId>
     <version>1</version>
-    <name>schedule</name>
-    <description>Demo project for Spring Boot</description>
+    <name>microserviceinfrastructure</name>
+    <description>The infrastructure for microservices</description>
 
     <properties>
         <java.version>1.8</java.version>
