@@ -61,6 +61,7 @@ public class CRUDLectureSubjectController extends CRUDAbstractController<Lecture
         }
         LectureSubject l = service.findById(e.getId());
         e.setLectureitems(l.getLectureitems());
+        System.out.println("Priority: " +e.getPriority());
         service.edit(e);
         return "redirect:/" + webaddr + "view/" + e.getId() + "/";
     }

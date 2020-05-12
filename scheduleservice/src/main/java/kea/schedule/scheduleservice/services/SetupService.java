@@ -141,7 +141,7 @@ public class SetupService {
 
         //Add topmenulink eng
         json = new JSONObject();
-        json.appendField("path", "https://localhost/servicepages/KEA-Schedule-Teacher/index.eng");
+        json.appendField("path", "/servicepages/KEA-Schedule-Teacher/index.eng");
         json.appendField("text", "Manage courses");
         json.appendField("priority", "90");
         json.appendField("language", "eng");
@@ -150,7 +150,7 @@ public class SetupService {
         restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceaddtopmenulink/KEA-Schedule-Teacher", HttpMethod.POST, entity, String.class);
         //Add topmenulink dk
         json = new JSONObject();
-        json.appendField("path", "https://localhost/servicepages/KEA-Schedule-Teacher/index.dk");
+        json.appendField("path", "/servicepages/KEA-Schedule-Teacher/index.dk");
         json.appendField("text", "Administrer kurser");
         json.appendField("priority", "90");
         json.appendField("language", "dk");
@@ -175,7 +175,7 @@ public class SetupService {
 
         //Add topmenulink eng
         json = new JSONObject();
-        json.appendField("path", "https://localhost/servicepages/KEA-Schedule/index.eng");
+        json.appendField("path", "/servicepages/KEA-Schedule/index.eng");
         json.appendField("text", "Schedule");
         json.appendField("priority", "10");
         json.appendField("language", "eng");
@@ -184,7 +184,7 @@ public class SetupService {
         restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceaddtopmenulink/KEA-Schedule", HttpMethod.POST, entity, String.class);
         //Add topmenulink dk
         json = new JSONObject();
-        json.appendField("path", "https://localhost/servicepages/KEA-Schedule/index.dk");
+        json.appendField("path", "/servicepages/KEA-Schedule/index.dk");
         json.appendField("text", "Skema");
         json.appendField("priority", "10");
         json.appendField("language", "dk");
@@ -255,7 +255,7 @@ public class SetupService {
 
         //Add topmenulink eng
         json = new JSONObject();
-        json.appendField("path", "https://localhost/servicepages/KEA-Schedule-Admin/index.eng");
+        json.appendField("path", "/servicepages/KEA-Schedule-Admin/index.eng");
         json.appendField("text", "Course admin");
         json.appendField("priority", "100");
         json.appendField("language", "eng");
@@ -264,7 +264,7 @@ public class SetupService {
         restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceaddtopmenulink/KEA-Schedule-admin", HttpMethod.POST, entity, String.class);
         //Add topmenulink dk
         json = new JSONObject();
-        json.appendField("path", "https://localhost/servicepages/KEA-Schedule-Admin/index.dk");
+        json.appendField("path", "/servicepages/KEA-Schedule-Admin/index.dk");
         json.appendField("text", "Kursus admin");
         json.appendField("priority", "100");
         json.appendField("language", "dk");
@@ -289,7 +289,7 @@ public class SetupService {
         entity = new HttpEntity<JSONObject>(json, headers);
         restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceaddaction/KEA-Schedule-admin", HttpMethod.POST, entity, String.class);
 
-        //Action: GroupService
+        //Action: UserService
         json = new JSONObject();
         json.appendField("callbackurl", "http://localhost:" + serviceport + "/actions/user/create/");
         json.appendField("actionname", "UserService.create");

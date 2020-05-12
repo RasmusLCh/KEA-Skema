@@ -18,7 +18,9 @@ public class ModelService {
                         MicroServiceService microserviceservice,
                         PageInjectionService pageinjectionservice,
                         TopMenuLinkService topmenuservice,
-                        UserService userservice){
+                        UserService userservice,
+                        MicroServiceOptionService microserviceoptionservice,
+                        UserMicroServiceOptionService usermicroserviceoptionservice){
         this.servicemap = new HashMap<String, CRUDServiceInterface<ModelInterface>>();
         this.servicemap.put("Action", actionservice);
         this.servicemap.put("FileResource", fileresourceservice);
@@ -27,6 +29,8 @@ public class ModelService {
         this.servicemap.put("PageInjection", pageinjectionservice);
         this.servicemap.put("TopMenu", topmenuservice);
         this.servicemap.put("User", userservice);
+        this.servicemap.put("MicroServiceOption", microserviceoptionservice);
+        this.servicemap.put("UserMicroServiceOption", usermicroserviceoptionservice);
     }
 
     public CRUDServiceInterface<ModelInterface> getService(String classname){
