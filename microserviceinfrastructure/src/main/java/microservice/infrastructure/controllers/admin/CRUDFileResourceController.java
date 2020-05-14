@@ -13,6 +13,10 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * The class extends the MSCRUDAbstractController so only path, modename and CRUD service and msservice is specified.
+ * Since it is not possible to overrride postmapping, a new mapping called bind is used.
+ * */
 @Controller
 @RequestMapping("/admin/fileresources/")
 public class CRUDFileResourceController extends MSCRUDAbstractController<FileResource, FileResourceService> {
@@ -21,7 +25,9 @@ public class CRUDFileResourceController extends MSCRUDAbstractController<FileRes
         super("fileresources/", "fileresource", fileresource, msservice);
     }
 
-    //Its not possible to override a post mapping, so we use another name for create
+    /**
+     * Its not possible to override a post mapping, so we use another name for create
+     */
     @PostMapping("bind")
     public String post_bind(@RequestParam("multipartfile") MultipartFile multipartfile, @RequestParam("microservice.id") int msid, HttpSession session, Model model){
         if(!authservice.isAdmin()){

@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+/**
+ * The class extends the MSCRUDAbstractController so only path, modename and CRUD service and msservice is specified.
+ * */
+
 @Controller
 @RequestMapping("/admin/microserviceoptions/")
 public class CRUDMicroServiceOptionController extends MSCRUDAbstractController<MicroServiceOption, MicroServiceOptionService> {
@@ -24,6 +28,9 @@ public class CRUDMicroServiceOptionController extends MSCRUDAbstractController<M
         super("microserviceoptions/", "microserviceoption", msoptionservice, msservice);
     }
 
+    /**
+     * We dont want to override any data that cannot be set throuhg the form, so we load the MicroServiceOption, and then update values that are available to set in the form in the object from the database, then save the object from the database and discard the object that was sent from the form.
+     * */
     @Override
     @PostMapping("/edit")
     public String post_edit(@ModelAttribute @Valid MicroServiceOption e, BindingResult result, HttpSession session, Model model)

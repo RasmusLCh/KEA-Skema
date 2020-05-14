@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
-
+/**
+ * The class extends the CRUDAbstractController so only path, modename and CRUD service is specified.
+ * */
 @Controller
 @RequestMapping("/admin/groups/")
 public class CRUDGroupController  extends CRUDAbstractController<Group, GroupService> {
@@ -26,6 +28,9 @@ public class CRUDGroupController  extends CRUDAbstractController<Group, GroupSer
 
 
 
+    /**
+     * Override get_create since we need to add alle possible users to select from to Model
+     * */
     @Override
     @GetMapping("create")
     public String get_create(Model model, HttpSession session, Group modelojb) {
@@ -38,6 +43,9 @@ public class CRUDGroupController  extends CRUDAbstractController<Group, GroupSer
         return path + "create";
     }
 
+    /**
+     * Override get_edit since we need to add alle possible users to select from to Model
+     * */
     @Override
     @GetMapping("/edit/{id}")
     public String get_edit(@PathVariable int id, Model model, HttpSession session)

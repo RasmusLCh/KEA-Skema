@@ -24,6 +24,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The import controller makes it possible to import CSV files with users and groups from JSON files.
+ * */
+
 @Controller
 @RequestMapping("admin/import/")
 public class importController {
@@ -42,6 +46,10 @@ public class importController {
         return "admin/import/index";
     }
 
+    /**
+     * The method gets a csv file, and by looking at the columns displayname, email and identifier creates users in the system.
+     * If the user already exists update email and email
+     * */
     @PostMapping("users")
     public String post_users(@RequestParam(name="usercsv") MultipartFile usercsv){
         if(!authservice.isAdmin()){
@@ -66,7 +74,15 @@ public class importController {
             for(User usr : users){
                 System.out.println("Displayname: " + usr.getDisplayname() + " Email: " + usr.getEmail() + " Identifier: " + usr.getIdentifier());
                 usr.setLanguage("ENG");
-                userservice.create(usr);
+                User knownuser = userservice.findByIdentifier(usr.getIdentifier());
+                if(knownuser == null){
+                    userservice.create(usr);
+                }
+                else{
+                    knownuser.setDisplayname(usr.getDisplayname());
+                    knownuser.setEmail(usr.getEmail());
+                    userservice.edit(knownuser);
+                }
             }
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
@@ -76,6 +92,10 @@ public class importController {
         return "admin/import/users";
     }
 
+    /**
+     * The method takes a json encoded file - Containing groups with users, that each has an identifier.
+     * If the group is already created in the database, then the members of the group are updated.
+     * */
     @PostMapping("groups")
     public String post_groups(@RequestParam(name="grpjson") MultipartFile file){
         if(!authservice.isAdmin()){

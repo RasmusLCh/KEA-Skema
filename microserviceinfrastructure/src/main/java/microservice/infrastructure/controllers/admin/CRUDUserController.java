@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+/**
+ * The class extends the CRUDAbstractController so only path, modename and CRUD service is specified.
+ * */
+
 @Controller
 @RequestMapping("/admin/users/")
 public class CRUDUserController extends CRUDAbstractController<User, UserService>{
@@ -25,6 +29,9 @@ public class CRUDUserController extends CRUDAbstractController<User, UserService
         this.groupservice = groupservice;
     }
 
+    /**
+     * Override get_create to be able to add groups to the Model
+     * */
     @Override
     @GetMapping("create")
     public String get_create(Model model, HttpSession session, User modelojb) {
@@ -35,6 +42,9 @@ public class CRUDUserController extends CRUDAbstractController<User, UserService
         return super.get_create(model, session, modelojb);
     }
 
+    /**
+     * Override post_create to be able to add groups to the Model
+     * */
     @Override
     @PostMapping("create")
     public String post_create(@ModelAttribute @Valid User e, BindingResult result, HttpSession session, Model model){
@@ -53,7 +63,9 @@ public class CRUDUserController extends CRUDAbstractController<User, UserService
         return "redirect:/"+path+"view/" + newe.getId() + "/";
     }
 
-
+    /**
+     * Override get_edit to be able to add groups to the Model
+     * */
     @Override
     @GetMapping("/edit/{id}")
     public String get_edit(@PathVariable int id, Model model, HttpSession session)
@@ -65,6 +77,9 @@ public class CRUDUserController extends CRUDAbstractController<User, UserService
         return super.get_edit(id, model, session);
     }
 
+    /**
+     * Override post_edit to be able to add groups to the Model
+     * */
     @Override
     @PostMapping("/edit")
     public String post_edit(@ModelAttribute @Valid User e, BindingResult result, HttpSession session, Model model)

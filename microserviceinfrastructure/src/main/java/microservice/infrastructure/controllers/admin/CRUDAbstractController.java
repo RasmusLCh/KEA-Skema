@@ -32,12 +32,22 @@ public abstract class CRUDAbstractController<E extends ModelInterface, S extends
 
     public CRUDAbstractController(){}
 
+    /**
+     * Sets the path for the html files
+     * Set the model name
+     * Set the service used
+     * */
     public CRUDAbstractController(String path, String modelname, S service){
         this.path = "admin/"+path;
         this.service = service;
         this.modelname = modelname;
     }
-
+    /**
+     * Sets the path for the html files
+     * Set the model name
+     * Set the service used
+     * Set the authentication service to use
+     * */
     public CRUDAbstractController(String path, String modelname, S service, AuthenticationService authservice){
         this.path = "admin/"+path;
         this.service = service;
@@ -45,7 +55,9 @@ public abstract class CRUDAbstractController<E extends ModelInterface, S extends
         this.authservice = authservice;
     }
 
-
+    /**
+     * Returns the index page, showing all models
+     * */
     @GetMapping({"index", ""})
     public String get_root_index(Model model, HttpSession session)
     {
@@ -56,6 +68,9 @@ public abstract class CRUDAbstractController<E extends ModelInterface, S extends
         return path + "index";
     }
 
+    /**
+     * Returns the index page, showing all models
+     * */
     @PostMapping({"index", ""})
     public String get_root_index(Model model, HttpSession session, @RequestParam("selectedmicroserviceid") int selectedmicroserviceid)
     {
@@ -66,6 +81,9 @@ public abstract class CRUDAbstractController<E extends ModelInterface, S extends
         return path + "index";
     }
 
+    /**
+     * Returns a create page, where the admin can set object fields
+     * */
     @GetMapping("create")
     public String get_create(Model model, HttpSession session, E modelojb) {
         if(!authservice.isAdmin()){
@@ -74,7 +92,9 @@ public abstract class CRUDAbstractController<E extends ModelInterface, S extends
         model.addAttribute(modelname, modelojb);
         return path + "create";
     }
-
+    /**
+     * Save the model and redirects to view page
+     * */
     @PostMapping("create")
     public String post_create(@ModelAttribute @Valid E e, BindingResult result, HttpSession session, Model model){
         if(!authservice.isAdmin()){
@@ -88,6 +108,9 @@ public abstract class CRUDAbstractController<E extends ModelInterface, S extends
         return "redirect:/"+path+"view/" + newe.getId() + "/";
     }
 
+    /**
+     * Returns a edit page, where the admin can set object fields
+     * */
     @GetMapping("/edit/{id}")
     public String get_edit(@PathVariable int id, Model model, HttpSession session)
     {
@@ -98,6 +121,9 @@ public abstract class CRUDAbstractController<E extends ModelInterface, S extends
         return path+"edit";
     }
 
+    /**
+     * The model with the id specified is updated
+     * */
     @PostMapping("/edit")
     public String post_edit(@ModelAttribute @Valid E e, BindingResult result, HttpSession session, Model model)
     {
@@ -112,6 +138,9 @@ public abstract class CRUDAbstractController<E extends ModelInterface, S extends
         return "redirect:/" + path + "view/" + e.getId() + "/";
     }
 
+    /**
+     * Returns a view page, where the admin can see information about the model that the admin is about to delete, and can move forward in the deletion process
+     * */
     @GetMapping("/delete/{id}")
     public String get_delete(@PathVariable int id, Model model, HttpSession session)
     {
@@ -121,6 +150,10 @@ public abstract class CRUDAbstractController<E extends ModelInterface, S extends
         model.addAttribute(modelname, service.findById(id));
         return path + "delete";
     }
+
+    /**
+     * The model with the id specified is deleted
+     * */
     @PostMapping("/delete")
     public String post_delete(@RequestParam(value="id") int id, HttpSession session)
     {
@@ -130,8 +163,12 @@ public abstract class CRUDAbstractController<E extends ModelInterface, S extends
         service.delete(id);
         return "redirect:/" + path;
     }
+
+    /**
+     * the view page is returned, where information about the model is shown.
+     * */
     @GetMapping("/view/{id}")
-    public String get_view(@PathVariable int id, Model model, HttpSession session)
+    public String get_view(@PathVariable int id, Model model)
     {
         if(!authservice.isAdmin()){
             return "forbidden";

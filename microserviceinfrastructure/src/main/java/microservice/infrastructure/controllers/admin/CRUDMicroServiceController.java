@@ -13,6 +13,11 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * The class extends the MSCRUDAbstractController so only path, modename and CRUD service and msservice is specified.
+ * Since we need to include data from GroupService create and edit are overriden
+ * */
+
 @Controller
 @RequestMapping("/admin/services/")
 public class CRUDMicroServiceController extends MSCRUDAbstractController<MicroService, MicroServiceService> {
@@ -38,7 +43,9 @@ public class CRUDMicroServiceController extends MSCRUDAbstractController<MicroSe
         return "admin/services/index";
     }
 
-
+    /*
+     * The default get_edit is overriden to be able to add accessgroups to the Model
+     * */
     @GetMapping("create")
     @Override
     public String get_create(Model model, HttpSession session, MicroService modelojb) {
@@ -49,6 +56,9 @@ public class CRUDMicroServiceController extends MSCRUDAbstractController<MicroSe
         return super.get_create(model, session, modelojb);
     }
 
+    /*
+    * The default get_edit is overriden to be able to add accessgroups to the Model
+    * */
     @GetMapping("/edit/{id}")
     @Override
     public String get_edit(@PathVariable int id, Model model, HttpSession session) {
@@ -59,6 +69,9 @@ public class CRUDMicroServiceController extends MSCRUDAbstractController<MicroSe
         return super.get_edit(id, model, session);
     }
 
+    /**
+     * The default post_edit is overrriden, since we only update part of the microservice.
+     * */
     @PostMapping("/edit")
     @Override
     public String post_edit(@ModelAttribute @Valid MicroService e, BindingResult result, HttpSession session, Model model)
