@@ -16,7 +16,6 @@ import javax.validation.Valid;
  *
  * This abstract implementation expect a POJO object to be created.
  * The POJO object must implement ModelInterface
- * The POJO can get simple datatypes set from the MSCRUDAbstractController.
  *
  * */
 

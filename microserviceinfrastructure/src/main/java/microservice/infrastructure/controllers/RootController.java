@@ -47,10 +47,16 @@ public class RootController {
 
 
 
-    @GetMapping({"index.eng", "index.dk"})
-    public String get_index(Model model, HttpSession session) throws IOException {
+    @GetMapping({"index.eng"})
+    public String get_index_eng(Model model, HttpSession session) throws IOException {
         System.out.println(session.getId());
-        return "index";
+        return "index_eng";
+    }
+
+    @GetMapping({"index.dk"})
+    public String get_index_dk(Model model, HttpSession session) throws IOException {
+        System.out.println(session.getId());
+        return "index_dk";
     }
 
     @GetMapping("settings.eng")
