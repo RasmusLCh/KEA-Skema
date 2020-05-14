@@ -51,6 +51,22 @@ public class TeacherController {
         return "forbidden";
     }
 
+    @GetMapping({"qa.eng", "qa"})
+    public String get_qa_eng(HttpServletRequest hsr, Model model){
+        if(hsr.getLocalPort() == teacherport){
+            return "teacher/qa";
+        }
+        return "forbidden";
+    }
+
+    @GetMapping({"qa.dk"})
+    public String get_qa_dk(HttpServletRequest hsr, Model model){
+        if(hsr.getLocalPort() == teacherport){
+            return "teacher/qa";
+        }
+        return "forbidden";
+    }
+
     @PostMapping("uploadcoursecsv")
     public String post_uploadcoursecsv(@RequestParam("courseplancsv") MultipartFile courseplancsv, HttpServletRequest hsr)  {
         if(hsr.getLocalPort() == teacherport){

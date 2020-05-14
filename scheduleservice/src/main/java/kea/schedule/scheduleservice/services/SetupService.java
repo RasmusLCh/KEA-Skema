@@ -157,6 +157,29 @@ public class SetupService {
         json.appendField("description", "");
         entity = new HttpEntity<JSONObject>(json, headers);
         restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceaddtopmenulink/KEA-Schedule-Teacher", HttpMethod.POST, entity, String.class);
+
+        //Lets upload our print picture
+        File file = null;
+        try {
+            Resource res = rl.getResource("classpath:static/qa_teacher.png");
+            file = res.getFile();
+            if(file == null) throw new IOException("File is null");
+            byte[] filecontent = Files.readAllBytes(file.toPath());
+            MultiValueMap<String, String> fileMap = new LinkedMultiValueMap<>();
+            fileMap.add(HttpHeaders.CONTENT_DISPOSITION, "form-data; name=\"multipartfile\"; filename=\"qa_teacher.png\"");
+            fileMap.add(HttpHeaders.CONTENT_TYPE, Files.probeContentType(file.toPath()));
+            HttpEntity<byte[]> fileentity = new HttpEntity<>(filecontent, fileMap);
+
+            MultiValueMap<String, Object> uploadbody = new LinkedMultiValueMap<>();
+            uploadbody.add("multipartfile", fileentity);
+            HttpHeaders uploadheaders = new HttpHeaders();
+            uploadheaders.setContentType(MediaType.MULTIPART_FORM_DATA);
+            HttpEntity<MultiValueMap<String, Object>> uploade = new HttpEntity<>(uploadbody, uploadheaders);
+            restTemplate.postForEntity("http://localhost:7500/serviceaddfileresource/KEA-Schedule-Teacher", uploade, String.class);
+        } catch (IOException e) {
+            System.out.println("download.jpg not loaded, failed to upload!");
+            e.printStackTrace();
+        }
     }
 
     public void setupScheduleMS() {

@@ -57,4 +57,20 @@ public class AdminController {
         }
         return "forbidden";
     }
+
+    @GetMapping({"qa.eng", "qa"})
+    public String get_qa_eng(HttpServletRequest hsr){
+        if(hsr.getLocalPort() == serviceport){
+            return "admin/qa";
+        }
+        return "forbidden";
+    }
+
+    @GetMapping({"qa.dk"})
+    public String get_qa_dk(HttpServletRequest hsr){
+        if(hsr.getLocalPort() == serviceport){
+            return "admin/qa";
+        }
+        return "forbidden";
+    }
 }

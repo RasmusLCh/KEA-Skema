@@ -31,7 +31,7 @@ public class FileResource implements MicroServiceElement, ModelInterface {
     @Size(min=1,max=20)
     @NotNull
     private String extension= "";
-    @Column(name="data", columnDefinition="BLOB")
+    @Column(name="data", columnDefinition="MEDIUMBLOB")
     @JsonIgnore
     private byte[] data = null;
     @ManyToOne(cascade= {CascadeType.DETACH})
