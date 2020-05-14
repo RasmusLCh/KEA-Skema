@@ -14,6 +14,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+/**
+ * CRUD controller for Course
+ * html files mut be placed in templates/admin/courses/
+ * url access /servicepages/KEA-Schedule-Admin/courses/
+ * */
+
 @Controller
 @RequestMapping("/servicepages/KEA-Schedule-Admin/courses/")
 public class CRUDCourseController extends CRUDAbstractController<Course, CourseService> {

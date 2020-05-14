@@ -15,6 +15,10 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Schedule microservice default controller. This controller shows the schedule for teachers and students.
+ * */
+
 @Controller
 @RequestMapping("/servicepages/KEA-Schedule/")
 public class ScheduleController {

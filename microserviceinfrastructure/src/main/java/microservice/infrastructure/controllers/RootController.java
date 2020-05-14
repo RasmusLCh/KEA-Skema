@@ -14,6 +14,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Handles root requests to the infrastructure
+ * */
+
 @Controller
 @RequestMapping("/")
 public class RootController {

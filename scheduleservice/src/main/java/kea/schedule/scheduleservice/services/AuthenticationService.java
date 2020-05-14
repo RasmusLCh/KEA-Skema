@@ -6,6 +6,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Handles user authentication.
+ * */
+
+
 @Service
 public class AuthenticationService {
     private UserService userservice;
@@ -16,6 +21,12 @@ public class AuthenticationService {
         this.groupservice = groupservice;
     }
 
+    /**
+     * Returns if the user has access to the group specified by name.
+     *
+     * @Param   user    The user that is requesting access
+     * @Param   accessrequired    The group, that the user is requesting access too.
+     * */
     public boolean hasAccess(User user, Group accessrequired){
         if(user == null || accessrequired == null){
             return false;
@@ -32,21 +43,36 @@ public class AuthenticationService {
         }
         return false;
     }
-
+    /**
+     * Returns if the user has access to the group specified by name.
+     *
+     * @Param   user    The user that is requesting access
+     * @Param   accessrequired    The group specified by name, that the user is requesting access too.
+     * */
     public boolean hasAccess(User user, String accessrequired){
         return hasAccess(user, groupservice.findByName(accessrequired));
     }
-
+    /**
+     * Returns if the current user has access to the Group.
+     *
+     * @Param   accessrequired    The Group the user is requesting access too.
+     * */
     public boolean hasAccess(Group accessrequired){
         return hasAccess(getUser(), accessrequired);
     }
-
+    /**
+     * Returns if the current user has access to the Group.
+     *
+     * @Param   accessrequired    The Group the user is requesting access too by name.
+     * */
     public boolean hasAccess(String accessrequired){
         return hasAccess(getUser(), accessrequired);
     }
 
     /**
-     * The user has access to one or more of the groups
+     * Returns if the current user has access to one or more of the groups Groups.
+     *
+     * @Param   accessrequired    The Groups the user is requesting access.
      * */
     public boolean hasAccess(List<Group> accessrequired){
         User user = getUser();

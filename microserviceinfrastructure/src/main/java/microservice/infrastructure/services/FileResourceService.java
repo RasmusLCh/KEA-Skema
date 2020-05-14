@@ -10,6 +10,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * CRUD for FileResource
+ * */
+
 @Service
 public class FileResourceService implements CRUDServiceInterface<FileResource> {
     private FileResourceRepo repo;

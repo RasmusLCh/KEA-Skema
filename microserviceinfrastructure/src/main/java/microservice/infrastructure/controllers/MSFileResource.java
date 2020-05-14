@@ -13,6 +13,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * Access resources that microservices has uploaded to the infrastructure.
+ * url /serviceresource/<MicroService Name>/<ResourceFile>
+ * */
+
 @Controller
 @RequestMapping("/serviceresource/")
 public class MSFileResource {

@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * CRUD for User
+ * */
+
 @Service
 public class UserService implements CRUDServiceInterface<User> {
     private UserRepo userrepo;

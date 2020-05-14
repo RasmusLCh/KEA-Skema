@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 /**
- * The class extends the CRUDAbstractController so only path, modename and CRUD service is specified.
+ * CRUD controller for Group
+ * html files mut be placed in templates/admin/groups/
+ * url access /admin/groups/
  * */
 @Controller
 @RequestMapping("/admin/groups/")

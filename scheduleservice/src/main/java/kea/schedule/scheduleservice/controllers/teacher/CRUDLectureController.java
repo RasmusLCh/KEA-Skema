@@ -1,6 +1,5 @@
 package kea.schedule.scheduleservice.controllers.teacher;
 
-import kea.schedule.scheduleservice.components.MSSession;
 import kea.schedule.scheduleservice.controllers.CRUDAbstractController;
 import kea.schedule.scheduleservice.models.Course;
 import kea.schedule.scheduleservice.models.Lecture;
@@ -16,6 +15,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
+
+/**
+ * CRUD controller for Lecture
+ * html files mut be placed in templates/teacher/lectures/
+ * url access /servicepages/KEA-Schedule-Teacher/lectures/
+ * */
 
 @Controller
 @RequestMapping("/servicepages/KEA-Schedule-Teacher/lectures/")

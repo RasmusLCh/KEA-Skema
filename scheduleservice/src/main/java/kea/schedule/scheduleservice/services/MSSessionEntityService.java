@@ -6,6 +6,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * CRUD for MSSession
+ * */
+
 @Service
 public class MSSessionEntityService implements CRUDServiceInterface<MSSessionEntity>{
     private MSSessionEntityRepo repo;

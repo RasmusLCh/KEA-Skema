@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Root controller for the microservice KEA-Schedule-Teacher.
+ * */
 
 @Controller
 @RequestMapping("/servicepages/KEA-Schedule-Teacher/")

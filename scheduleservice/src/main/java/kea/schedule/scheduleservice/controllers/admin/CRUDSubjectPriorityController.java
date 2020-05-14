@@ -9,8 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * Note this internally links to the sps folder
+ * CRUD controller for SubjectPriority
+ * html files mut be placed in templates/admin/sps/
+ * url access /servicepages/KEA-Schedule-Admin/subjectpriorities/
  * */
+
 @Controller
 @RequestMapping("/servicepages/KEA-Schedule-Admin/subjectpriorities/")
 public class CRUDSubjectPriorityController extends CRUDAbstractController<SubjectPriority, SubjectPriorityService> {

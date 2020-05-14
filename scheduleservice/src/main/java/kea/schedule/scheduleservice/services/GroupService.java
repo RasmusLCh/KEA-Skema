@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * CRUD for Group
+ * */
+
 @Service
 public class GroupService implements CRUDServiceInterface<Group> {
     private GroupRepo grouprepo;

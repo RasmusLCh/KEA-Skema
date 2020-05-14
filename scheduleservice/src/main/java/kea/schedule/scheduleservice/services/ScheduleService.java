@@ -19,7 +19,10 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
+
+/**
+ * The ScheduleService create schedules, by interpretating Course > Lecture > Lecture Subject and Lecture Item.
+ * */
 
 @Service
 public class ScheduleService {
@@ -45,6 +48,12 @@ public class ScheduleService {
         return getSchedulesWeekly(start.atStartOfDay(), end.atStartOfDay().plusHours(23).plusMinutes(59));
     }
 
+    /**
+     * Generates a list of ScheduleWeekly from start date to end date. If the start date isnt in the start of a week empty days are added. If the end date isnt in the end of a week empty days are added.
+     *
+     * @Param start The start date we are generating weeks from
+     * @Param end   The end date we are generating weeks too
+     * */
     public List<ScheduleWeekly> getSchedulesWeekly(LocalDateTime start, LocalDateTime end){
         List<Lecture> lectures = getLectures(start, end);
         ScheduleTimes scheduletimes = getScheduleTimes();
@@ -115,10 +124,21 @@ public class ScheduleService {
         return schedulesweekly;
     }
 
+    /**
+     * Returns a daily schedule from a start date/time to and end date/time.
+     *
+     * @Param start The start date/time
+     * @Param end The end date/time
+     * */
     public List<ScheduleDaily> getSchedulesDaily(LocalDateTime start, LocalDateTime end){
         return getSchedulesDaily(start, end, getScheduleTimes(), getLectures(start, end));
     }
-
+    /**
+     * Returns a daily schedule from a start date/time to and end date/time.
+     *
+     * @Param start The start date/time
+     * @Param end The end date/time
+     * */
     public List<ScheduleDaily> getSchedulesDaily(LocalDateTime start, LocalDateTime end, ScheduleTimes schedulehours, List<Lecture> lectures){
         List<ScheduleDaily> sds = new ArrayList<>();
         ScheduleDaily sd = new ScheduleDaily();
@@ -174,7 +194,7 @@ public class ScheduleService {
     /**
      * Removes empty blocks before lectures
      * */
-    public ScheduleWeekly preTrim(ScheduleWeekly sw){
+    private ScheduleWeekly preTrim(ScheduleWeekly sw){
         int i = 0;
         boolean remove = true;
         List<Integer> removes = new ArrayList<>();
@@ -210,7 +230,7 @@ public class ScheduleService {
     /**
      * Removes empty blocks after lectures
      * */
-    public ScheduleWeekly postTrim(ScheduleWeekly sw){
+    private ScheduleWeekly postTrim(ScheduleWeekly sw){
     //sw.getScheduledailies().get(0).getScheduleblocks().get(0).getLectures() == null
     int i =  1;
     boolean remove = true;
@@ -246,7 +266,7 @@ public class ScheduleService {
     /**
      * This method returns the schedule time blocks, default is blocks of size 15 minuts from 8:00 to 17:00
      * */
-    ScheduleTimes getScheduleTimes(){
+    private ScheduleTimes getScheduleTimes(){
         ScheduleTimes sh = new ScheduleTimes();
         for(int i = 0; i < 9 * 4; i++){
             LocalDateTime dt = LocalDate.now().atStartOfDay().plusMinutes(8 * 60 + i * 15);
@@ -255,7 +275,7 @@ public class ScheduleService {
         return sh;
     }
 
-    List<Lecture> getLectures(LocalDateTime start, LocalDateTime end){
+    private List<Lecture> getLectures(LocalDateTime start, LocalDateTime end){
         List<Course> courses = courseservice.getUserCourses();
         List<Lecture> clectures = new ArrayList<>();
         for(Course course: courses){
@@ -272,18 +292,26 @@ public class ScheduleService {
         return clectures;
     }
 
+    /**
+     * Return the current week number
+     * */
     public int getCurrentWeek(){
         LocalDateTime now = LocalDateTime.now();
         WeekFields weekFields = WeekFields.ISO;
         return now.get(weekFields.weekOfWeekBasedYear());
     }
-
+    /**
+     * Return the current day of the week
+     * */
     public int getCurrentWeekDay(){
         LocalDateTime now = LocalDateTime.now();
         WeekFields weekFields = WeekFields.ISO;
         return now.get(weekFields.dayOfWeek());
     }
 
+    /**
+     * Sets a period, the period set will be visible for students and teachers in the schedule
+     * */
     public boolean setPeriod(String start, String end){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         boolean result = false;
@@ -308,14 +336,14 @@ public class ScheduleService {
     /**
     * Enable / disable courses based on periode startdate and periode enddate set in the system.
     * */
-    public void updateCourseActiveState(){
+    private void updateCourseActiveState(){
         updateCourseActiveState(getPeriodStart(), getPeriodEnd());
     }
     /**
      * Enable / disable courses based on startdate and enddate and the date the courses has lectures.
      * */
     @Transactional
-    public void updateCourseActiveState(LocalDate startdate, LocalDate enddate){
+    private void updateCourseActiveState(LocalDate startdate, LocalDate enddate){
         //It's time to deactivate / activate courses
         LocalDate lecturestartdate;
         LocalDate lectureenddate;
@@ -409,6 +437,11 @@ public class ScheduleService {
         return schedulesettingservice.findSetting("periodend");
     }
 
+    /**
+     * Import a CSV file, where the schedule for a course is specified
+     *
+     * @Param courseplancsv The CSV file (must be UTF-8, ; seperated)
+     * */
     public void importCSV(MultipartFile courseplancsv) throws IOException {
         CsvMapper mapper = new CsvMapper();
         CsvSchema schema = mapper.schemaFor(String[].class).withColumnSeparator(';');

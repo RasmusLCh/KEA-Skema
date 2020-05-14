@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
-
+/**
+ * Handles setting the usermicroserviceoption.
+ * */
 @RestController
 @RequestMapping("/usermicroserviceoption/")
 public class UserMicroServiceOptionRestController {

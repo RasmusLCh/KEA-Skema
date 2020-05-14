@@ -15,6 +15,10 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Properties;
 
+/**
+ * Handles user authentication.
+ * */
+
 @Service
 public class AuthenticationService {
 
@@ -33,14 +37,23 @@ public class AuthenticationService {
         this.actionservice = actionservice;
     }
 
+    /**
+     * Gets the current user (from session)
+     * */
     private User getUser(){
         return (User)session.getAttribute("curuser");
     }
 
+    /**
+     * Returns if the current user is authenticated or not.
+     * */
     public boolean isAuthenticated(){
         return session.getAttribute("curuser") != null;
     }
 
+    /**
+     * Returns if the current user is an administrator or not.
+     * */
     public boolean isAdmin(){
         MicroService ms = microserviceservice.findByName("adminpanel");
         if(ms == null){
@@ -54,14 +67,22 @@ public class AuthenticationService {
         return true;
     }
 
+    /**
+     * Returns if the current user has access to the MicroService.
+     *
+     * @Param   ms    The MicroService the user is requesting access too.
+     * */
     public boolean hasAccess(MicroService ms){
         if(ms == null){
             return false;
         }
         return hasAccess(ms.getAccessgroups());
     }
+
     /**
-     * Being a MicroServiceElement impliece that access is only available if the user has access to the MicroService
+     * Returns if the current user has access to the MicroServiceElement.
+     *
+     * @Param   element    The MicroServiceElement the user is requesting access too.
      * */
     public boolean hasAccess(MicroServiceElement element){
         if(element == null){
@@ -70,21 +91,38 @@ public class AuthenticationService {
         return hasAccess(element.getMicroservice().getAccessgroups());
     }
 
-
+    /**
+     * Returns if the user has access to the group specified by name.
+     *
+     * @Param   user    The user that is requesting access
+     * @Param   accessrequired    The group specified by name, that the user is requesting access too.
+     * */
     public boolean hasAccess(User user, String accessrequired){
         return hasAccess(user, groupservice.findByName(accessrequired));
     }
 
+    /**
+     * Returns if the current user has access to the Group.
+     *
+     * @Param   accessrequired    The Group the user is requesting access too.
+     * */
     public boolean hasAccess(Group accessrequired){
         return hasAccess(getUser(), accessrequired);
     }
 
+    /**
+     * Returns if the current user has access to the Group.
+     *
+     * @Param   accessrequired    The Group the user is requesting access too by name.
+     * */
     public boolean hasAccess(String accessrequired){
         return hasAccess(getUser(), accessrequired);
     }
 
     /**
-     * The user has access to one or more of the groups
+     * Returns if the current user has access to one or more of the groups Groups.
+     *
+     * @Param   accessrequired    The Groups the user is requesting access.
      * */
     public boolean hasAccess(List<Group> accessrequired){
         User user = getUser();
@@ -100,7 +138,11 @@ public class AuthenticationService {
         return false;
     }
 
-
+    /**
+     * Returns if the user has access to one or more of the groups Groups.
+     *
+     * @Param   accessrequired    The Groups the user is requesting access.
+     * */
     public boolean hasAccess(User user, Group accessrequired){
         if(user == null || accessrequired == null){
             return false;
@@ -137,12 +179,23 @@ public class AuthenticationService {
 
 
 
-
+    /**
+     * Returns if the current identifier and password is valid.
+     *
+     * @Param   identifier    User identifier.
+     * @Param   password    Password
+     * */
     public boolean Authenticate(String identifier, String password){
         User user = userservice.findByIdentifier(identifier);
         return Authenticate(user, password);
     }
 
+    /**
+     * Returns if the current user and password is valid.
+     *
+     * @Param   identifier    User.
+     * @Param   password    Password
+     * */
     public boolean Authenticate(User user, String password){
         boolean returnvalue = true;
         if(user == null){

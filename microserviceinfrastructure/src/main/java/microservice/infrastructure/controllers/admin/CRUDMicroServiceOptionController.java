@@ -16,7 +16,9 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 /**
- * The class extends the MSCRUDAbstractController so only path, modename and CRUD service and msservice is specified.
+ * CRUD controller for MicroServiceOption
+ * html files mut be placed in templates/admin/microserviceoptions/
+ * url access /admin/microserviceoptions/
  * */
 
 @Controller

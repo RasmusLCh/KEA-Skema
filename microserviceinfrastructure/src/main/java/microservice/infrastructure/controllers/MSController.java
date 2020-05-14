@@ -25,6 +25,12 @@ import java.net.URISyntaxException;
 import java.util.Enumeration;
 import java.util.List;
 
+/**
+ * Relay between clients and microservices
+ * Access any registrered microservice, by /servicepages/<MicroService Name>
+ * Max folder depth is 5
+ * */
+
 @Controller
 @RequestMapping("/servicepages/")
 public class MSController {

@@ -10,7 +10,7 @@ import java.util.Optional;
 
 
 /**
- * There is no error handling on page injections, since they shouldnt be injected if the user doesnt have access to the page in the first case.
+ * CRUD for PageInjection
  * */
 @Service
 public class PageInjectionService implements CRUDServiceInterface<PageInjection> {

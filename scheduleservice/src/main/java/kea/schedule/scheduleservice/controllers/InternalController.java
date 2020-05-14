@@ -16,6 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Internal controller for schedule-service, used for setting up the service in the infrastructure
+ * */
+
 @Controller
 @RequestMapping("/")
 public class InternalController {

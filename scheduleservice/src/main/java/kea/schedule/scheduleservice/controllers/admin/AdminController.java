@@ -1,9 +1,7 @@
 package kea.schedule.scheduleservice.controllers.admin;
 
-import kea.schedule.scheduleservice.models.ScheduleSetting;
 import kea.schedule.scheduleservice.services.CourseService;
 import kea.schedule.scheduleservice.services.ScheduleService;
-import kea.schedule.scheduleservice.services.ScheduleSettingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -14,8 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+
+
+/**
+ * Default controller to the Admin microservice
+ * */
 
 @Controller
 @RequestMapping("/servicepages/KEA-Schedule-Admin/")

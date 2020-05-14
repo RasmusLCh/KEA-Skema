@@ -23,6 +23,12 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Enumeration;
 
+/**
+ * RestRelay between clients and microservices
+ * Access any registrered microservice, by /servicerest/<MicroService Name>
+ * Max folder depth is 5
+ * */
+
 @RestController
 @RequestMapping("/servicerest/")
 public class MSRestController {

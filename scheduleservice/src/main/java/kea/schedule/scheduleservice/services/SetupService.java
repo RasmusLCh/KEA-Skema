@@ -19,6 +19,10 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The setup service, provides an easy way to setup the microservices.
+ * */
+
 @Service
 public class SetupService {
     @Value("${infrastructure.port:7500}")
@@ -38,6 +42,9 @@ public class SetupService {
         this.rl = rl;
     }
 
+    /**
+     * Install the microservice, this implies that all microservices are setup. Users and groups are synchronized from the infrastructure to the microservice.
+     * */
     public void install() {
         System.out.println("Synchronize users.... this might take a while");
         synchronizeUsers();
@@ -124,7 +131,9 @@ public class SetupService {
         }
     }
 
-
+    /**
+     * Setup the microservice: KEA-Schedule-Teacher
+     * */
     public void setupTeacherMS() {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
@@ -181,7 +190,9 @@ public class SetupService {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Setup the microservice: KEA-Schedule
+     * */
     public void setupScheduleMS() {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
@@ -261,7 +272,9 @@ public class SetupService {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Setup the microservice: KEA-Schedule-admin
+     * */
     public void setupAdminMS() {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();

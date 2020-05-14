@@ -8,7 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * The class extends the MSCRUDAbstractController so only path, modename and CRUD service and msservice is specified.
+ * CRUD controller for TopMenuLink
+ * html files mut be placed in templates/admin/topmenulinks/
+ * url access /admin/topmenulinks/
  * */
 
 @Controller

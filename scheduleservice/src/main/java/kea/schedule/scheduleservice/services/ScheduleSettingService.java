@@ -8,6 +8,19 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * CRUD for ScheduleSetting
+ *
+ ** A ScheduleSetting is a single name and value, and contains simple information to save in the database.
+ *
+ ** Example
+ *
+ ** name: MyBirthday
+ ** value: 100183
+ *
+ ** Could be saved in a ScheduleSetting
+ * */
+
 @Service
 public class ScheduleSettingService implements CRUDServiceInterface<ScheduleSetting> {
     private ScheduleSettingRepo repo;

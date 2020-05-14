@@ -14,9 +14,12 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * The class extends the MSCRUDAbstractController so only path, modename and CRUD service and msservice is specified.
+ * CRUD controller for FileResource
+ * html files mut be placed in templates/admin/fileresources/
+ * url access /admin/fileresources/
  * Since it is not possible to overrride postmapping, a new mapping called bind is used.
  * */
+
 @Controller
 @RequestMapping("/admin/fileresources/")
 public class CRUDFileResourceController extends MSCRUDAbstractController<FileResource, FileResourceService> {

@@ -22,7 +22,12 @@
     <label>Access Groups:</label>
     <select size="10" name="accessgroups" class="form-control" multiple>
         <th:block th:each="group : ${accessgroups}">
-            <option th:value="${group.getId()}" th:text="${group.getName()}"></option>
+            <th:block th:if="${microservice?.accessgroups?.contains(group)}">
+                <option th:value="${group.getId()}" th:text="${group.getName()}" selected="selected"></option>
+            </th:block>
+            <th:block th:unless="${microservice?.accessgroups?.contains(group)}">
+                <option th:value="${group.getId()}" th:text="${group.getName()}"></option>
+            </th:block>
         </th:block>
     </select>
     <input type="submit" value="Create">

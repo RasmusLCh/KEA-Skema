@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * CRUD for TopMenuLink
+ * */
+
 @Service
 public class TopMenuLinkService implements CRUDServiceInterface<TopMenuLink> {
     private TopMenuLinkRepo repo;

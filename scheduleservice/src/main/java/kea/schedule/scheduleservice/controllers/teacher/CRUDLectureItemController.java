@@ -18,6 +18,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * CRUD controller for LectureItem
+ * html files mut be placed in templates/teacher/lectureitems/
+ * url access /servicepages/KEA-Schedule-Teacher/items/
+ * */
+
 @Controller
 @RequestMapping("/servicepages/KEA-Schedule-Teacher/items/")
 public class CRUDLectureItemController extends CRUDAbstractController<LectureItem, LectureItemService> {

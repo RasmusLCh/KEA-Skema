@@ -10,6 +10,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * CRUD for SubjectPriority
+ * */
+
 @Service
 public class SubjectPriorityService implements CRUDServiceInterface<SubjectPriority>{
     private SubjectPriorityRepo repo;

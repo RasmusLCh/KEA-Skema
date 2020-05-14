@@ -19,6 +19,7 @@ import java.util.List;
 
 /**
  * Only requests made on the service port are valid to the controller
+ * This controller handles all internal communication, from infrastructure to microservices
  * */
 @Controller
 @CrossOrigin(origins = "*") // A better solution would be to be more narrow in who can access..

@@ -14,8 +14,9 @@ import javax.validation.Valid;
 import java.util.List;
 
 /**
- * The class extends the MSCRUDAbstractController so only path, modename and CRUD service and msservice is specified.
- * Since we need to include data from GroupService create and edit are overriden
+ * CRUD controller for MicroService
+ * html files mut be placed in templates/admin/services/
+ * url access /admin/services/
  * */
 
 @Controller

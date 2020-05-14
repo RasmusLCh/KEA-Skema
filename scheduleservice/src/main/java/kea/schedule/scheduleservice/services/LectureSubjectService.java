@@ -12,6 +12,10 @@ import org.springframework.ui.Model;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * CRUD for LectureSubject
+ * */
+
 @Service
 public class LectureSubjectService  implements CRUDServiceInterface<LectureSubject> {
     private LectureSubjectRepo repo;
@@ -27,6 +31,9 @@ public class LectureSubjectService  implements CRUDServiceInterface<LectureSubje
         this.subjectpriorityservice = subjectpriorityservice;
     }
 
+    /**
+     * If SubjectPriority has been set by an administrator, the priority set in the LectureSubject will be overwritten by the administrator setting
+     * */
     @Override
     public LectureSubject create(LectureSubject lectureSubject) {
         lectureSubject = validatePriority(lectureSubject);
@@ -34,7 +41,9 @@ public class LectureSubjectService  implements CRUDServiceInterface<LectureSubje
         actionservice.doAction("LectureSubjectService.create", lectureSubject);
         return ls;
     }
-
+    /**
+     * If SubjectPriority has been set by an administrator, the priority set in the LectureSubject will be overwritten by the administrator setting
+     * */
     @Override
     public void edit(LectureSubject lectureSubject) {
         lectureSubject = validatePriority(lectureSubject);

@@ -6,7 +6,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * Factory for Model services
+ * */
 @Service
 public class ModelService {
     Map servicemap;

@@ -4,6 +4,10 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 
+/**
+ * Service that keep track of current user language.
+ * */
+
 @Service
 public class LangService {
 

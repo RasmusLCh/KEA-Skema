@@ -11,6 +11,10 @@ import org.springframework.ui.Model;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * CRUD for Lecture
+ * */
+
 @Service
 public class LectureService implements CRUDServiceInterface<Lecture>{
     private LectureRepo repo;

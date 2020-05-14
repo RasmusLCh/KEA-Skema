@@ -8,7 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * The class extends the MSCRUDAbstractController so only path, modename and CRUD service and msservice is specified.
+ * CRUD controller for PageInjection
+ * html files mut be placed in templates/admin/pageinjections/
+ * url access /admin/pageinjections/
  * */
 @Controller
 @RequestMapping("/admin/pageinjections/")

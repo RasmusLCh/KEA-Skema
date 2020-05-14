@@ -12,6 +12,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * CRUD for Course
+ * */
+
 @Service
 public class CourseService implements CRUDServiceInterface<Course>{
     private CourseRepo repo;

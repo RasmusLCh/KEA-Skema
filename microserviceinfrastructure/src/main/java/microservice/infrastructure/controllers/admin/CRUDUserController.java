@@ -15,7 +15,9 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 /**
- * The class extends the CRUDAbstractController so only path, modename and CRUD service is specified.
+ * Handles user creation.
+ * The class extends the CRUDAbstractController so only path, modelname and CRUD service is specified.
+ * url access /admin/users/
  * */
 
 @Controller
@@ -23,8 +25,12 @@ import javax.validation.Valid;
 public class CRUDUserController extends CRUDAbstractController<User, UserService>{
     private GroupService groupservice;
 
+    /**
+     * @param   userservice The user service to use
+     * @param   groupservice    The service that handles group requests
+    * */
     @Autowired
-    public CRUDUserController(UserService userservice, MicroServiceService msservice, GroupService groupservice){
+    public CRUDUserController(UserService userservice, GroupService groupservice){
         super("users/", "user", userservice);
         this.groupservice = groupservice;
     }
