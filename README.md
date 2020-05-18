@@ -13,7 +13,6 @@ JSON keys i bold, er required.
 
 Handling | Beskrivelse
 --- | ---
-
 Registrering af MS | En MS registreres ved at poste JSON data til  localhost:7500/serviceregistration
 | I formen
 | 
@@ -29,6 +28,7 @@ Registrering af MS | En MS registreres ved at poste JSON data til  localhost:750
 | name skal angives med små bogstaver og kun tegnene fra a-z er lovlige.
 | 
 | dependencymicroserviceid kan findes ved at se om en service eksisterer, derfra kan MS id tages.
+
 Afmelding af MS | For at fjerne en service, skal den være disabled i systemet, herefter gå til localhost:7500/serviceremoval/{servicename}
 
 For at kunne fungere, har vi derudover brug for at brugere der tilgår vores service, kan tilgå de microservices som der ligger under servicen, det har vi gjort muligt ved at lave relays.
