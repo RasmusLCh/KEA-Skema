@@ -45,50 +45,50 @@ Læsning af models | Eksisterende microservices kan læse data fra infrastruktur
 
 Til alle handlinger, bliver der registreret hvis det er en MS som har lavet dem. Hvis man afmelder MS så fjernes de handlinger der hører til denne.
 
-##Actions
+## Actions
 følgende actions er indbygget i infrastrukturen
 
-###Placering: ActionService
+###P lacering: ActionService
 Action | Note
 --- | ---
 ActionService.create | Sker når en ny Action bliver oprettet.
 ActionService.edit | Sker når en Action bliver editeret.
 ActionService.delete | Sker når en Action bliver slettet.
-###Placering: AuthenticationService
+### Placering: AuthenticationService
 Action | Note
 --- | ---
 AuthenticationService.Authenticate | Sker når en bruger bliver authentificeret. Indeholder data on authentificeringen lykkedes og om brugeren.
-###FileResourceService
+### FileResourceService
 Action | Note
 --- | ---
 FileResourceService.create | Sker når en ny FileResource bliver oprettet.
 FileResourceService.edit | Sker når en FileResource bliver editeret.
 FileResourceService.delete | Sker når en FileResource bliver slettet.
-###GroupService
+### GroupService
 Action | Note
 --- | ---
 GroupService.create | Sker når en ny Group bliver oprettet.
 GroupService.edit | Sker når en Group bliver editeret.
 GroupService.delete | Sker når en Group bliver slettet.
-###MicroServiceService
+### MicroServiceService
 Action | Note
 --- | ---
 MicroServiceService.create | Sker når en ny MicroService bliver oprettet.
 MicroServiceService.edit | Sker når en MicroService bliver editeret.
 MicroServiceService.delete | Sker når en MicroService bliver slettet.
-###PageInjectionService
+### PageInjectionService
 Action | Note
 --- | ---
 PageInjectionService.create | Sker når en ny PageInjection bliver oprettet.
 PageInjectionService.edit | Sker når en PageInjection bliver editeret.
 PageInjectionService.delete | Sker når en PageInjection bliver slettet.
-###TopMenuLinkService
+### TopMenuLinkService
 Action | Note
 --- | ---
 TopMenuLinkService.create | Sker når en ny TopMenuLink bliver oprettet.
 TopMenuLinkService.edit | Sker når en TopMenuLink bliver editeret.
 TopMenuLinkService.delete | Sker når en TopMenuLink bliver slettet.
-###UserService
+### UserService
 Action | Note
 --- | ---
 UserService.create | Sker når en ny User erction bliver oprettet.
