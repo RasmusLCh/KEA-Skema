@@ -13,21 +13,7 @@ JSON keys i bold, er required.
 
 Handling | Beskrivelse
 --- | ---
-Registrering af MS | En MS registreres ved at poste JSON data til  localhost:7500/serviceregistration  
-I formen  
-{  
- |     “name”: {String},
- |    “port”: {int},
- |    “version”: {float},
- |    “description”: {String},
- |    “userRequired”: {boolean},
- |    ”dependencyMicroserviceId”: {int}
- | }
- | 
- | name skal angives med små bogstaver og kun tegnene fra a-z er lovlige.
- | 
- | dependencymicroserviceid kan findes ved at se om en service eksisterer, derfra kan MS id tages.
-
+Registrering af MS | En MS registreres ved at poste JSON data til  localhost:7500/serviceregistration<br>I formen<br><br>{<br>&nbsp;&nbsp;“name”: {String},<br>&nbsp;&nbsp;“port”: {int},<br>&nbsp;&nbsp;“version”: {float},<br>&nbsp;&nbsp;“description”: {String},<br>&nbsp;&nbsp;“userRequired”: {boolean},<br>&nbsp;&nbsp;”dependencyMicroserviceId”: {int}<br>}<br><br>name skal angives med små bogstaver og kun tegnene fra a-z er lovlige.<br><br>dependencymicroserviceid kan findes ved at se om en service eksisterer, derfra kan MS id tages.
 Afmelding af MS | For at fjerne en service, skal den være disabled i systemet, herefter gå til localhost:7500/serviceremoval/{servicename}
 
 For at kunne fungere, har vi derudover brug for at brugere der tilgår vores service, kan tilgå de microservices som der ligger under servicen, det har vi gjort muligt ved at lave relays.
