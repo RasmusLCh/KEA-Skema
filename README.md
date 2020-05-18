@@ -19,155 +19,27 @@ Afmelding af MS | For at fjerne en service, skal den være disabled i systemet, 
 For at kunne fungere, har vi derudover brug for at brugere der tilgår vores service, kan tilgå de microservices som der ligger under servicen, det har vi gjort muligt ved at lave relays.
 
 
-Relays
-Beskrivelse
-GET/POST Relay
-Efter et plugin er installeret, kan det være nødvendigt at tilgå hjemmesider som ligger i pluginnet, da vi ikke kan tilgå plugins direkte da de køre på en port som der er lukket for i firewallen, så er der i vores spring program opsat så man kan tilgå hjemmesider der ligger i MS gennem
-
-localhost/servicepages/{servicename}/{page}
-
-Maks mappe dybden i relayed er 5, dvs.
-
-localhost/servicepages/{servicename}/{folder1}/{folder2}/{folder3}/{folder4}/{folder5}/{page}
-
-Når man kalder den adresse, vil spring kalde MS på
-
-localhost:{serviceport}/servicepages/{servicename}/{page}
-
-Hvis en MS laver redirect gennemt 302 eller 303, er det kun tilladt at lave interne redirects.
-
-Når et relay sker, vil userid på brugerne med sendt med kaldet, hvis brugeren ikke er logget ind er userid = 0.
-
-Note: content-type multipart/form-data er kun tilgængelig for POST.
-GET/POST/PUT/DELETE REST Relay
-Efter et plugin er installeret, kan det være nødvendigt at tilgå REST data som ligger i pluginnet, da vi ikke kan tilgå plugins direkte da de køre på en port som der er lukket for i firewallen, så er der i vores spring program opsat så man kan tilgå REST data der ligger i MS gennem
-
-localhost/servicerest/{servicename}/{restpage}
-
-Maks mappe dybden i rest relay er 5, dvs.
-
-localhost/servicerest/{servicename}/{folder1}/{folder2}/{folder3}/{folder4}/{folder5}/{page}
-
-Når man kalder den adresse, vil spring kalde MS på
-
-localhost:{serviceport}/servicerest/{servicename}/{restpage}
-
-Redirects fra MS til Infrastruktur er ikke understøttet for REST.
-
-Når et relay sker, vil userid på brugerne med sendt med kaldet, hvis brugeren ikke er logget ind er userid = 0.
-
-Note: content-type multipart/form-data er kun tilgængelig for POST.
+Relays | Beskrivelse
+--- | ---
+GET/POST Relay | Efter et plugin er installeret, kan det være nødvendigt at tilgå hjemmesider som ligger i pluginnet, da vi ikke kan tilgå plugins direkte da de køre på en port som der er lukket for i firewallen, så er der i vores spring program opsat så man kan tilgå hjemmesider der ligger i MS gennem<br>localhost/servicepages/{servicename}/{page}<br><br>Maks mappe dybden i relayed er 5, dvs.<br><br>localhost/servicepages/{servicename}/{folder1}/{folder2}/{folder3}/{folder4}/{folder5}/{page}<br><br>Når man kalder den adresse, vil spring kalde MS på<br><br>localhost:{serviceport}/servicepages/{servicename}/{page}<br><br>Hvis en MS laver redirect gennemt 302 eller 303, er det kun tilladt at lave interne redirects.Når et relay sker, vil userid på brugerne med sendt med kaldet, hvis brugeren ikke er logget ind er userid = 0.<br><br>
+Note: content-type multipart/form-data er kun tilgængelig for POST.<br><br>
+GET/POST/PUT/DELETE REST Relay | Efter et plugin er installeret, kan det være nødvendigt at tilgå REST data som ligger i pluginnet, da vi ikke kan tilgå plugins direkte da de køre på en port som der er lukket for i firewallen, så er der i vores spring program opsat så man kan tilgå REST data der ligger i MS gennem<br><br>localhost/servicerest/{servicename}/{restpage}<br><br>Maks mappe dybden i rest relay er 5, dvs.<br><br>localhost/servicerest/{servicename}/{folder1}/{folder2}/{folder3}/{folder4}/{folder5}/{page}<br><br>Når man kalder den adresse, vil spring kalde MS på<br><br>localhost:{serviceport}/servicerest/{servicename}/{restpage}<br><br>Redirects fra MS til Infrastruktur er ikke understøttet for REST.<br><br>Når et relay sker, vil userid på brugerne med sendt med kaldet, hvis brugeren ikke er logget ind er userid = 0.<br><br>Note: content-type multipart/form-data er kun tilgængelig for POST.
 
 Derudover så skal vores microservices kunne ændre på eksisterende hjemmesider og kunne samarbejde med vores service og evt. andre microservices. Det har vi gjort muligt ved at give dem følgende handlemuligheder.
 
-Handling
-Beskrivelse
-Tilføjelse af javascript på udvalgte hjemmesider
-For at tilføje javascript på en vilkårlig hjemmeside, kan man poste JSON data til localhost:7500/serviceaddpageinjection/{servicename} I formen
-
-{
-    “type”: “JS”,
-    “page”: {String},
-    “data”: {String},
-    “priority”: {int}
-}
-
-Det at vi kan tilføje javascript til en side, gør at vi kan ændre på siden. Og javascript kan evt. kalde vores REST Relay for at få data fra vores MS.
-Priority angiver hvor vigtigt elementet er, jo højere jo tidligere bliver det tilføjet til javascript koden. 50 er default priority.
-
-page skal angives som /index hvis siden man tilgår er localhost. Eller så angivet siden som f.eks. /mywebpage hvis stien er localhost/mywebpage
-Tilføjelse af CSS på udvalgte hjemmesider
-For at tilføje CSS til en vilkårlig hjemmeside, kan man poste JSON data til  localhost:7500/serviceaddpageinjection/{servicename} I formen
-
-{
-    “type”: “CSS”,
-    “page”: {String},
-    “data”: {String},
-    “priority”: {int}
-}
-
-Det gør at vi nu har mulighed til at style de ting vi ønsker at indsætte via javascript. eller vi kan ændre på tidligere design.
-Priority angiver hvor vigtigt elementet er, jo højere jo senere bliver det tilføjet til css koden. 50 er default priority.
-
-page skal angives som /index hvis siden man tilgår er localhost. Eller så angivet siden som f.eks. /mywebpage hvis stien er localhost/mywebpage
-Tilføjelse af MicroServiceOption
-MicroService options giver mulighed for at brugeren kan slå funktionalitet til og fra i den JS som MS injektor.
-
-MicroServiceOptions bliver indlæst på alle hjemmesider.
-
-En service kan registrere MicroServiceOptions ved at poste JSON data til localhost:7500/serviceaddmicroserviceoption/{servicename} i formen
-
-{
-    “variableName”: {String},
-    “variableValue”: {boolean},
-    “description”: {String},
-    “priority”: {int}
-}
-
-Man kan ved at se på variablename se værdien variablevalue, som brugerne har sat. Hvis brugeren ikke har valgt variablevalue, så sættes den til værdien den var sat til ved oprettelse.
-variablevalue er default sat til false.
-priority er default sat til 50, priority angiver ved settings tab i hvilke rækkefølge microserviceoptions vises. Jo før vises microserviceoption.
-Tilføjelse af links, i topmenuen.
-Vores hjemmeside styres primært via topmenu links (som kan ses i prototype). En service kan registrere topmenu links ved at poste JSON data til localhost:7500/serviceaddtopmenulink/{servicename} i formen
-
-{
-    “path”: {String},
-    “text”: {String},
-    “description”: {String},
-    “priority”: {int}
-}
-
-Path vil ofte pege på det relay der er opsat.
-Priority angiver hvor vigtigt elementet er, jo højere jo mere mod venstre bliver det placeret. 50 er default priority.
-Actions
-Nogen gange har man brug for at få at vide hvis der sker noget specifikt, her bruger vi actions - Som er en form for Observer pattern.
-
-En MS (eller andet) kan registrere de gerne vil have et callback når en action sker, ved at poste JSON til http://localhost:7500/serviceaddaction/{servicename} i formen
-
-{
-    “callbackurl”: {String},
-    “actionname”: {String},
-    “priority”: {int}
-}
-
-Note: callbackurl kan refererer til en lokal port.
-
-Når vores service så laver en handling der kan være relevant for andre så kaldes doAction(String actionname, JSONObject data), alle der har registreret sig vil derefter modtage data i Json format på deres callbackurl.
-
-Priority angiver hvor vigtigt elementet er, jo højere tidligere vil det modtage data i forhold til andre actions. 50 er default priority.
-Se om microservice eksistere
-Nogen microservices kan bygge på andre microservices, derfor kan en microservice se om en anden microservice eksistere ved at kalde
-
-localhost:7500/serviceexists/{servicename}
-
-Og vil derefter modtage JSON retur i formen
-
-{
-    “id”: {int},
-    “name”: {String}
-    “port”: {int}
-    “enabled”: {boolean}
-}
-Tilføjelse af ressource
-Ved f.eks. billeder eller filer som en MS henviser til, så ligges de i servicen, og MS kan derefter henvise til dem via
-
-localhost/serviceresource/{servicename]/{resource}
-Læsning af models
-Eksisterende microservices kan læse data fra infrastrukturen ved at se alle af en bestemt type, eller ved at se en specifik.
-
-http://localhost:7500/find/all/{Modelname}/
-
-http://localhost:7500/find/ById/{Modelname}/{id}
-
-Eksempelvis hvis man ønsker at se alle actions i infrastrukturen:
-
-http://localhost:7500/find/all/Action/
-
-Eller hvis man ønsker at se en specifik 
-
-http://localhost:7500/find/ById/Action/12000
-
-
+Handling | Beskrivelse
+--- | ---
+Tilføjelse af javascript på udvalgte hjemmesider | For at tilføje javascript på en vilkårlig hjemmeside, kan man poste JSON data til localhost:7500/serviceaddpageinjection/{servicename} I formen<br>{<br>&nbsp;&nbsp;“type”: “JS”,<br>&nbsp;&nbsp;“page”: {String},<br>&nbsp;&nbsp;“data”: {String},<br>&nbsp;&nbsp;“priority”: {int}<br>}<br><br>Det at vi kan tilføje javascript til en side, gør at vi kan ændre på siden. Og javascript kan evt. kalde vores REST Relay for at få data fra vores MS.
+Priority angiver hvor vigtigt elementet er, jo højere jo tidligere bliver det tilføjet til javascript koden. 50 er default priority.<br><br>page skal angives som /index hvis siden man tilgår er localhost. Eller så angivet siden som f.eks. /mywebpage hvis stien er localhost/mywebpage
+Tilføjelse af CSS på udvalgte hjemmesider | For at tilføje CSS til en vilkårlig hjemmeside, kan man poste JSON data til  localhost:7500/serviceaddpageinjection/{servicename} I formen<br><br>{<br>&nbsp;&nbsp;“type”: “CSS”,<br>&nbsp;&nbsp;“page”: {String},<br>&nbsp;&nbsp;“data”: {String},<br>&nbsp;&nbsp;“priority”: {int}<br>}<br><br>Det gør at vi nu har mulighed til at style de ting vi ønsker at indsætte via javascript. eller vi kan ændre på tidligere design.<br><br>Priority angiver hvor vigtigt elementet er, jo højere jo senere bliver det tilføjet til css koden. 50 er default priority.<br><br>Page skal angives som /index hvis siden man tilgår er localhost. Eller så angivet siden som f.eks. /mywebpage hvis stien er localhost/mywebpage
+Tilføjelse af MicroServiceOption | MicroService options giver mulighed for at brugeren kan slå funktionalitet til og fra i den JS som MS injektor.<br><br>MicroServiceOptions bliver indlæst på alle hjemmesider.<br><br>En service kan registrere MicroServiceOptions ved at poste JSON data til localhost:7500/serviceaddmicroserviceoption/{servicename} i formen<br><br>{<br>&nbsp;&nbsp;“variableName”: {String},<br>&nbsp;&nbsp;“variableValue”: {boolean},<br>&nbsp;&nbsp;“description”: {String},<br>&nbsp;&nbsp;“priority”: {int}<br><br>}<br><br>Man kan ved at se på variablename se værdien variablevalue, som brugerne har sat. Hvis brugeren ikke har valgt variablevalue, så sættes den til værdien den var sat til ved oprettelse.
+variablevalue er default sat til false.<br>priority er default sat til 50, priority angiver ved settings tab i hvilke rækkefølge microserviceoptions vises. Jo før vises microserviceoption.
+Tilføjelse af links, i topmenuen. | Vores hjemmeside styres primært via topmenu links (som kan ses i prototype). En service kan registrere topmenu links ved at poste JSON data til localhost:7500/serviceaddtopmenulink/{servicename} i formen
+<br><br>{<br>&nbsp;&nbsp;“path”: {String},<br>&nbsp;&nbsp;“text”: {String},<br>&nbsp;&nbsp;“description”: {String},<br>&nbsp;&nbsp;“priority”: {int}<br>}<br><br>Path vil ofte pege på det relay der er opsat.<br>Priority angiver hvor vigtigt elementet er, jo højere jo mere mod venstre bliver det placeret. 50 er default priority.
+Actions | Nogen gange har man brug for at få at vide hvis der sker noget specifikt, her bruger vi actions - Som er en form for Observer pattern.<br><br>En MS (eller andet) kan registrere de gerne vil have et callback når en action sker, ved at poste JSON til http://localhost:7500/serviceaddaction/{servicename} i formen<br><br>{<br>&nbsp;&nbsp;“callbackurl”: {String},<br>&nbsp;&nbsp;“actionname”: {String},<br>&nbsp;&nbsp;“priority”: {int}<br>}<br><br>Note: callbackurl kan refererer til en lokal port.<br><br>Når vores service så laver en handling der kan være relevant for andre så kaldes doAction(String actionname, JSONObject data), alle der har registreret sig vil derefter modtage data i Json format på deres callbackurl.<br><br>Priority angiver hvor vigtigt elementet er, jo højere tidligere vil det modtage data i forhold til andre actions. 50 er default priority.
+Se om microservice eksistere | Nogen microservices kan bygge på andre microservices, derfor kan en microservice se om en anden microservice eksistere ved at kalde<br>localhost:7500/serviceexists/{servicename}<br><br>Og vil derefter modtage JSON retur i formen<br><br>{<br>&nbsp;&nbsp;“id”: {int},<br>&nbsp;&nbsp;“name”: {String}<br>&nbsp;&nbsp;“port”: {int}<br>&nbsp;&nbsp;   “enabled”: {boolean}<br>}
+Tilføjelse af ressource | Ved f.eks. billeder eller filer som en MS henviser til, så ligges de i servicen, og MS kan derefter henvise til dem via<br><br>localhost/serviceresource/{servicename]/{resource}
+Læsning af models | Eksisterende microservices kan læse data fra infrastrukturen ved at se alle af en bestemt type, eller ved at se en specifik.<br><br>http://localhost:7500/find/all/{Modelname}/<br><br>http://localhost:7500/find/ById/{Modelname}/{id}<br><br>Eksempelvis hvis man ønsker at se alle actions i infrastrukturen:<br><br>http://localhost:7500/find/all/Action/<br><br>Eller hvis man ønsker at se en specifik<br><br>http://localhost:7500/find/ById/Action/12000
 
 Til alle handlinger, bliver der registreret hvis det er en MS som har lavet dem. Hvis man afmelder MS så fjernes de handlinger der hører til denne.
 
