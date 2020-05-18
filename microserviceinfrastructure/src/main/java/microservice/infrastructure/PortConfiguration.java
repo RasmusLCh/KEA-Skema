@@ -85,7 +85,7 @@ public class PortConfiguration {
         httpcon.setPort(httpPort);
         //If you choose to not run with http to https forwards, running pages as http can cause cookies to not be saved appropriately!
         httpcon.setSecure(false);
-        httpcon.setRedirectPort(httpsPort);
+        httpcon.setRedirectPort(443);
         c[0] = httpcon;
 
         //Service port
