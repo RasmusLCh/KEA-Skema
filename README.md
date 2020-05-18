@@ -1,7 +1,7 @@
-#Intro
+# Intro
 GitHub repositoriet indeholder en opgave der er afleveret på KEA (Københavns Erhvervsakademi) på kurset PADC i foråret 2020.
 
-#Hvad indeholder repositoriet?
+# Hvad indeholder repositoriet?
 MicroService Infrastruktur findes i mappen: microserviceinfrastructure
 Skema microservice findes i mappen: scheduleservice
 I mappen PC_MS1 findes en tidlig version af en microservice der er brugt til Proof of concept - Hvor der især er fokus på registrering af microservices i infrastruktur.
