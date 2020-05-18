@@ -2,19 +2,19 @@
 GitHub repositoriet indeholder en opgave der er afleveret på KEA (Københavns Erhvervsakademi) på kurset PADC i foråret 2020.
 
 # Hvad indeholder repositoriet?
-MicroService Infrastruktur findes i mappen: microserviceinfrastructure
-Skema microservice findes i mappen: scheduleservice
+MicroService Infrastruktur findes i mappen: microserviceinfrastructure<br>
+Skema microservice findes i mappen: scheduleservice<br>
 I mappen PC_MS1 findes en tidlig version af en microservice der er brugt til Proof of concept - Hvor der især er fokus på registrering af microservices i infrastruktur.
 
 # MicroService Infrastructure
 I mappen infrastructure ligger der en microservice infrastruktur. I infrastrukturen kan der opsættes forskellige microservices, vi har lavet en microservice til at vise skemaer for studerende og undervisere.
 
 ## MicroService infrastructure API
-API indeholder hvordan en microservice kan kommunikere med infrastrukturen.
+API indeholder hvordan en microservice kan kommunikere med infrastrukturen.<br><br>
 
-Note: I følgende bruges {} til at angive en variabel værdi, hvor typen eller variabel navnet angives i {} som f.eks. {String} eller {servicename}.
+Note: I følgende bruges {} til at angive en variabel værdi, hvor typen eller variabel navnet angives i {} som f.eks. {String} eller {servicename}.<br><br>
 
-JSON keys i bold, er required.
+JSON keys i bold, er required.<br><br>
 
 Handling | Beskrivelse
 --- | ---
