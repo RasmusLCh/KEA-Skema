@@ -1,4 +1,4 @@
-<th:block th:include="/admin/header.html" th:tag="remove"></th:block>
+<th:block th:include="admin/header.html" th:tag="remove"></th:block>
 <div class="block">
     <h1>Create File Resource</h1>
     <th:block th:if="${selectedmicroserviceid != 0}">
@@ -15,4 +15,4 @@
     <p class="errortext" th:if="${#fields.hasErrors('type')}">The document type is not allowed.</p>
     <input type="submit" value="Create">
 </form>
-<th:block th:include="/admin/footer.html" th:tag="remove"></th:block>
+<th:block th:include="admin/footer.html" th:tag="remove"></th:block>

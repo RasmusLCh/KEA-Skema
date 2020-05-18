@@ -15,7 +15,7 @@ public class LangService {
         Object language = session.getAttribute("language");
         if(language != null){
             System.out.println("No user language found " + (String) language);
-            return (String) language;
+            return ((String) language).toLowerCase();
         }
         System.out.println("returning default language");
         return "eng";

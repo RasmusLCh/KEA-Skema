@@ -1,10 +1,10 @@
-<th:block th:include="/global/header.html" th:tag="remove"></th:block>
+<th:block th:include="global/header.html" th:tag="remove"></th:block>
 <div class="block">
     <h1 class="schedule">Create lecture subject</h1>
     <a href="../index" class="button right">Back</a>
 </div>
-<th:block th:include="/teacher/courseDisplay.html" th:tag="remove"></th:block>
-<th:block th:include="/teacher/LectureDisplay.html" th:tag="remove"></th:block>
+<th:block th:include="teacher/courseDisplay.html" th:tag="remove"></th:block>
+<th:block th:include="teacher/LectureDisplay.html" th:tag="remove"></th:block>
 <form class="schedule" method="post" action="" th:object="${lecturesubject}">
     <input type="text" name="lecture.id" id="lecture.id" th:value="${selectedlectureid}" style="display:none;">
     <label>Subject;:</label>
@@ -16,4 +16,4 @@
     <p>Note: This field is overwritten if the administrator has assigned a priority to the specified subject.</p>
     <input type="submit" value="Create">
 </form>
-<th:block th:include="/global/footer.html" th:tag="remove"></th:block>
+<th:block th:include="global/footer.html" th:tag="remove"></th:block>

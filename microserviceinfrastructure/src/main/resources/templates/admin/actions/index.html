@@ -1,4 +1,4 @@
-<th:block th:include="/admin/header.html" th:tag="remove"></th:block>
+<th:block th:include="admin/header.html" th:tag="remove"></th:block>
 <div class="block">
     <h1>Actions</h1>
     <th:block th:if="${selectedmicroserviceid != 0}">
@@ -6,7 +6,7 @@
     </th:block>
 </div>
 
-<th:block th:include="/admin/msselector.html" th:tag="remove"></th:block>
+<th:block th:include="admin/msselector.html" th:tag="remove"></th:block>
 <th:block th:if="${selectedmicroserviceid != 0}">
     <br/>
     <table>
@@ -37,4 +37,4 @@
 <th:block th:if="${selectedmicroserviceid == 0}">
     <p>Please select a MicroService.</p>
 </th:block>
-<th:block th:include="/admin/footer.html" th:tag="remove"></th:block>
+<th:block th:include="admin/footer.html" th:tag="remove"></th:block>

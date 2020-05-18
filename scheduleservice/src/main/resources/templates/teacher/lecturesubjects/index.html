@@ -1,11 +1,11 @@
-<th:block th:include="/global/header.html" th:tag="remove"></th:block>
+<th:block th:include="global/header.html" th:tag="remove"></th:block>
 <div class="block">
     <h1>Manage lecture subjects</h1>
     <a href="../lectures/index" class="button right">Lectures</a>
     <a href="create" class="button right">Create</a>
 </div>
-<th:block th:include="/teacher/courseDisplay.html" th:tag="remove"></th:block>
-<th:block th:include="/teacher/LectureSelector.html" th:tag="remove"></th:block>
+<th:block th:include="teacher/courseDisplay.html" th:tag="remove"></th:block>
+<th:block th:include="teacher/LectureSelector.html" th:tag="remove"></th:block>
 <th:block th:if="${selectedcourseid != 0 and selectedlectureid != 0}">
     <br/>
     <table>
@@ -53,4 +53,4 @@
 <th:block th:if="${selectedcourseid == 0 or selectedlectureid == 0}">
     <p>Both a course and lecture must be selected, before you can manage lecture subjects for a specific lecture. If you need to change the course, go back to Manage lecture.</p>
 </th:block>
-<th:block th:include="/global/footer.html" th:tag="remove"></th:block>
+<th:block th:include="global/footer.html" th:tag="remove"></th:block>

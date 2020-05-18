@@ -39,9 +39,9 @@ public class ScheduleController {
 
             List<ScheduleWeekly> schedulesweekly = scheduleservice.getSchedulesWeekly(scheduleservice.getPeriodStart(), scheduleservice.getPeriodEnd());
             model.addAttribute("schedulesweekly", schedulesweekly);
-            return "/schedule/weekly_eng";
+            return "schedule/weekly_eng";
         }
-        return "redirect:/weekly_eng";
+        return "redirect:weekly_eng";
     }
 
     @GetMapping({"weekly.eng"})
@@ -49,7 +49,7 @@ public class ScheduleController {
         if(hsr.getLocalPort() == studentport) {
             List<ScheduleWeekly> schedulesweekly = scheduleservice.getSchedulesWeekly(scheduleservice.getPeriodStart(), scheduleservice.getPeriodEnd());
             model.addAttribute("schedulesweekly", schedulesweekly);
-            return "/schedule/weekly_eng";
+            return "schedule/weekly_eng";
         }
         return "forbidden";
     }
@@ -60,7 +60,7 @@ public class ScheduleController {
 
             List<ScheduleWeekly> schedulesweekly = scheduleservice.getSchedulesWeekly(scheduleservice.getPeriodStart(), scheduleservice.getPeriodEnd());
             model.addAttribute("schedulesweekly", schedulesweekly);
-            return "/schedule/weekly_dk";
+            return "schedule/weekly_dk";
         }
         return "redirect:/weekly_dk";
     }
@@ -70,7 +70,7 @@ public class ScheduleController {
         if(hsr.getLocalPort() == studentport) {
             List<ScheduleWeekly> schedulesweekly = scheduleservice.getSchedulesWeekly(scheduleservice.getPeriodStart(), scheduleservice.getPeriodEnd());
             model.addAttribute("schedulesweekly", schedulesweekly);
-            return "/schedule/weekly_dk";
+            return "schedule/weekly_dk";
         }
         return "forbidden";
     }
