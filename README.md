@@ -13,9 +13,9 @@ JSON keys i bold, er required.
 
 Handling | Beskrivelse
 --- | ---
-Registrering af MS | En MS registreres ved at poste JSON data til  localhost:7500/serviceregistration\
-I formen\
-{\
+Registrering af MS | En MS registreres ved at poste JSON data til  localhost:7500/serviceregistration  
+I formen  
+{  
  |     “name”: {String},
  |    “port”: {int},
  |    “version”: {float},
