@@ -11,27 +11,25 @@ Note: I følgende bruges {} til at angive en variabel værdi, hvor typen eller v
 
 JSON keys i bold, er required.
 
-Handling
-Beskrivelse
-Registrering af MS
-En MS registreres ved at poste JSON data til  localhost:7500/serviceregistration
+Handling | Beskrivelse
+--- | ---
 
-I formen
-
-{
-    “name”: {String},
-    “port”: {int},
-    “version”: {float},
-    “description”: {String},
-    “userRequired”: {boolean},
-    ”dependencyMicroserviceId”: {int}
-}
-
-name skal angives med små bogstaver og kun tegnene fra a-z er lovlige.
-
-dependencymicroserviceid kan findes ved at se om en service eksisterer, derfra kan MS id tages.
-Afmelding af MS
-For at fjerne en service, skal den være disabled i systemet, herefter gå til localhost:7500/serviceremoval/{servicename}
+Registrering af MS | En MS registreres ved at poste JSON data til  localhost:7500/serviceregistration
+| I formen
+| 
+| {
+|     “name”: {String},
+|    “port”: {int},
+|    “version”: {float},
+|    “description”: {String},
+|    “userRequired”: {boolean},
+|    ”dependencyMicroserviceId”: {int}
+| }
+| 
+| name skal angives med små bogstaver og kun tegnene fra a-z er lovlige.
+| 
+| dependencymicroserviceid kan findes ved at se om en service eksisterer, derfra kan MS id tages.
+Afmelding af MS | For at fjerne en service, skal den være disabled i systemet, herefter gå til localhost:7500/serviceremoval/{servicename}
 
 For at kunne fungere, har vi derudover brug for at brugere der tilgår vores service, kan tilgå de microservices som der ligger under servicen, det har vi gjort muligt ved at lave relays.
 
@@ -188,7 +186,7 @@ http://localhost:7500/find/ById/Action/12000
 
 Til alle handlinger, bliver der registreret hvis det er en MS som har lavet dem. Hvis man afmelder MS så fjernes de handlinger der hører til denne.
 
-​25.1.1.​ Actions - Martin, Oliver og Rasmus
+##Actions
 følgende actions er indbygget i infrastrukturen
 
 Placering: ActionService
@@ -244,7 +242,7 @@ Sker når en User bliver editeret.
 UserService.delete
 Sker når en User bliver slettet.
 
-​25.1.2.​ Eksempel på opsætning af microservice - Martin, Oliver og Rasmus
+## Eksempel på opsætning af microservice
 Koden i dette eksempel er bygget på koden fra scheduleservice\Service\Setup som findes i github.
 
 I koden er port numrene defineret ved 
