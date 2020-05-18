@@ -1,6 +1,11 @@
 #Intro
 GitHub repositoriet indeholder en opgave der er afleveret på KEA (Københavns Erhvervsakademi) på kurset PADC i foråret 2020.
 
+#Hvad indeholder repositoriet?
+MicroService Infrastruktur findes i mappen: microserviceinfrastructure
+Skema microservice findes i mappen: scheduleservice
+I mappen PC_MS1 findes en tidlig version af en microservice der er brugt til Proof of concept - Hvor der især er fokus på registrering af microservices i infrastruktur.
+
 # MicroService Infrastructure
 I mappen infrastructure ligger der en microservice infrastruktur. I infrastrukturen kan der opsættes forskellige microservices, vi har lavet en microservice til at vise skemaer for studerende og undervisere.
 
@@ -43,73 +48,71 @@ Til alle handlinger, bliver der registreret hvis det er en MS som har lavet dem.
 ##Actions
 følgende actions er indbygget i infrastrukturen
 
-Placering: ActionService
-ActionService.create
-Sker når en ny Action bliver oprettet.
-ActionService.edit
-Sker når en Action bliver editeret.
-ActionService.delete
-Sker når en Action bliver slettet.
-Placering: AuthenticationService
-AuthenticationService.Authenticate
-Sker når en bruger bliver authentificeret. Indeholder data on authentificeringen lykkedes og om brugeren.
-FileResourceService
-FileResourceService.create
-Sker når en ny FileResource bliver oprettet.
-FileResourceService.edit
-Sker når en FileResource bliver editeret.
-FileResourceService.delete
-Sker når en FileResource bliver slettet.
-GroupService
-GroupService.create
-Sker når en ny Group bliver oprettet.
-GroupService.edit
-Sker når en Group bliver editeret.
-GroupService.delete
-Sker når en Group bliver slettet.
-MicroServiceService
-MicroServiceService.create
-Sker når en ny MicroService bliver oprettet.
-MicroServiceService.edit
-Sker når en MicroService bliver editeret.
-MicroServiceService.delete
-Sker når en MicroService bliver slettet.
-PageInjectionService
-PageInjectionService.create
-Sker når en ny PageInjection bliver oprettet.
-PageInjectionService.edit
-Sker når en PageInjection bliver editeret.
-PageInjectionService.delete
-Sker når en PageInjection bliver slettet.
-TopMenuLinkService
-TopMenuLinkService.create
-Sker når en ny TopMenuLink bliver oprettet.
-TopMenuLinkService.edit
-Sker når en TopMenuLink bliver editeret.
-TopMenuLinkService.delete
-Sker når en TopMenuLink bliver slettet.
-UserService
-UserService.create
-Sker når en ny User erction bliver oprettet.
-UserService.edit
-Sker når en User bliver editeret.
-UserService.delete
-Sker når en User bliver slettet.
+###Placering: ActionService
+Action | Note
+--- | ---
+ActionService.create | Sker når en ny Action bliver oprettet.
+ActionService.edit | Sker når en Action bliver editeret.
+ActionService.delete | Sker når en Action bliver slettet.
+###Placering: AuthenticationService
+Action | Note
+--- | ---
+AuthenticationService.Authenticate | Sker når en bruger bliver authentificeret. Indeholder data on authentificeringen lykkedes og om brugeren.
+###FileResourceService
+Action | Note
+--- | ---
+FileResourceService.create | Sker når en ny FileResource bliver oprettet.
+FileResourceService.edit | Sker når en FileResource bliver editeret.
+FileResourceService.delete | Sker når en FileResource bliver slettet.
+###GroupService
+Action | Note
+--- | ---
+GroupService.create | Sker når en ny Group bliver oprettet.
+GroupService.edit | Sker når en Group bliver editeret.
+GroupService.delete | Sker når en Group bliver slettet.
+###MicroServiceService
+Action | Note
+--- | ---
+MicroServiceService.create | Sker når en ny MicroService bliver oprettet.
+MicroServiceService.edit | Sker når en MicroService bliver editeret.
+MicroServiceService.delete | Sker når en MicroService bliver slettet.
+###PageInjectionService
+Action | Note
+--- | ---
+PageInjectionService.create | Sker når en ny PageInjection bliver oprettet.
+PageInjectionService.edit | Sker når en PageInjection bliver editeret.
+PageInjectionService.delete | Sker når en PageInjection bliver slettet.
+###TopMenuLinkService
+Action | Note
+--- | ---
+TopMenuLinkService.create | Sker når en ny TopMenuLink bliver oprettet.
+TopMenuLinkService.edit | Sker når en TopMenuLink bliver editeret.
+TopMenuLinkService.delete | Sker når en TopMenuLink bliver slettet.
+###UserService
+Action | Note
+--- | ---
+UserService.create | Sker når en ny User erction bliver oprettet.
+UserService.edit | Sker når en User bliver editeret.
+UserService.delete | Sker når en User bliver slettet.
 
 ## Eksempel på opsætning af microservice
 Koden i dette eksempel er bygget på koden fra scheduleservice\Service\Setup som findes i github.
 
 I koden er port numrene defineret ved 
 
+```
 @Value("${infrastructure.port:7500}")
 int infrastructureport;
+```
 
+```
 @Value("${ms.port.service:7510}")
 int serviceport;
+```
 
 En microservice opsættes ved at kommunikere med infrastrukturen, det første der gøres er at registrere microservicen på infrastrukturen
 
-
+```
 RestTemplate restTemplate = new RestTemplate();
 HttpHeaders headers = new HttpHeaders();
 headers.setContentType(MediaType.APPLICATION_JSON);
@@ -122,9 +125,11 @@ json.appendField("enabled", false);
 json.appendField("description", "admin module");
 entity = new HttpEntity<JSONObject>(json, headers);
 restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceregistration", HttpMethod.POST, entity, String.class);
+```
 
 Herefter kan de elementer som lægges under en microservice tilføjes, f.eks. topmenu links
 
+```
 //Add topmenulink eng
 json = new JSONObject();
 json.appendField("path", "/servicepages/KEA-Schedule-Admin/index.eng");
@@ -134,9 +139,11 @@ json.appendField("language", "eng");
 json.appendField("description", "");
 entity = new HttpEntity<JSONObject>(json, headers);
 restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceaddtopmenulink/KEA-Schedule-admin", HttpMethod.POST, entity, String.class);
+```
 
 Eller actions
 
+```
 //Action: UserService
 json = new JSONObject();
 json.appendField("callbackurl", "http://localhost:" + serviceport + "/actions/user/create/");
@@ -153,5 +160,6 @@ json.appendField("callbackurl", "http://localhost:" + serviceport + "/actions/us
 json.appendField("actionname", "UserService.delete");
 entity = new HttpEntity<JSONObject>(json, headers);
 restTemplate.exchange("http://localhost:" + infrastructureport + "/serviceaddaction/KEA-Schedule-admin", HttpMethod.POST, entity, String.class);
+```
 
 Tilføjelse af funktionalitet til en microservice i infrastrukturen, foregår via rest kald, derfor er det også muligt at bruge ajax kald, hvis man ikke ønsker at implementere opsætningen af microservicen i Java. Det er illustreret i projektet PC_MS1 i PC_MS1\src\main\resources\templates\setup.html
