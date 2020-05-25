@@ -66,4 +66,8 @@ public class UserService implements CRUDServiceInterface<User> {
     public List<User> findAll(int msid) {
         return null;
     }
+
+    public List<User> findUsersByDisplaynameStartingWith(String name) {
+        return userrepo.findUsersByDisplaynameStartingWith(name);
+    }
 }

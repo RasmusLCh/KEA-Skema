@@ -3,6 +3,39 @@
     <h1>Create Group</h1>
     <a href="../" class="button right">Back</a>
 </div>
+<script>
+    function setUser(displayname) {
+        $.ajax({
+            url: '/usersearch/find',
+            type: 'post',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                "displayname": displayname
+            }),
+            success: function (data) {
+                $("#searchresults").empty();
+                data.forEach(user =>
+                    $('#searchresults').append('<option value="' + user.id + '">' + user.displayname + '')
+                )
+            },
+            error: function () {
+                alert("Failed to save the option setting.")
+            }
+        });
+    }
+
+    function addToGroup() {
+        $("#searchresults option:selected").each(function () {
+            $('#Users').append('<option value="' + $(this).val() + '">' + $(this).text() + '')
+        });
+    }
+
+    function removeFromGroup() {
+        $("#Users option:selected").remove()
+    }
+
+</script>
+
 <form method="post" action="" th:object="${group}">
     <label>Name:</label>
     <input type="text" th:field="*{name}">
@@ -13,28 +46,29 @@
     <label>Metadata:</label>
     <input type="text" th:field="*{metadata}">
     <p class="errortext" th:if="${#fields.hasErrors('metadata')}">The max length of the data is 100 characters.</p>
-    <label>Users:</label>
-    <select th:field="*{users}" size="20" multiple>
-        <th:block th:each="user : ${users}">
-            <th:block th:if="${group.getUsers().contains(user)}">
-                <option th:value="${user.id}" th:text="${user.displayname + '(' + user.identifier + ')'}" SELECTED="SELECTED"></option>
-            </th:block>
-            <th:block th:unless="${group.getUsers().contains(user)}">
-                <option th:value="${user.id}" th:text="${user.displayname + '(' + user.identifier + ')'}"></option>
-            </th:block>
-        </th:block>
+
+    <br>
+    <label>User Search</label>
+    <input type="text" placeholder="Search.." id="search">
+    <input type="button" class="ui-button" value="Search" onclick="setUser($('#search').val())">
+
+    <label>Search Results:</label>
+    <select size="20" multiple id="searchresults">
     </select>
     <p class="hint">Select multiple users by holding down CTRL while selecting user.</p>
+    <input type="button" class="ui-button" value="Add to group"
+           onclick="addToGroup($('#searchresults option:selected'))">
+
+
+    <label>Users:</label>
+    <select size="20" multiple id="Users">
+    </select>
+    <p class="hint">Select multiple users by holding down CTRL while selecting user.</p>
+    <input type="button" class="ui-button" value="Remove from Users" onclick="removeFromGroup()">
+
+    <br>
     <label>Groups:</label>
     <select th:field="*{groups}" size="10" multiple>
-        <th:block th:each="grp : ${groups}">
-            <th:block th:if="${group.getGroups().contains(grp)}">
-                <option th:value="${grp.id}" th:text="${grp.name}" SELECTED="SELECTED"></option>
-            </th:block>
-            <th:block th:unless="${group.getGroups().contains(grp)}">
-                <option th:value="${grp.id}" th:text="${grp.name}"></option>
-            </th:block>
-        </th:block>
     </select>
     <p class="hint">Select multiple groups by holding down CTRL while selecting group.</p>
     <input type="submit" value="Create">
