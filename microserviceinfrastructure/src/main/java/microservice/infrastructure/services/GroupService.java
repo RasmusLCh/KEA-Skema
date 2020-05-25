@@ -46,7 +46,7 @@ public class GroupService implements CRUDServiceInterface<Group> {
 
          */
         grouprepo.deleteById(id);
-        actionservice.doAction("GroupService.edit", new Group(id));
+        actionservice.doAction("GroupService.delete", new Group(id));
     }
 
     @Override
