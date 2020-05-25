@@ -101,4 +101,13 @@ public class CRUDUserController extends CRUDAbstractController<User, UserService
         service.edit(e);
         return "redirect:/" + path + "view/" + e.getId() + "/";
     }
+
+    @GetMapping("showall")
+    public String show_all(Model model, HttpSession session, User modelojb) {
+        if (!authservice.isAdmin()) {
+            return "forbidden";
+        }
+        model.addAttribute(modelname + "s", service.findAll());
+        return path + "showall";
+    }
 }
