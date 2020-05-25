@@ -1,47 +1,10 @@
-<th:block th:include="/admin/header.html" th:tag="remove" xmlns:th="http://www.w3.org/1999/xhtml"
-          xmlns="http://www.w3.org/1999/html"></th:block>
-
+<th:block th:include="admin/header.html" th:tag="remove"></th:block>
 <div class="block">
     <h1>Users</h1>
     <a href="create/" class="button right">Create User</a>
 </div>
 
-<input type="text" placeholder="Search.." id="search">
-<button class="button1" onclick="setUser($('#search').val())">Search</button>
-<a class="button1" href="showall/" onclick="popUp()">Show all</a>
-
-<script>
-    function popUp() {
-        confirm("It will take a while for the page to load");
-    }
-
-    function setUser(displayname) {
-        $.ajax({
-            url: '/usersearch/find',
-            type: 'post',
-            contentType: 'application/json',
-            data: JSON.stringify({
-                "displayname": displayname
-            }),
-            success: function (data) {
-                $("#usertable > tbody tr").remove();
-                data.forEach(user => {
-                        $('#usertable > tbody:last-child').append('<tr><td>' + user.id + '</td>' + '<td>' + user.displayname + '</td>' + '<td>' + user.identifier + '</td>' + '<td>' + user.email + '</td>' + '<td>' + user.language + '</td>' +
-                            '<td class="invisible">' + '<a href="view/' + user.id + '/" class="button">View</a></td>' +
-                            '<td class="invisible">' + '<a href="edit/' + user.id + '/" class="button">Edit</a></td>' +
-                            '<td class="invisible">' + '<a href="delete/' + user.id + '/" class="button">Delete</a></td>' +
-                            '</tr>')
-                    }
-                )
-            },
-            error: function () {
-                alert("Failed to save the option setting.")
-            }
-        });
-    }
-</script>
-
-<table id="usertable">
+<table>
     <thead>
     <tr>
         <th>ID</th>
@@ -49,12 +12,27 @@
         <th>IDENTIFIER</th>
         <th>Email</th>
         <th>LANGUAGE</th>
+        <th>GROUPS</th>
         <th class="invisible"></th>
         <th class="invisible"></th>
         <th class="invisible"></th>
     </tr>
     </thead>
     <tbody>
+    <tr th:each="user:${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.displayname}"></td>
+        <td th:text="${user.identifier}"></td>
+        <td th:text="${user.email}"></td>
+        <td th:text="${user.language}"></td>
+        <td>
+           <th:block th:each="grp, iter: ${user.groups}" th:remove="tag"><th:block th:text="${grp.name}" th:if="${iter.index == 0}"></th:block><th:block th:text="${', ' + grp.name}" th:if="${iter.index > 0}"></th:block></th:block>
+        </td>
+        <td class="invisible"><a th:href="'view/' + ${user.id} + '/'" class="button">VIEW</a></td>
+        <td class="invisible"><a th:href="'edit/' + ${user.id} + '/'" class="button">EDIT</a></td>
+        <td class="invisible"><a th:href="'delete/' + ${user.id} + '/'" class="button">DELETE</a></td>
+    </tr>
+    </tbody>
 </table>
 
-<th:block th:include="/admin/footer.html" th:tag="remove"></th:block>
+<th:block th:include="admin/footer.html" th:tag="remove"></th:block>
