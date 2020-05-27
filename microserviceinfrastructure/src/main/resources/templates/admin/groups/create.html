@@ -15,7 +15,7 @@
             success: function (data) {
                 $("#searchresults").empty();
                 data.forEach(user =>
-                    $('#searchresults').append('<option value="' + user.id + '">' + user.displayname + '')
+                    $('#searchresults').append('<option value="' + user.id + '">' + user.displayname + '</option>')
                 )
             },
             error: function () {
@@ -26,17 +26,62 @@
 
     function addToGroup() {
         $("#searchresults option:selected").each(function () {
-            $('#Users').append('<option value="' + $(this).val() + '">' + $(this).text() + '')
+            console.log($(this).val());
+        });
+        $("#searchresults option:selected").each(function () {
+            $('#users').append('<option value="' + $(this).val() + '" selected="selected">' + $(this).text() + '</option>')
         });
     }
 
-    function removeFromGroup() {
-        $("#Users option:selected").remove()
+    function removeFromUsers() {
+        $("#users option:selected").remove();
     }
+
+    $(document).ready(function () {
+            $('#formid').on('submit', function(e) {
+
+                //prevent the default submithandling
+                e.preventDefault();
+                var formdata = new FormData();
+                formdata.append('name', $('#name').val());
+                formdata.append('description',  $('#description').val());
+                formdata.append('metadata',  $('#metadata').val());
+                $("#users option:selected").each(function () {
+                    formdata.append('users',$(this).val());
+                });
+                $("#groups option:selected").each(function () {
+                    formdata.append('groups',$(this).val());
+                });
+
+
+
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/groups/create',
+                    data: formdata,
+                    processData: false,
+                    contentType: false,
+                    success:function() {
+                        window.open('/admin/groups/', '_self');
+                    },
+                    error:function(error){
+                        alert('Errorr'+ error);
+                    }
+                });
+
+
+                //send the data of 'this' (the matched form) to yourURL
+                //$.post('/admin/groups/create/', $(this).serialize());
+            })
+    });
+
+
+
 
 </script>
 
-<form method="post" action="" th:object="${group}">
+<form method="post" action="" th:object="${group}" id="formid">
     <label>Name:</label>
     <input type="text" th:field="*{name}">
     <p class="errortext" th:if="${#fields.hasErrors('name')}">The max length of the name is 100 characters.</p>
@@ -61,14 +106,28 @@
 
 
     <label>Users:</label>
-    <select size="20" multiple id="Users">
+    <select size="20" multiple th:field="*{users}">
+        <th:block th:each="usr : ${group.users}">
+            <option th:value="${usr.id}" th:text="${usr.displayname}"></option>
+        </th:block>
     </select>
+    <p class="hint">Only selected users are Saved.</p>
     <p class="hint">Select multiple users by holding down CTRL while selecting user.</p>
-    <input type="button" class="ui-button" value="Remove from Users" onclick="removeFromGroup()">
+    <input type="button" class="ui-button" value="Remove from Users" onclick="removeFromUsers()">
 
     <br>
     <label>Groups:</label>
     <select th:field="*{groups}" size="10" multiple>
+        <th:block th:each="grp : ${groups}">
+            <th:block th:unless="${group.id == grp.id}">
+                <th:block th:if="${group.getGroups().contains(grp)}">
+                    <option th:value="${grp.id}" th:text="${grp.name}" SELECTED="SELECTED"></option>
+                </th:block>
+                <th:block th:unless="${group.getGroups().contains(grp)}">
+                    <option th:value="${grp.id}" th:text="${grp.name}"></option>
+                </th:block>
+            </th:block>
+        </th:block>
     </select>
     <p class="hint">Select multiple groups by holding down CTRL while selecting group.</p>
     <input type="submit" value="Create">
