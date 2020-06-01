@@ -1,0 +1,15 @@
+<th:block th:include="'header_'+${language}+'.html'" th:tag="remove"></th:block>
+<h1>Welcome!</h1>
+<div id="content">
+    <p>Hi and welcome to KEA learning, a place for student and teacher to organize their learning. Currently you can see your schedule, homework and your attendance in the system.</p>
+    <p id="item">To get started, please log into the system.</p>
+
+    <h2>Feels like the system is missing a key feateure?</h2>
+    <p>If you feel like the system is missing a keyfeature, come help us, the system is 100% open source and easy to extend. That means that you can develope extensions (called microservices) to the system and integrate them easily and with out risk to the rest of the system!
+        Checkout the <a href="https://github.com/RasmusLCh/KEA-Skema">github repository</a> for more information and how to get started!</p>
+
+    <h2>Things that aren't working / suggestions</h2>
+    <p>The system is still in beta, so if you find anything that is not working or you got suggestions, let us know!<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;<a href="mailto:support@learning.kea.dk">support@learning.kea.dk</a></p>
+</div>
+<th:block th:include="footer.html" th:tag="remove"></th:block>

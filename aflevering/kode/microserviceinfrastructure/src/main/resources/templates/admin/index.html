@@ -1,0 +1,39 @@
+<th:block th:include="admin/header.html" th:tag="remove"></th:block>
+<h1>Admin mode</h1>
+<p>Welcome administrator! Below you can find a short description of what is available to you in admin mode.<br/>If you cannot find your answer below, please send us an email <a href="mailto:support@mor.it">support@mor.it</a></p>
+
+<h2>Users</h2>
+Users in the system, the users are authenticated by logging into Office 365 SMTP server.
+
+<h2>Groups</h2>
+Groups in the system, groups can contain other groups or users. The max depth of a group is 50.
+
+<h2>Import</h2>
+Imports users or groups from Outlook address book, please use these scripts to generate a CSV/JSON file to import:<br/>
+<a th:href="@{/files/getUsers.ps1}">Get users</a>
+<a th:href="@{/files/getGroups.p1}">Get groups</a>
+When importing users or groups, already created users or groups will be updated - Users or groups in the system will not be deleted, if they are not in the CSV/JSON file.
+<h2>Statistics</h2>
+Show how much the system is being used.
+
+<h2>Services</h2>
+Her you can set, who can access what microservices based on the groups you have created. <br/><br/>
+
+All service options, File Resources, Action, Page Injections and Top Menu Links are only available to users that has access to the service.
+
+<h2>Service Options</h2>
+Her you can define specific settings the users can set, that your services are using.
+
+<h2>File Resources</h2>
+Files that the services are showing to the users.
+
+<h2>Actions</h2>
+Alert services, when a specific actions happens in the infrastructure, for example when an user is created.
+
+<h2>Page Injections</h2>
+Inject css og js into specific pages, to change their design og the structure of the page with javascript.
+
+<h2>Top Menu Links</h2>
+Top menu links that are available on the main page.
+
+<th:block th:include="admin/footer.html" th:tag="remove"></th:block>

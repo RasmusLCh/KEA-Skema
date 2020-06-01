@@ -1,0 +1,126 @@
+<th:block th:include="admin/header.html" th:tag="remove"></th:block>
+<script>
+    function setUser(displayname) {
+        $.ajax({
+            url: '/usersearch/find',
+            type: 'post',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                "displayname": displayname
+            }),
+            success: function (data) {
+                $("#searchresults").empty();
+                data.forEach(user =>
+                $('#searchresults').append('<option value="' + user.id + '">' + user.displayname + '</option>')
+            )
+            },
+            error: function () {
+                alert("Failed to save the option setting.")
+            }
+        });
+    }
+
+    function addToGroup() {
+        $("#searchresults option:selected").each(function () {
+            $('#users').append('<option value="' + $(this).val() + '" selected="selected">' + $(this).text() + '</option>')
+        });
+    }
+
+    function removeFromUsers() {
+        $("#users option:selected").remove()
+    }
+    $(document).ready(function () {
+        $('#formid').on('submit', function(e) {
+            //prevent the default submithandling
+            e.preventDefault();
+
+            var formdata = new FormData();
+            formdata.append('name', $('#name').val());
+            formdata.append('description',  $('#description').val());
+            formdata.append('metadata',  $('#metadata').val());
+
+            $("#users option:selected").each(function () {
+                formdata.append('users',$(this).val());
+            });
+            $("#groups option:selected").each(function () {
+                formdata.append('groups',$(this).val());
+            });
+
+
+
+
+            $.ajax({
+                type: 'POST',
+                url: '/admin/groups/edit',
+                data: formdata,
+                processData: false,
+                contentType: false,
+                success:function() {
+                   // window.open('/admin/groups/', '_self');
+                },
+                error:function(error){
+                   // alert('Errorr'+ error);
+                }
+            });
+
+
+            //send the data of 'this' (the matched form) to yourURL
+            //$.post('/admin/groups/create/', $(this).serialize());
+        })
+    });
+
+</script>
+<div class="block">
+    <h1>Edit Page Injection</h1>
+    <a href="../../" class="button right">Back</a>
+</div>
+<form method="post" action="../../edit" th:object="${group}">
+    <input type="hidden" th:field="*{id}">
+    <label>Name:</label>
+    <input type="text" th:field="*{name}">
+    <p class="errortext" th:if="${#fields.hasErrors('name')}">The max length of the name is 100 characters.</p>
+    <label>Description:</label>
+    <textarea th:field="*{description}"></textarea>
+    <p class="errortext" th:if="${#fields.hasErrors('description')}">The max length of the data is 2000 characters.</p>
+    <label>Metadata:</label>
+    <input type="text" th:field="*{metadata}">
+    <p class="errortext" th:if="${#fields.hasErrors('metadata')}">The max length of the data is 100 characters.</p>
+
+    <br>
+    <label>User Search</label>
+    <input type="text" placeholder="Search.." id="search">
+    <input type="button" class="ui-button" value="Search" onclick="setUser($('#search').val())">
+
+    <label>Search Results:</label>
+    <select size="20" multiple id="searchresults">
+    </select>
+    <p class="hint">Select multiple users by holding down CTRL while selecting user.</p>
+    <input type="button" class="ui-button" value="Add to group"
+           onclick="addToGroup($('#searchresults option:selected'))">
+    <label>Users:</label>
+    <select size="20" multiple th:field="*{users}">
+        <th:block th:each="usr : ${group.users}">
+            <option th:value="${usr.id}" th:text="${usr.displayname}"></option>
+        </th:block>
+    </select>
+    <p class="hint">Only selected users are Saved.</p>
+    <p class="hint">Select multiple users by holding down CTRL while selecting user.</p>
+    <input type="button" class="ui-button" value="Remove from Users" onclick="removeFromUsers()">
+
+    <label>Groups:</label>
+    <select th:field="*{groups}" size="10" multiple>
+        <th:block th:each="grp : ${groups}">
+            <th:block th:unless="${group.id == grp.id}">
+                <th:block th:if="${group.getGroups().contains(grp)}">
+                    <option th:value="${grp.id}" th:text="${grp.name}" SELECTED="SELECTED"></option>
+                </th:block>
+                <th:block th:unless="${group.getGroups().contains(grp)}">
+                    <option th:value="${grp.id}" th:text="${grp.name}"></option>
+                </th:block>
+            </th:block>
+        </th:block>
+    </select>
+    <p class="hint">Select multiple groups by holding down CTRL while selecting group.</p>
+    <input type="submit" value="Edit">
+</form>
+<th:block th:include="admin/footer.html" th:tag="remove"></th:block>

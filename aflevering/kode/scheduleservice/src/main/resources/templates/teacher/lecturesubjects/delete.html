@@ -1,0 +1,50 @@
+<th:block th:include="global/header.html" th:tag="remove"></th:block>
+<div class="block">
+    <h1>Delete lecture subject</h1>
+    <a href="../../index" class="button right">Back</a>
+</div>
+<p>You are about to delete the lecture subject</p>
+<table>
+    <tr>
+        <th colspan="3">Course</th>
+    </tr>
+    <tr>
+        <td colspan="3" th:text="${lecturesubject.lecture.course.name}">
+
+        </td>
+    </tr>
+    <tr>
+        <th colspan="3">Lecture</th>
+    </tr>
+    <tr>
+        <td colspan="3" th:text="${#temporals.format(lecturesubject.lecture.startdatetime, 'yyyy-MM-dd HH:mm')} + ' - ' + ${#temporals.format(lecturesubject.lecture.enddatetime, 'yyyy-MM-dd HH:mm')}">
+
+        </td>
+    </tr>
+    <tr>
+        <th>ID</th>
+        <th>SUBJECT</th>
+        <th>PRIORITY</th>
+    </tr>
+    <tr>
+        <td th:text="${lecturesubject.id}"></td>
+        <td th:text="${lecturesubject.subject}"></td>
+        <td th:text="${lecturesubject.priority}"></td>
+    </tr>
+    <tr>
+        <th colspan="3">ITEMS</th>
+    </tr>
+    <tr th:each="item : ${lecturesubject.lectureitems}">
+        <td colspan="3" th:text="${item.description}">
+
+        </td>
+    </tr>
+</table>
+
+<p>Please confirm.</p>
+
+<form method="post" action="../../delete/">
+    <input type="hidden" name="id" th:value="${lecturesubject.id}">
+    <input type="submit" value="Delete" class="btn-primary form-control">
+</form>
+<th:block th:include="global/footer.html" th:tag="remove"></th:block>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Setup MS1</title>
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+    <script>
+        function serviceregistration(){
+            alert("Start");
+            $.ajax({
+                url: 'http://localhost:7500/serviceregistration',
+                type: 'post',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    name: "MS1",
+                    port: 10001,
+                    enabled: false
+                }),
+                success: function() {
+                    alert("service registration done!");
+                }
+            });
+        }
+
+        function serviceremoval(){
+            alert("Start");
+            $.ajax({
+                url: 'http://localhost:7500/serviceremoval',
+                type: 'post',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    name: "MS1"
+                }),
+                success: function() {
+                    alert("serviceremoval done!");
+                }
+            });
+        }
+
+        function serviceaddtopmenulink(){
+            alert("Start");
+            $.ajax({
+                url: 'http://localhost:7500/serviceaddtopmenulink/MS1',
+                type: 'post',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    path: "localhost:7500/servicepages/MS1/test",
+                    text: "MS1",
+                    description: "This is my description"
+                }),
+                success: function() {
+                    alert("serviceaddtopmenulink done!");
+                }
+            });
+        }
+
+        function serviceaddaction(){
+            alert("Start");
+            $.ajax({
+                url: 'http://localhost:7500/serviceaddaction/MS1',
+                type: 'post',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    callbackurl: "http://localhost:10001/servicepages/MS1/action",
+                    actionname: "cron"
+                }),
+                success: function() {
+                    alert("serviceaddaction done!");
+                }
+            });
+        }
+
+        function serviceaddpageinjectionCSS(){
+            alert("Start");
+            $.ajax({
+                url: 'http://localhost:7500/serviceaddpageinjection/MS1',
+                type: 'post',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    type: "CSS",
+                    page: "/index",
+                    data: "h1 { color: green; }",
+                    priority: 5
+                }),
+                success: function() {
+                    alert("serviceaddpageinjection CSS done!");
+                }
+            });
+        }
+
+        function serviceaddpageinjectionJS(){
+            alert("Start");
+            $.ajax({
+                url: 'http://localhost:7500/serviceaddpageinjection/MS1',
+                type: 'post',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    type: "JS",
+                    page: "/index",
+                    data: "$( document ).ready(function() { " +
+                        " $( '#item' ).prepend('Hello there, what are you?') ; " +
+                        "});",
+                    priority: 5
+                }),
+                success: function() {
+                    alert("serviceaddpageinjection JS done!");
+                }
+            });
+        }
+
+        function serviceexists(){
+            alert("Start");
+            $.ajax({
+                url: 'http://localhost:7500/serviceexists/MS1',
+                type: 'get',
+                dataType: 'JSON',
+                success: function(data) {
+                    alert("id: " + data.id + ", name: " + data.name + ", port: " + data.port + " - If id is 0, then the service doesnt exists!");
+                }
+            });
+        }
+
+        function setupall(){
+            $.ajax({
+                url: 'http://localhost:10001/setupall',
+                type: 'post',
+                contentType: 'application/json',
+                data: JSON.stringify({}),
+                success: function() {
+                    alert("Everything has been setup!");
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<h2>Your about to setup MS1</h2>
+<h3>Manual</h3>
+<p>Each button click, calls the appropriate page on the main service - with default test data. - This is done with ajax calls in javascript.</p>
+<button onclick="javascript: serviceregistration()">serviceregistration</button>
+<button onclick="javascript: serviceremoval()">serviceremoval</button>
+<button onclick="javascript: serviceaddtopmenulink()">serviceaddtopmenulink</button>
+<button onclick="javascript: serviceaddaction()">serviceaddaction</button>
+<button onclick="javascript: serviceaddpageinjectionCSS()">serviceaddpageinjection CSS</button>
+<button onclick="javascript: serviceaddpageinjectionJS()">serviceaddpageinjection JS</button>
+<button onclick="javascript: serviceexists()">Check if MS1 microservice is already installed</button>
+<form enctype="multipart/form-data" method="post" action="http://localhost:7500/serviceaddfileresource/MS1">
+    <input type="file" name="multipartfile">
+    <input type="submit" value="Upload">
+</form>
+
+<p>Note: After uploading a file, visit localhost:7500/serviceresource/MS1/{filename} so if you upload 1.png visit localhost:7500/serviceresource/MS1/1.png</p>
+
+<hr/>
+<h3>Automatic</h3>
+<p>All the default test data settings are send to the main service. This is done with a server side call. Beside the above, this also adds a some JS that uses the microservice restcontroller, to change the color of p's on the /index page.</p>
+
+<button onclick="javascript: setupall()" style="padding: 30px; font-size: 50px">Setup MS1 (all settings)</button>
+</body>
+</html>

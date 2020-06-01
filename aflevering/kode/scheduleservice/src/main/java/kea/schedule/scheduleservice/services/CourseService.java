@@ -1,0 +1,115 @@
+package kea.schedule.scheduleservice.services;
+
+import kea.schedule.scheduleservice.components.MSSession;
+import kea.schedule.scheduleservice.models.Course;
+import kea.schedule.scheduleservice.repositories.CourseRepo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+/**
+ * CRUD for Course
+ * */
+
+@Service
+public class CourseService implements CRUDServiceInterface<Course>{
+    private CourseRepo repo;
+    private ActionService actionservice;
+    private MSSession session;
+    private AuthenticationService authservice;
+    private UserService userservice;
+
+
+    @Autowired
+    public CourseService(CourseRepo repo, ActionService actionservice, MSSession session, AuthenticationService authservice, UserService userservice){
+        this.repo = repo;
+        this.actionservice = actionservice;
+        this.session = session;
+        this.authservice = authservice;
+        this.userservice = userservice;
+    }
+
+    @Override
+    public Course create(Course course) {
+        Course c = repo.save(course);
+        actionservice.doAction("CourseService.create", c);
+        return c;
+    }
+
+    @Override
+    public void edit(Course course) {
+        repo.save(course);
+        actionservice.doAction("CourseService.edit", course);
+    }
+
+    @Override
+    public void delete(int id) {
+        repo.deleteById(id);
+        actionservice.doAction("CourseService.delete", new Course(id));
+    }
+
+    @Override
+    public Course findById(int id) {
+        Optional opt = repo.findById(id);
+        if(opt.isPresent()){
+            return (Course)opt.get();
+        }
+        return null;
+    }
+
+    @Override
+    public List<Course> findAll() {
+        return repo.findAll();
+    }
+
+    /**
+     * Returns all courses the current user has access too
+     * */
+    public List<Course> findAllByAccess(){
+        List<Course> courses = repo.findAll();
+        List<Course> acourses = new ArrayList<>();
+        for(Course course: courses){
+            if(authservice.hasAccess(course.getTeachers())){
+                acourses.add(course);
+            }
+        }
+        return acourses;
+    }
+
+    public void setSelectedcourse(int couseid, Model model){
+        session.setAttribute("selectedcourseid", new Integer(couseid));
+        model.addAttribute("selectedcourseid", getSelectedCourseId());
+        model.addAttribute("selectedcourse", getSelectedCourse());
+    }
+
+    public int getSelectedCourseId(){
+        if(session.getAttribute("selectedcourseid") != null){
+            return ((Integer)session.getAttribute("selectedcourseid")).intValue();
+        }
+        return 0;
+    }
+
+    public Course getSelectedCourse(){
+        if(session.getAttribute("selectedcourseid") != null && ((Integer)session.getAttribute("selectedcourseid")).intValue() > 0){
+            System.out.println("Selected courseid is " + session.getAttribute("selectedcourseid"));
+            return findById(((Integer)session.getAttribute("selectedcourseid")).intValue());
+        }
+        return null;
+    }
+
+    public List<Course> getUserCourses(){
+        int userid = session.getUserId();
+        //Get the list, then only save distinct values
+        List<Course> courses = repo.findDistinctByActiveIsTrueAndTeachersUsersIdOrActiveIsTrueAndStudentsUsersId(userid, userid);
+        for(Course course : courses){
+            System.out.println(course.getName());
+        }
+        System.out.println("Courses = " + courses.size());
+        return courses.stream().distinct().collect(Collectors.toList());
+    }
+}

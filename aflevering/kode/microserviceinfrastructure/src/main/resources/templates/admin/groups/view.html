@@ -1,0 +1,40 @@
+<th:block th:include="admin/header.html" th:tag="remove"></th:block>
+<div class="block">
+    <h1>View Group</h1>
+    <a href="../../" class="button right">Back</a>
+</div>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>NAME</th>
+        <th>METADATA</th>
+    </tr>
+    <tr>
+        <td th:text="${group.id}"></td>
+        <td th:text="${group.name}"></td>
+        <td th:text="${group.metadata}"></td>
+    </tr>
+    <tr>
+        <th colspan="3">Description</th>
+    </tr>
+    <tr>
+        <td colspan="3" th:text="${group.description}"></td>
+    </tr>
+    <th:block th:if="${group.users != null and 0 &lt; group.getUsers().size()}">
+    <tr>
+        <th colspan="3">Users</th>
+    </tr>
+    <tr th:each="user : ${group.users}">
+        <td colspan="3" th:text="${user.displayname}"></td>
+    </tr>
+    </th:block>
+    <th:block th:if="${group.groups != null and 0 &lt; group.getGroups().size() }">
+        <tr>
+            <th colspan="3">Groups</th>
+        </tr>
+        <tr th:each="grp: ${group.groups}">
+            <td colspan="3" th:text="${grp.name}"></td>
+        </tr>
+    </th:block>
+</table>
+<th:block th:include="admin/footer.html" th:tag="remove"></th:block>

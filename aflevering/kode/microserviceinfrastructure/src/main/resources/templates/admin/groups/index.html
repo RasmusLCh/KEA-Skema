@@ -1,0 +1,29 @@
+<th:block th:include="admin/header.html" th:tag="remove"></th:block>
+<h1>Groups</h1>
+<a href="create/" class="button right">Create Group</a>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>NAME</th>
+        <th>DESCRIPTION</th>
+        <th>METADATA</th>
+        <th>USERS</th>
+        <th>GROUPS</th>
+        <th class="invisible"></th>
+        <th class="invisible"></th>
+        <th class="invisible"></th>
+    </tr>
+    <tr th:each="group: ${groups}" th:if="${group != null}">
+        <td th:text="${group.id}"></td>
+        <td th:text="${group.name}"></td>
+        <td th:text="${group.description}"></td>
+        <td th:text="${group.metadata}"></td>
+        <td th:text="${group.getUsers().size()}"></td>
+        <td th:text="${group.getGroups().size()}"></td>
+        <td class="invisible"><a th:href="'view/' + ${group.id} + '/'" class="button">VIEW</a></td>
+        <td class="invisible"><a th:href="'edit/' + ${group.id} + '/'" class="button">EDIT</a></td>
+        <td class="invisible"><a th:href="'delete/' + ${group.id} + '/'" class="button">DELETE</a></td>
+    </tr>
+</table>
+<th:block th:include="admin/footer.html" th:tag="remove"></th:block>

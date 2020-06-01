@@ -1,0 +1,86 @@
+<th:block th:include="global/header.html" th:tag="remove"></th:block>
+<th:block th:if="${userid == 0}">
+    <h1>Skema</h1>
+    <p>Login i systemet for at se dit skema.</p>
+</th:block>
+<th:block th:if="${userid > 0}">
+<div class="schedule_options">
+    <select class="schedule_view" id="schedule_view">
+        <option value="weekly" selected="selected">Ugentligt skema</option>
+    </select>
+    <div class="schedule_options_buttons">
+        <a href=""><img src="/serviceresource/KEA-Schedule/download.png" class="schedule_icon"></a>
+        <a href=""><img src="/serviceresource/KEA-Schedule/print.png" class="schedule_icon"></a>
+    </div>
+    <br/><br/>
+</div>
+
+<div class="schedule_weeklycontainer" id="schedule_weeklycontainer">
+<th:block th:each="scheduleweekly : ${schedulesweekly}" th:if="${schedulesweekly != null}">
+    <table class="schedule_weekly" th:id="${'schedule_week' + scheduleweekly.weeknumber}">
+        <tr>
+            <th class="time" th:text="${'Uge ' + scheduleweekly.weeknumber}"></th>
+            <th th:class="${(scheduleweekly.weeknumber == currentWeek && currentWeekDay == 1) ? 'presentweekday' : 'weekday'}">Mandag</th>
+            <th th:class="${(scheduleweekly.weeknumber == currentWeek && currentWeekDay == 2) ? 'presentweekday' : 'weekday'}">Tirsdag</th>
+            <th th:class="${(scheduleweekly.weeknumber == currentWeek && currentWeekDay == 3) ? 'presentweekday' : 'weekday'}">Onsdag</th>
+            <th th:class="${(scheduleweekly.weeknumber == currentWeek && currentWeekDay == 4) ? 'presentweekday' : 'weekday'}">Torsdag</th>
+            <th th:class="${(scheduleweekly.weeknumber == currentWeek && currentWeekDay == 5) ? 'presentweekday' : 'weekday'}">Fredag</th>
+        </tr>
+        <tr th:each="scheduletime, iter : ${scheduleweekly.scheduletimes.times}">
+            <td th:text="${#temporals.format(scheduletime, 'HH:mm')}"></td>
+            <th:block th:each="scheduledaily : ${scheduleweekly.scheduledailies}">
+                <td th:rowspan="${scheduledaily.scheduleblocks.get(iter.count - 1).size}" th:if="${scheduledaily.scheduleblocks.get(iter.count - 1).size > 0}" class="schedule">
+                    <th:block th:each="lecture, liter : ${scheduledaily.scheduleblocks.get(iter.count - 1)?.lectures}">
+                        <th:block th:if="${liter.count > 1}" th:tag="remove">
+                            <hr/>
+                        </th:block>
+                        <h3 th:text="${lecture.course.name}" class="schedule_coursename"></h3>
+                        <div th:each="teacher : ${lecture.teachers}" class="schedule_teachers">
+                            <span th:text="${teacher.displayname}" class="schedule_teacher"></span>
+                        </div>
+                        <span class="schedule_location" th:text="${lecture.location}"></span>
+                        <th:block th:each="subject : ${lecture.lecturesubjects}">
+                            <h4 class="schedule_subject" th:text="${subject.subject}"></h4>
+                            <th:block th:each="item : ${subject.lectureitems}">
+                                <span class="schedule_item" th:utext="${item.description}"></span>
+                            </th:block>
+                        </th:block>
+                        <div>
+
+                        </div>
+                    </th:block>
+                    <th:block th:unless="${scheduledaily.scheduleblocks.get(iter.count - 1)?.message == null}">
+                        <span th:text="${scheduledaily.scheduleblocks.get(iter.count - 1)?.message}"></span>
+                    </th:block>
+                </td>
+            </th:block>
+        </tr>
+        <tr th:if="${scheduleweekly.scheduletimes.times.size() == 0}"><td colspan="6" class="schedule_middle"><p>Ingen lektioner</p></td></tr>
+
+    </table>
+</th:block>
+<th:block th:if="${schedulesweekly == null}">
+    <p>Vi kunne desværre ikke finde et skema for dig.</p>
+</th:block>
+</div>
+<script th:inline="text">
+    $(function(){
+        var weeknum = [[${currentWeek}]];
+        var position = $("#schedule_week"+weeknum).position().top + $("#schedule_weeklycontainer").scrollTop() - 200;
+        $("#schedule_weeklycontainer").animate({scrollTop: position});
+    });
+</script>
+<script>
+    $(function(){
+        $("#schedule_view").change(function() {
+            if($("#schedule_view").val() == "day"){
+                window.location.href = 'https://localhost/servicepages/KEA-Schedule/daily.eng';
+            }
+            else{
+                window.location.href = 'https://localhost/servicepages/KEA-Schedule/weekly.eng';
+            }
+        });
+    });
+</script>
+</th:block>
+<th:block th:include="global/footer.html" th:tag="remove"></th:block>

@@ -1,0 +1,32 @@
+<th:block th:include="'header_'+${language}+'.html'" th:tag="remove"></th:block>
+<h2>Settings</h2>
+This page enables you, to enable or disable features in the system available to you.
+<h2>Options</h2>
+<div th:each="service: ${microservices}" th:if="${service.microserviceoptions != null && service.microserviceoptions.size() > 0}">
+    <h3 th:text="${service.name}"  class="microservice_name"></h3>
+    <p th:utext="${service.description}" class="microservice_description"></p>
+    <th:block th:each="msoption : ${service.microserviceoptions}">
+        <input type="checkbox" th:checked="${usermicroserviceoptions.get(msoption.name) != null ?  usermicroserviceoptions.get(msoption.name).active : msoption.active}" class="microserserviceoption_active" th:onclick="'javascript: setUserMicroServiceOption(' + ${msoption.id} + ', this.checked);'"><span th:text="${msoption.name}" class="microserserviceoption_name"></span>
+        <span th:text="${msoption.description}" class="microserserviceoption_description"></span>
+    </th:block>
+</div>
+<script>
+function setUserMicroServiceOption(microserviceoptionid, active){
+    $.ajax({
+        url: '/usermicroserviceoption/set',
+        type: 'post',
+        contentType: 'application/json',
+        data: JSON.stringify({
+            "microserviceoption": microserviceoptionid,
+            "active": active
+        }),
+        success: function() {
+
+        },
+        error: function(){
+            alert("Failed to save the option setting.")
+        }
+    });
+}
+</script>
+<th:block th:include="footer.html" th:tag="remove"></th:block>

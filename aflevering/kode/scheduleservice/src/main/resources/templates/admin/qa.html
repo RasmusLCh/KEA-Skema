@@ -1,0 +1,42 @@
+<th:block th:include="global/header.html" th:tag="remove"></th:block>
+<h1 class="block">Q&A</h1>
+On this page, you can find answers to the questions we get the most.
+
+<h2>How do i assign a user to a group?</h2>
+Assigning users to groups is done in the infrastructure.
+
+<h2>Add one or more students to a course</h2>
+<ul>
+    <li>In the infrastructure add the users to a group.</li>
+    <li>Open Course admin</li>
+    <li>Click on Manage Course</li>
+    <li>Click edit</li>
+    <li>Select the student groups that needs access to the course</li>
+    <li>Click edit</li>
+</ul>
+
+<h2>What is Subject prioritizer</h2>
+Subject prioritizer is used, when a teacher uploads a schedule, with different subjects. for example<br/><br/>
+
+Class today, Homework, Further reading material<br/><br/>
+
+Here til teacher can assign different prioritizes for what is show first forexample<br/><br/>
+
+Class today (priority = 200)<br/>
+Homework (priority = 100)<br/>
+Further reading material (priority = 50)<br/><br/>
+
+With the Subject Prioritzer, you can specific that any subject that matches the ones you have defined, gets a specific priority. Forexample if you set Further reading material to priority = 500, the list would be<br/><br/>
+
+Further reading material (priority = 500)<br/>
+Class today (priority = 200)<br/>
+Homework (priority = 100)<br/>
+
+The higher the priority the sooner the subject will be shown, the max priority is 1000.
+
+<h2>What is the webcrawler?</h2>
+The webcrawler scrabes data from keaplan.kea.dk, this page is linked with an internal system that KEA uses for assigning rooms for courses.<br/>
+When the webpage is scrabed, rooms and teacher for specific lectures are updated.<br/>
+If lectures are found on keaplan.kea.dk they are added to the course that matches the name.<br/>
+If no course is found, a new course is created for the lectures. Any ground matching course name is added as students to the course.<br/>
+<th:block th:include="global/footer.html" th:tag="remove"></th:block>

@@ -1,0 +1,14 @@
+<label>Lecture:</label>
+<form method="post" action="">
+    <select name="selectedlectureid" onchange="javascript: form.submit()">
+        <option value="0" th:selected="${selectedlectureid == 0} ? 'SELECTED' : ''">Select Lecture</option>
+        <th:block th:each="lecture: ${lectures}" th:if="${lecture != null}">
+            <th:block th:if="${selectedlectureid == lecture.id}">
+                <option th:value="${lecture?.id}" th:text="${#temporals.format(lecture.startdatetime, 'yyyy-MM-dd HH:mm') + ' - ' + #temporals.format(lecture.enddatetime, 'yyyy-MM-dd HH:mm')}" SELECTED></option>
+            </th:block>
+            <th:block th:unless="${selectedlectureid == lecture.id}">
+                <option th:value="${lecture?.id}" th:text="${#temporals.format(lecture.startdatetime, 'yyyy-MM-dd HH:mm') + ' - ' + #temporals.format(lecture.enddatetime, 'yyyy-MM-dd HH:mm')}"></option>
+            </th:block>
+        </th:block>
+    </select>
+</form>

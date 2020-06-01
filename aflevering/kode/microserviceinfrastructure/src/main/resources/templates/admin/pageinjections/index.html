@@ -1,0 +1,40 @@
+<th:block th:include="admin/header.html" th:tag="remove"></th:block>
+<div class="block">
+    <h1>Page Injections</h1>
+    <th:block th:if="${selectedmicroserviceid != 0}">
+        <a href="create/" class="button right">Create Page Injection</a>
+    </th:block>
+</div>
+
+<th:block th:include="admin/msselector.html" th:tag="remove"></th:block>
+<th:block th:if="${selectedmicroserviceid != 0}">
+    <br/>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>TYPE</th>
+                <th>PAGE</th>
+                <th>PRIORITY</th>
+                <th class="invisible"></th>
+                <th class="invisible"></th>
+                <th class="invisible"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="pageinjection:${pageinjections}">
+                <td th:text="${pageinjection.id}"></td>
+                <td th:text="${pageinjection.type}"></td>
+                <td th:text="${pageinjection.page}"></td>
+                <td th:text="${pageinjection.priority}"></td>
+                <td class="invisible"><a th:href="'view/' + ${pageinjection.id} + '/'" class="button">VIEW</a></td>
+                <td class="invisible"><a th:href="'edit/' + ${pageinjection.id} + '/'" class="button">EDIT</a></td>
+                <td class="invisible"><a th:href="'delete/' + ${pageinjection.id} + '/'" class="button">DELETE</a></td>
+            </tr>
+        </tbody>
+    </table>
+</th:block>
+<th:block th:if="${selectedmicroserviceid == 0}">
+    <p>Please select a MicroService.</p>
+</th:block>
+<th:block th:include="admin/footer.html" th:tag="remove"></th:block>

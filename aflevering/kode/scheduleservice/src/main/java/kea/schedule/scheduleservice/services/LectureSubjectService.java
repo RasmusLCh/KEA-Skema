@@ -1,0 +1,106 @@
+package kea.schedule.scheduleservice.services;
+
+import kea.schedule.scheduleservice.components.MSSession;
+import kea.schedule.scheduleservice.models.Lecture;
+import kea.schedule.scheduleservice.models.LectureSubject;
+import kea.schedule.scheduleservice.models.SubjectPriority;
+import kea.schedule.scheduleservice.repositories.LectureSubjectRepo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+
+import java.util.List;
+import java.util.Optional;
+
+/**
+ * CRUD for LectureSubject
+ * */
+
+@Service
+public class LectureSubjectService  implements CRUDServiceInterface<LectureSubject> {
+    private LectureSubjectRepo repo;
+    private ActionService actionservice;
+    private MSSession session;
+    private SubjectPriorityService subjectpriorityservice;
+
+    @Autowired
+    public LectureSubjectService(LectureSubjectRepo repo, ActionService actionservice, MSSession session, SubjectPriorityService subjectpriorityservice){
+        this.repo = repo;
+        this.actionservice = actionservice;
+        this.session = session;
+        this.subjectpriorityservice = subjectpriorityservice;
+    }
+
+    /**
+     * If SubjectPriority has been set by an administrator, the priority set in the LectureSubject will be overwritten by the administrator setting
+     * */
+    @Override
+    public LectureSubject create(LectureSubject lectureSubject) {
+        lectureSubject = validatePriority(lectureSubject);
+        LectureSubject ls = repo.save(lectureSubject);
+        actionservice.doAction("LectureSubjectService.create", lectureSubject);
+        return ls;
+    }
+    /**
+     * If SubjectPriority has been set by an administrator, the priority set in the LectureSubject will be overwritten by the administrator setting
+     * */
+    @Override
+    public void edit(LectureSubject lectureSubject) {
+        lectureSubject = validatePriority(lectureSubject);
+        repo.save(lectureSubject);
+        actionservice.doAction("LectureSubjectService.edit", lectureSubject);
+    }
+
+    @Override
+    public void delete(int id) {
+        repo.deleteById(id);
+        actionservice.doAction("LectureSubjectService.delete", new LectureSubject(id));
+    }
+
+    @Override
+    public LectureSubject findById(int id) {
+        Optional opt = repo.findById(id);
+        if(opt.isPresent()){
+            return (LectureSubject)opt.get();
+        }
+        return null;
+    }
+
+    @Override
+    public List<LectureSubject> findAll() {
+        return repo.findAllByOrderByPriorityDesc();
+    }
+
+    public List<LectureSubject> findAllByLectureId(int lectureid){
+        return repo.findAllByLectureIdOrderByPriorityDesc(lectureid);
+    }
+
+    public void setSelectedLectureSubject(int lecturesubjectid, Model model){
+        session.setAttribute("selectedlecturesubjectid", new Integer(lecturesubjectid));
+        model.addAttribute("selectedlecturesubjectid", getSelectedLectureSubjectId());
+        model.addAttribute("selectedlecturesubject", getSelectedLectureSubject());
+    }
+
+    public int getSelectedLectureSubjectId(){
+        if(session.getAttribute("selectedlecturesubjectid") != null){
+            return ((Integer)session.getAttribute("selectedlecturesubjectid")).intValue();
+        }
+        return 0;
+    }
+
+    public LectureSubject getSelectedLectureSubject(){
+        if(session.getAttribute("selectedlecturesubjectid") != null && ((Integer)session.getAttribute("selectedlecturesubjectid")).intValue() > 0){
+            System.out.println("Selected lecture subject is " + session.getAttribute("selectedlecturesubjectid"));
+            return findById(((Integer)session.getAttribute("selectedlecturesubjectid")).intValue());
+        }
+        return null;
+    }
+
+    public LectureSubject validatePriority(LectureSubject sb){
+        SubjectPriority sp = subjectpriorityservice.findBySubject(sb.getSubject());
+        if(sp != null){
+            sb.setPriority(sp.getPriority());
+        }
+        return sb;
+    }
+}

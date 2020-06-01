@@ -1,0 +1,20 @@
+<th:block th:include="global/header.html" th:tag="remove"></th:block>
+<div class="block">
+    <h1 class="schedule">Create lecture item</h1>
+    <a href="../index" class="button right">Back</a>
+</div>
+<th:block th:include="teacher/courseDisplay.html" th:tag="remove"></th:block>
+<th:block th:include="teacher/LectureDisplay.html" th:tag="remove"></th:block>
+<th:block th:include="teacher/LectureSubjectDisplay.html" th:tag="remove"></th:block>
+<form class="schedule" method="post" action="" th:object="${lectureitem}">
+    <input type="text" name="lecturesubject.id" id="lecturesubject.id" th:value="${selectedlecturesubjectid}" style="display:none;">
+    <label>Description</label>
+    <input type="text" th:field="*{description}">
+    <p class="errortext" th:if="${#fields.hasErrors('description')}">The description format is not valid.</p>
+    <label>Priority:</label>
+    <input type="text" th:field="*{priority}">
+    <p class="errortext" th:if="${#fields.hasErrors('priority')}">The location format is not valid.</p>
+    <p>Note: This field is overwritten if the administrator has assigned a priority to the specified subject.</p>
+    <input type="submit" value="Create">
+</form>
+<th:block th:include="global/footer.html" th:tag="remove"></th:block>

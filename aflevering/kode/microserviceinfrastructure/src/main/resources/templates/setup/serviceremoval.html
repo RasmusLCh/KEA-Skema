@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Service Removal</h2>
+
+<p th:text="${microservice.getName()} + ' is now removed.'"></p>
+<h3>The following services are available</h3>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Port</th>
+    </tr>
+    <tr th:each="ms: ${microservices}">
+        <td th:text="${ms.name}" />
+        <td th:text="${ms.port}" />
+    </tr>
+</table>
+</body>
+</html>

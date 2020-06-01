@@ -1,0 +1,20 @@
+<th:block th:include="admin/header.html" th:tag="remove"></th:block>
+<div class="block">
+    <h1>Import</h1>
+</div>
+
+<form method="post" action="./users" enctype="multipart/form-data">
+    <label>User import</label>
+    <input type="file" name="usercsv" placeholder="Add a CSV file"><br/>
+    <p class="hint">Note: Users in CSV are created/imported.</p>
+    <input type="submit" value="Import">
+</form>
+
+<br/><br/>
+<form method="post" action="./groups" enctype="multipart/form-data">
+    <label>Group import</label>
+    <input type="file" name="grpjson" placeholder="Add a JSON file"><br/>
+    <p class="hint">Note: If metadata field for the group is the same as group name in the import file, members between the 2 groups are synchronized.</p>
+    <input type="submit" value="Import">
+</form>
+<th:block th:include="admin/footer.html" th:tag="remove"></th:block>

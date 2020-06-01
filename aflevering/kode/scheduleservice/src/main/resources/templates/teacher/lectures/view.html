@@ -1,0 +1,34 @@
+<th:block th:include="global/header.html" th:tag="remove"></th:block>
+<div class="block">
+    <h1>View Lecture</h1>
+    <a href="../../index" class="button right">Back</a>
+</div>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>START</th>
+        <th>END</th>
+        <th>LOCATION</th>
+    </tr>
+    <tr>
+        <td th:text="${lecture.id}"></td>
+        <td th:text="${lecture.startdatetime}"></td>
+        <td th:text="${lecture.enddatetime}"></td>
+        <td th:text="${lecture.location}"></td>
+    </tr>
+    <tr>
+        <th colspan="4">TEACHER(S)</th>
+    </tr>
+    <tr th:each="teacher : ${lecture.teachers}">
+        <td colspan="4" th:text="${teacher.displayname}">
+
+        </td>
+    </tr>
+    <tr>
+        <th colspan="4">SUBJECTS</th>
+    </tr>
+    <tr th:each="subject : ${lecture.lecturesubjects}">
+        <td colspan="4" th:text="${subject.subject}"></td>
+    </tr>
+</table>
+<th:block th:include="global/footer.html" th:tag="remove"></th:block>

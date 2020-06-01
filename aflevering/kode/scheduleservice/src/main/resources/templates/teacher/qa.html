@@ -1,0 +1,57 @@
+<th:block th:include="global/header.html" th:tag="remove"></th:block>
+<h1 class="block">Q&A</h1>
+On this page, you can find answers to the questions we get the most. When using the system as a teacher, we suggest that you create your lecture plan in excel or similair and then upload a CSV file.
+
+<h2>Courses</h2>
+You can only see the courses your assigned too, if you cannot see the course you wish to edit, please contact an Course administrator.
+
+<h2>Lectures</h2>
+A Lecture has a start date/time and an end date/time. The location of the lecture and teachers (available users from students and teachers that are assigned to the lecture).
+
+If your indoubt about any of the fields, your not forced to fill them out.
+
+<h2>Lecture Subject</h2>
+After you created your lecture, you can assign lecture subjects to it. Lecture subjects are like headlines for the lecture, like <br/>
+Class today: Where you could write about what you wanna talk about.<br/>
+Homework: Homework for the students.<br/><br/>
+
+When you create a lecture subject, you assign it a priority, default is 50, lecture subjects are sorted by priority in descending order.<br/><br/>
+
+<h2>Lecture Item</h2>
+Lecture items are assigned under Lecture Subjects, it could be that you had a Lecture Subject called Homework and you wanted to add a Lecture Item which said "Read page 1-50 in Forman".
+
+<h2>Upload schedule</h2>
+When uploading a schedule, all lectures in the course are deleted.<br/>
+The file you upload, must be in UTF8 semicolon seperated CSV format<br/>
+
+The format of the schedule must be<br/><br/>
+
+Headerline: Dato;Start;Slut;Teacher(s);Room;Subject1;Subject2 etc.<br/><br/>
+
+When a lecture start, the row must start with Dato and Start Slut, Teacher(s) and Room.<br/>
+After the initial lecture start line, you can keep writting teachers and subject items.<br/><br/>
+
+As always a picture says more than a thousand words, so here is a example<br/><br/>
+
+<img src="/serviceresource/KEA-Schedule-Teacher/qa_teacher.png" style="width: 80%"><br/><br/>
+
+On the picture, the PRESSMAN is lecture items, that are added under a specific Lecture Subject "Lektier".<br/>
+If multiple teachers are assigned to a lecture, they are written in different rows.<br/>
+
+<h2>Upload schedule: Links</h2>
+If you wish to insert a link, then insert the link inbetween hard brackets, and after the end hardbracket add the link text.<br/><br/>
+
+examples:<br/>
+<pre>
+    [https://www.google.com]Google
+</pre>
+The student will see the link as <a href="https://www.google.com]">Google</a>
+<pre>
+    [https://fronter.com/kea/links/files.phtml/1036354350$113936663$/3.semester/Design+3++_prcent_2A++Systemudvikling+3/DownloadsAndStuff/TheItMeasurementCompendium_Chap12_6_7_8_9.pdf]PDF
+</pre>
+The student will see the link as <a href="https://fronter.com/kea/links/files.phtml/1036354350$113936663$/3.semester/Design+3++_prcent_2A++Systemudvikling+3/DownloadsAndStuff/TheItMeasurementCompendium_Chap12_6_7_8_9.pdf">PDF</a>
+
+
+
+
+<th:block th:include="global/footer.html" th:tag="remove"></th:block>

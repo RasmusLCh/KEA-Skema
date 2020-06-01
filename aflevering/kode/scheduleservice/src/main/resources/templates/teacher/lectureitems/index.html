@@ -1,0 +1,39 @@
+<th:block th:include="global/header.html" th:tag="remove"></th:block>
+<div class="block">
+    <h1>Manage lecture items</h1>
+    <a href="../subjects/index" class="button right">Lecture subjects</a>
+    <a href="../lectures/index" class="button right">Lectures</a>
+    <a href="create" class="button right">Create</a>
+</div>
+<th:block th:include="teacher/courseDisplay.html" th:tag="remove"></th:block>
+<th:block th:include="teacher/LectureDisplay.html" th:tag="remove"></th:block>
+<th:block th:include="teacher/LectureSubjectSelector.html" th:tag="remove"></th:block>
+<th:block th:if="${selectedcourseid != 0 and selectedlectureid != 0 and selectedlecturesubjectid != 0}">
+    <br/>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>DESCRIPTION</th>
+                <th>PRIORITY</th>
+                <th class="invisible"></th>
+                <th class="invisible"></th>
+                <th class="invisible"></th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${lectureitems}">
+            <td th:text="${item.id}"></td>
+            <td th:text="${item.description}"></td>
+            <td th:text="${item.priority}"></td>
+            <td class="invisible"><a th:href="'view/' + ${item.id} + '/'" class="button">VIEW</a></td>
+            <td class="invisible"><a th:href="'edit/' + ${item.id} + '/'" class="button">EDIT</a></td>
+            <td class="invisible"><a th:href="'delete/' + ${item.id} + '/'" class="button">DELETE</a></td>
+        </tr>
+        </tbody>
+    </table>
+</th:block>
+<th:block th:if="${selectedcourseid == 0 or selectedlectureid == 0 or selectedlecturesubjectid == 0}">
+    <p>Course, lecture and lecture subject must be selected, before you can manage lecture items for a specific lecture subject.</p>
+</th:block>
+<th:block th:include="global/footer.html" th:tag="remove"></th:block>

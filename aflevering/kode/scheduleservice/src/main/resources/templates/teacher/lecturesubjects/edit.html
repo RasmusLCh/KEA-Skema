@@ -1,0 +1,22 @@
+<th:block th:include="global/header.html" th:tag="remove"></th:block>
+<div class="block">
+    <h1>Edit lecture subject</h1>
+    <a href="../../index" class="button right">Back</a>
+</div>
+<label>Course:</label>
+<p th:text="${lecturesubject.lecture.course.name}" class="disabledinput"></p>
+<label>Lecture:</label>
+<p th:text="${#temporals.format(lecturesubject.lecture.startdatetime, 'yyyy-MM-dd HH:mm')} + ' - ' + ${#temporals.format(lecturesubject.lecture.enddatetime, 'yyyy-MM-dd HH:mm')}"></p>
+<form method="post" action="../../edit" th:object="${lecturesubject}">
+    <input type="text" th:field="*{lecture}" style="display:none;">
+    <input type="text" th:field="*{id}" style="display:none;">
+    <label>Subject:</label>
+    <input type="text" th:field="*{subject}">
+    <p class="errortext" th:if="${#fields.hasErrors('subject')}">The location format is not valid.</p>
+    <label>Priority:</label>
+    <input type="text" th:field="*{priority}">
+    <p class="errortext" th:if="${#fields.hasErrors('priority')}">The location format is not valid.</p>
+    <p>Note: This field is overwritten if the administrator has assigned a priority to the specified subject.</p>
+    <input type="submit" value="Edit">
+</form>
+<th:block th:include="global/footer.html" th:tag="remove"></th:block>

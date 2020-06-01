@@ -1,0 +1,37 @@
+<th:block th:include="global/header.html" th:tag="remove"></th:block>
+<div class="block">
+    <h1>Edit Course</h1>
+    <a href="../../index" class="button right">Back</a>
+</div>
+<form method="post" action="../../edit" th:object="${course}">
+    <input type="hidden" th:field="*{id}">
+    <label>Name:</label>
+    <input type="text" th:field="*{name}">
+    <p class="errortext" th:if="${#fields.hasErrors('name')}">The max length of the page is 200 characters.</p>
+    <label>Active:</label>
+    <input type="checkbox" th:field="*{active}"> <span>Only active courses are shown in the schedule.</span>
+    <label>Teacher groups:</label>
+    <select th:field="*{teachers}" size="10" multiple>
+        <th:block th:each="grp : ${groups}">
+            <th:block th:if="${course.getTeachers()?.contains(grp)}">
+                <option th:value="${grp.id}" th:text="${grp.name}" SELECTED="SELECTED"></option>
+            </th:block>
+            <th:block th:unless="${course.getTeachers()?.contains(grp)}">
+                <option th:value="${grp.id}" th:text="${grp.name}"></option>
+            </th:block>
+        </th:block>
+    </select>
+    <label>Student groups:</label>
+    <select th:field="*{students}" size="10" multiple>
+        <th:block th:each="grp : ${groups}">
+            <th:block th:if="${course.getStudents()?.contains(grp)}">
+                <option th:value="${grp.id}" th:text="${grp.name}" SELECTED="SELECTED"></option>
+            </th:block>
+            <th:block th:unless="${course.getStudents()?.contains(grp)}">
+                <option th:value="${grp.id}" th:text="${grp.name}"></option>
+            </th:block>
+        </th:block>
+    </select>
+    <input type="submit" value="Edit">
+</form>
+<th:block th:include="global/footer.html" th:tag="remove"></th:block>

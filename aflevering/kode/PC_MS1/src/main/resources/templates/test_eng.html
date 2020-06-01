@@ -1,0 +1,33 @@
+<h2>MS1</h2>
+<p>This is the MS1 test page!</p>
+
+<p>This is called through the MSServicePagesController in the microservice.</p>
+
+<h3>Resource test</h3>
+<p>Test of resource handling, Here the picture to the right should be added to the spring project (through upload) - the left is a direct access and wont work</p>
+<img th:src="@{/smiley.jpg}">
+<img th:src="@{/serviceresource/MS1/smiley.jpg}">
+
+<hr>
+<form method="post" action="/servicepages/MS1/upload" enctype="multipart/form-data">
+    <input type="file" name="multipartfile">
+    <input type="hidden" name="testvar" value="ThisIsTestVar!">
+    <input type="hidden" name="testvar2" value="ThisIs22222222222Var!">
+    <input type="hidden" name="test3333333" value="This333333333333Var!">
+    <input type="submit">
+</form>
+
+<form method="post" action="/servicepages/MS1/upload" enctype="multipart/form-data">
+    <input type="text" name="text1">
+    <input type="text" name="text2">
+    <input type="text" name="text3">
+    <input type="checkbox" name="check1">
+    <input type="submit">
+</form>
+
+<form method="post" action="/servicepages/MS1/upload" enctype="multipart/form-data">
+    <input type="file" name="file1">
+    <input type="file" name="file2">
+    <input type="hidden" name="cmd" value="multifileupload!">
+    <input type="submit">
+</form>

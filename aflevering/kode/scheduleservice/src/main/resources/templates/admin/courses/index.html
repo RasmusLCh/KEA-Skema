@@ -1,0 +1,35 @@
+<th:block th:include="global/header.html" th:tag="remove"></th:block>
+<div class="block">
+    <h1 class="schedule">Manage Course</h1>
+    <a href="../index" class="button right">Back</a>
+    <a href="create" class="button right">Create</a>
+</div>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>NAME</th>
+            <th>ACTIVE</th>
+            <th>TEACHERS GROUPS</th>
+            <th>STUDENTS GROUPS</th>
+            <th class="invisible"></th>
+            <th class="invisible"></th>
+            <th class="invisible"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="course:${courses}">
+            <td th:text="${course.id}"></td>
+            <td th:text="${course.name}"></td>
+            <td><input type="checkbox" th:checked="${course.active}" DISABLED></td>
+            <td>
+                <th:block th:each="grp, iter: ${course.getTeachers()}" th:remove="tag"><th:block th:text="${grp.name}" th:if="${iter.index == 0}"></th:block><th:block th:text="${', ' + grp.name}" th:if="${iter.index > 0}"></th:block></th:block>
+            </td>
+            <td th:text="${course.getStudents().size()}"></td>
+            <td class="invisible"><a th:href="'view/' + ${course.id} + '/'" class="button">VIEW</a></td>
+            <td class="invisible"><a th:href="'edit/' + ${course.id} + '/'" class="button">EDIT</a></td>
+            <td class="invisible"><a th:href="'delete/' + ${course.id} + '/'" class="button">DELETE</a></td>
+        </tr>
+    </tbody>
+</table>
+<th:block th:include="global/footer.html" th:tag="remove"></th:block>

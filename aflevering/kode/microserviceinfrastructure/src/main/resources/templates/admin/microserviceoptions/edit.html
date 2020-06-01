@@ -1,0 +1,24 @@
+<th:block th:include="admin/header.html" th:tag="remove"></th:block>
+<div class="block">
+    <h1>Edit Service Option</h1>
+    <th:block th:if="${selectedmicroserviceid != 0}">
+        <a href="../../" class="button right">Back</a>
+    </th:block>
+</div>
+<form method="post" action="../../edit" th:object="${microserviceoption}">
+    <input type="text" th:field="*{id}" style="display:none;">
+    <input type="text" name="microservice.id" id="microservice.id" th:value="${selectedmicroserviceid}" style="display:none;">
+    <label>Name:</label>
+    <input type="text" th:field="*{name}">
+    <p class="errortext" th:if="${#fields.hasErrors('name')}">The max length of the page is 200 characters.</p>
+    <label>Active:</label>
+    <input type="checkbox" th:field="*{active}">
+    <label>Description:</label>
+    <input type="text" th:field="*{description}">
+    <p class="errortext" th:if="${#fields.hasErrors('description')}">The max length of the page is 200 characters.</p>
+    <label>Priority:</label>
+    <input type="text" th:field="*{priority}">
+    <p class="errortext" th:if="${#fields.hasErrors('priority')}">The max value of the priority 1000.</p>
+    <input type="submit" value="Edit">
+</form>
+<th:block th:include="admin/footer.html" th:tag="remove"></th:block>

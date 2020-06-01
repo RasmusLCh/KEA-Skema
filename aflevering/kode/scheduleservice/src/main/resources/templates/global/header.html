@@ -1,0 +1,224 @@
+<style>
+    div.schedulecontainer *{
+
+    }
+    /* General CSS: Start */
+    div.schedulecontainer h1{
+        display: inline-block;
+        padding: 0px;
+        margin: 0px;
+    }
+
+    div.schedulecontainer .block{
+        display: block;
+        width: 100%;
+        margin-bottom: 7px;
+    }
+
+    div.schedulecontainer .right{
+        float: right;
+    }
+
+    div.schedulecontainer th, td {
+        border: 1px solid black;
+        padding: 5px;
+    }
+
+    div.schedulecontainer th{
+        color: white;
+        background-color: #233249;
+    }
+
+    div.schedulecontainer th.invisible{
+        border: none;
+        background-color: white;
+        color: black;
+        width: 100px;
+    }
+
+    div.schedulecontainer td.invisible{
+        border: none;
+        width: 100px;
+    }
+
+    div.schedulecontainer table{
+        border-collapse: collapse;
+        border: 0px;
+        width: 100%;
+    }
+    div.schedulecontainer td{
+        padding: 10px;
+        vertical-align: top;
+    }
+    div.schedulecontainer td.noborder{
+        border: 0px;
+    }
+    div.schedulecontainer hr{
+        border: 1px dotted black;
+    }
+
+    div.schedulecontainer label{
+        display: block;
+        font-weight: bold;
+        padding-top: 10px;
+        padding-bottom: 2px;
+    }
+
+    div.schedulecontainer input[type=text],
+    div.schedulecontainer input[type=password],
+    div.schedulecontainer input[type=submit],
+    div.schedulecontainer input[type=datetime-local],
+    div.schedulecontainer textarea,
+    div.schedulecontainer select{
+        /* box fix, makes it so the 100% width is the same for all elements */
+        -ms-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        display: block;
+        width: 100%;
+        padding: 8px;
+    }
+
+    form.schdule_periode input[type=text],
+    form.schdule_periode input[type=submit]{
+        display: inline-block;
+        width: 200px;
+    }
+
+    input[type=submit].button{
+        color: white;
+        background-color: #233249;
+        border-radius: 25px;
+        padding: 5px;
+        padding-left: 30px;
+        padding-right: 30px;
+        text-decoration: none;
+        border: 1px solid;
+        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    div.schedulecontainer textarea{
+        height: 300px;
+    }
+
+    div.schedulecontainer input[type='submit']{
+        margin-top: 10px;
+        margin-bottom: 10px;
+        background-color: #233249;
+        color: white;
+        padding: 10px;
+    }
+
+    div.schedulecontainer a.button{
+        color: white;
+        background-color: #233249;
+        border-radius: 25px;
+        padding: 5px;
+        padding-left: 30px;
+        padding-right: 30px;
+        text-decoration: none;
+    }
+
+    div.schedulecontainer a.button:hover{
+        color: white;
+    }
+
+    span.error{
+        color: red;
+    }
+
+    p.error{
+        color: red;
+    }
+
+    h1.block{
+        display: block;
+    }
+</style>
+<style>
+    table.schedule_weekly{
+        width: 100%;
+        table-layout:fixed;
+    }
+
+    div.schedule_weeklycontainer{
+        display: block;
+        overflow: auto;
+        width: 100%;
+        height:calc(100vh - 140px);
+        background: scroll 0 0;
+    }
+
+    h3.schedule_coursename{
+        display: inline-block;
+        margin: 0px;
+        padding: 0px;
+        word-wrap: break-word;
+    }
+    div.schedule_teachers{
+        margin: 0px;
+        padding: 0px;
+        word-wrap: break-word;
+    }
+
+    span.schedule_location{
+        display: block;
+        font-style: italic;
+        margin-bottom: 30px;
+        word-wrap: break-word;
+    }
+
+    h4.schedule_subject{
+        display: block;
+        margin-top: 15px;
+        padding: 0px;
+        word-wrap: break-word;
+    }
+
+    span.schedule_item{
+        display: block;
+        width: 100%;
+        word-wrap: break-word;
+    }
+
+    div.schedule_options{
+        display: block;
+        margin-top: 10px;
+    }
+    select.schedule_view {
+        width: 140px!important;
+        float: left;
+
+    }
+
+    div.schedule_options_buttons{
+        float: right;
+    }
+
+    img.schedule_icon{
+        height: 30px;
+    }
+    td.schedule_middle{
+        text-align: center;
+    }
+    td.schedule{
+        width: 20%;
+        word-wrap: break-word
+    }
+    table.schedule_weekly th.weekday{
+        width: 18%
+    }
+
+    table.schedule_weekly th.presentweekday{
+        width: 18%;
+        color: #ea5045;
+    }
+
+    table.schedule_weekly th.time{
+        width: 10%
+    }
+</style>
+<div class="schedulecontainer" id="schedulecontainer">

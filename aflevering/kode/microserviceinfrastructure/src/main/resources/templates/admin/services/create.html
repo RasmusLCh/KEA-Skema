@@ -1,0 +1,37 @@
+<th:block th:include="admin/header.html" th:tag="remove"></th:block>
+<div class="block">
+    <h1>Create Microservice</h1>
+    <a href="../" class="button right">Back</a>
+</div>
+<form method="post" action="" th:object="${microservice}">
+    <label>Name:</label>
+    <input type="text" th:field="*{name}">
+    <p class="errortext" th:if="${#fields.hasErrors('name')}">Name must be unique and a maximum of 50 characters.</p>
+    <label>Port:</label>
+    <input type="text" th:field="*{port}">
+    <p class="errortext" th:if="${#fields.hasErrors('port')}">Port must be between 1024 and 65535.</p>
+    <label>Version:</label>
+    <input type="text" th:field="*{version}">
+    <p class="errortext" th:if="${#fields.hasErrors('version')}">Ineligible version number</p>
+    <label>Description:</label>
+    <textarea th:field="*{description}"></textarea>
+    <p class="errortext" th:if="${#fields.hasErrors('description')}">The max length of the description is XXXX characters.</p>
+    <label>Enabled:</label>
+    <input type="checkbox" th:field="*{enabled}">
+    <p class="errortext" th:if="${#fields.hasErrors('enabled')}"></p>
+    <label>Access Groups:</label>
+    <select size="10" name="accessgroups" class="form-control" multiple>
+        <th:block th:each="group : ${accessgroups}">
+            <th:block th:if="${microservice?.accessgroups?.contains(group)}">
+                <option th:value="${group.getId()}" th:text="${group.getName()}" selected="selected"></option>
+            </th:block>
+            <th:block th:unless="${microservice?.accessgroups?.contains(group)}">
+                <option th:value="${group.getId()}" th:text="${group.getName()}"></option>
+            </th:block>
+        </th:block>
+    </select>
+    <input type="submit" value="Create">
+
+
+</form>
+<th:block th:include="admin/footer.html" th:tag="remove"></th:block>

@@ -1,0 +1,25 @@
+<th:block th:include="admin/header.html" th:tag="remove"></th:block>
+<div class="block">
+    <h1>Edit File Resource</h1>
+    <th:block th:if="${selectedmicroserviceid != 0}">
+        <a href="../../" class="button right">Back</a>
+    </th:block>
+</div>
+<form method="post" action="../../edit" th:object="${fileresource}">
+    <input type="hidden" th:field="*{id}">
+    <label>MicroService:</label>
+    <p th:text="${selectedmicroservice.name}" class="disabledinput"></p>
+    <label>Filename:</label>
+    <input type="text" th:field="*{filename}">
+    <p class="errortext" th:if="${#fields.hasErrors('filename')}">An error occured, filename must be between 1 and 255 characters long.</p>
+
+File Resource
+    <input type="text" th:field="*{type}">
+    <p class="errortext" th:if="${#fields.hasErrors('type')}">An error occured, type must be between 1 and 50 characters long.</p>
+    <label>Extension:</label>
+    <input type="text" th:field="*{extension}">
+    <p class="errortext" th:if="${#fields.hasErrors('extension')}">An error occured, extension must be between 1 and 20 characters long.</p>
+
+    <input type="submit" value="Edit">
+</form>
+<th:block th:include="admin/footer.html" th:tag="remove"></th:block>

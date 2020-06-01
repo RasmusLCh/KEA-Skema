@@ -1,0 +1,42 @@
+<th:block th:include="global/header.html" th:tag="remove"></th:block>
+<div class="block">
+    <h1>Delete Lecture</h1>
+    <a href="../../index" class="button right">Back</a>
+</div>
+<p>You are about to delete the lecture</p>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>START</th>
+        <th>END</th>
+        <th>LOCATION</th>
+    </tr>
+    <tr>
+        <td th:text="${lecture.id}"></td>
+        <td th:text="${lecture.startdatetime}"></td>
+        <td th:text="${lecture.enddatetime}"></td>
+        <td th:text="${lecture.location}"></td>
+    </tr>
+    <tr>
+        <th colspan="4">TEACHER(S)</th>
+    </tr>
+    <tr th:each="teacher : ${lecture.teachers}">
+        <td colspan="4" th:text="${teacher.displayname}">
+
+        </td>
+    </tr>
+    <tr>
+        <th colspan="4">SUBJECTS</th>
+    </tr>
+    <tr th:each="subject : ${lecture.lecturesubjects}">
+        <td colspan="4" th:text="${subject.subject}"></td>
+    </tr>
+</table>
+
+<p>Please confirm.</p>
+
+<form method="post" action="../../delete/">
+    <input type="hidden" name="id" th:value="${lecture.id}">
+    <input type="submit" value="Delete" class="btn-primary form-control">
+</form>
+<th:block th:include="global/footer.html" th:tag="remove"></th:block>

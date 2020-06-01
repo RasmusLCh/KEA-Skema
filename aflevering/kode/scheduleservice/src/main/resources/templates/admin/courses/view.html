@@ -1,0 +1,34 @@
+<th:block th:include="global/header.html" th:tag="remove"></th:block>
+<div class="block">
+    <h1>View Course</h1>
+    <a href="../../index" class="button right">Back</a>
+</div>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>NAME</th>
+        <th>ACTIVE</th>
+    </tr>
+    <tr>
+        <td th:text="${course.id}"></td>
+        <td th:text="${course.name}"></td>
+        <td th:text="${course.active}"></td>
+    </tr>
+    <tr>
+        <th colspan="3">Teacher groups</th>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <th:block th:each="grp, iter: ${course.getTeachers()}" th:remove="tag"><th:block th:text="${grp.name}" th:if="${iter.index == 0}"></th:block><th:block th:text="${', ' + grp.name}" th:if="${iter.index > 0}"></th:block></th:block>
+        </td>
+    </tr>
+    <tr>
+        <th colspan="3">Student groups</th>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <th:block th:each="grp, iter: ${course.getStudents()}" th:remove="tag"><th:block th:text="${grp.name}" th:if="${iter.index == 0}"></th:block><th:block th:text="${', ' + grp.name}" th:if="${iter.index > 0}"></th:block></th:block>
+        </td>
+    </tr>
+</table>
+<th:block th:include="global/footer.html" th:tag="remove"></th:block>

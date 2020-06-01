@@ -1,0 +1,47 @@
+<th:block th:include="admin/header.html" th:tag="remove"></th:block>
+<div class="block">
+    <h1>Delete Page Injection</h1>
+    <th:block th:if="${selectedmicroserviceid != 0}">
+        <a href="../../" class="button right">Back</a>
+    </th:block>
+</div>
+<p>You are about to delete the page injection</p>
+<table>
+    <tr>
+        <th colspan="4">
+            MicroService
+        </th>
+    </tr>
+    <tr>
+        <td colspan="4" th:text="${pageinjection.microservice.name}"></td>
+    </tr>
+    <tr>
+        <th>ID</th>
+        <th>TYPE</th>
+        <th>PAGE</th>
+        <th>PRIORITY</th>
+    </tr>
+    <tr>
+        <td th:text="${pageinjection.id}"></td>
+        <td th:text="${pageinjection.type}"></td>
+        <td th:text="${pageinjection.page}"></td>
+        <td th:text="${pageinjection.priority}"></td>
+
+    </tr>
+    <tr>
+        <th colspan="4">
+            DATA
+        </th>
+    </tr>
+    <tr>
+        <td colspan="4" th:text="${pageinjection.data}"></td>
+    </tr>
+</table>
+
+<p>Please confirm.</p>
+
+<form method="post" action="../../delete/">
+    <input type="hidden" name="id" th:value="${pageinjection.id}">
+    <input type="submit" value="Delete" class="btn-primary form-control">
+</form>
+<th:block th:include="admin/footer.html" th:tag="remove"></th:block>

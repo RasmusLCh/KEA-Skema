@@ -1,0 +1,42 @@
+<th:block th:include="admin/header.html" th:tag="remove"></th:block>
+<div class="block">
+    <h1>Service Options</h1>
+    <th:block th:if="${selectedmicroserviceid != 0}">
+        <a href="create/" class="button right">Create Service Option</a>
+    </th:block>
+</div>
+
+<th:block th:include="admin/msselector.html" th:tag="remove"></th:block>
+<th:block th:if="${selectedmicroserviceid != 0}">
+    <br/>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>NAME</th>
+                <th>ACTIVE</th>
+                <th>DESCRIPTION</th>
+                <th>PRIORITY</th>
+                <th class="invisible"></th>
+                <th class="invisible"></th>
+                <th class="invisible"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="microserviceoption:${microserviceoptions}">
+                <td th:text="${microserviceoption.id}"></td>
+                <td th:text="${microserviceoption.name}"></td>
+                <td th:text="${microserviceoption.active}"></td>
+                <td th:text="${microserviceoption.description}"></td>
+                <td th:text="${microserviceoption.priority}"></td>
+                <td class="invisible"><a th:href="'view/' + ${microserviceoption.id} + '/'" class="button">VIEW</a></td>
+                <td class="invisible"><a th:href="'edit/' + ${microserviceoption.id} + '/'" class="button">EDIT</a></td>
+                <td class="invisible"><a th:href="'delete/' + ${microserviceoption.id} + '/'" class="button">DELETE</a></td>
+            </tr>
+        </tbody>
+    </table>
+</th:block>
+<th:block th:if="${selectedmicroserviceid == 0}">
+    <p>Please select a MicroService.</p>
+</th:block>
+<th:block th:include="admin/footer.html" th:tag="remove"></th:block>
