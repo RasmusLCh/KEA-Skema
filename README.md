@@ -13,8 +13,8 @@ Skema system: https://youtu.be/YPETpkGNYyo<br>
 Tilføj microservice: https://youtu.be/a1UhtjMzavk
 
 # Kontakt
-Martin Kjeldgaard Nikolajsen (mart56p7@stud.kea.dk, martinnikolajsen@outlook.dk)
-Oliver Alexander Varnild (oliv604m@stud.kea.dk)
+Martin Kjeldgaard Nikolajsen (mart56p7@stud.kea.dk, martinnikolajsen@outlook.dk)<br>
+Oliver Alexander Varnild (oliv604m@stud.kea.dk)<br>
 Rasmus Langelund Christensen (rasm383n@stud.kea.dk)
 
 # MicroService Infrastructure
