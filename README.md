@@ -12,6 +12,11 @@ Admin menu: https://youtu.be/7Volxnh7jO8<br>
 Skema system: https://youtu.be/YPETpkGNYyo<br>
 Tilføj microservice: https://youtu.be/a1UhtjMzavk
 
+# Kontakt
+Martin Kjeldgaard Nikolajsen (mart56p7@stud.kea.dk, martinnikolajsen@outlook.dk)
+Oliver Alexander Varnild (oliv604m@stud.kea.dk)
+Rasmus Langelund Christensen (rasm383n@stud.kea.dk)
+
 # MicroService Infrastructure
 I mappen infrastructure ligger der en microservice infrastruktur. I infrastrukturen kan der opsættes forskellige microservices, vi har lavet en microservice til at vise skemaer for studerende og undervisere.
 
