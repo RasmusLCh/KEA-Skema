@@ -13,9 +13,9 @@ foreach ($entry in $GlobalAddressList)
 		if($entry.getExchangeUser()){
 			$RecordData = [ordered]@{
 				Name   = $entry.Name
-				# PrimarySmtpAddress = $entry.GetExchangeUser().PrimarySmtpAddress
+				Email = $entry.GetExchangeUser().PrimarySmtpAddress
 				# x500   = $entry.Address
-				alias = $entry.GetExchangeUser().alias
+				Identifier = $entry.GetExchangeUser().alias
 			}
 			$Record = New-Object PSobject -Property $RecordData
 			$Record | Export-csv $OutFile -NoTypeInformation -Append		
